@@ -1,0 +1,43 @@
+
+
+
+
+
+
+
+set system tacplus-server 10.210.48.1 secret Tacacs+OTP
+set system tacplus-server 10.210.48.1 timeout 1
+ set system tacplus-server 10.210.48.1 source-address 10.106.144.103
+set system tacplus-server 10.210.48.2 secret Tacacs+OTP
+ set system tacplus-server 10.210.48.2 source-address 10.106.144.103
+set system tacplus-server 10.210.48.2 timeout 1
+set system accounting events login
+set system accounting events change-log
+set system accounting events interactive-commands
+set system accounting destination tacplus server 10.210.48.1 secret Tacacs+OTP
+set system accounting destination tacplus server 10.210.48.1 source-address 10.106.144.103
+set system accounting destination tacplus server 10.210.48.2 secret Tacacs+OTP
+set system accounting destination tacplus server 10.210.48.2 source-address 10.106.144.103
+
+
+
+set system login user ISEadmin class super-user
+set system authentication-order [ tacplus password ] 
+
+****************************************************************************************
+set groups RE-Protect policy-options prefix-list TACACS_PREFIX 10.210.48.1/32
+set groups RE-Protect policy-options prefix-list TACACS_PREFIX 10.210.48.2/32
+
+set groups RE-Protect firewall family inet filter ACLtoRE term PERMIT_TACACS from source-prefix-list TACACS_PREFIX
+set groups RE-Protect firewall family inet filter ACLtoRE term PERMIT_TACACS from protocol tcp
+set groups RE-Protect firewall family inet filter ACLtoRE term PERMIT_TACACS from source-port tacacs
+set groups RE-Protect firewall family inet filter ACLtoRE term PERMIT_TACACS then accept
+
+
+insert groups RE-Protect firewall family inet filter ACLtoRE term PERMIT_TACACS before term Deny_All
+
+
+
+###################################################################################
+set routing-options static route 10.210.48.1/32 next-hop 10.106.144.97
+set routing-options static route 10.210.48.2/32 next-hop 10.106.144.97
