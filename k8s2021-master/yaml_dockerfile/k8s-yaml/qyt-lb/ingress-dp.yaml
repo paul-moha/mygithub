@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: qyt-lb-dp
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`qyt-lb-dp.qytangk8s.com`)
+    kind: Rule
+    services:
+    - name: qyt-lb-dp-service
+      port: 5000

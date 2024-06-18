@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anti-affinity-pod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: anti-affinity-pod
+  template:
+    metadata:
+      labels:
+        app: anti-affinity-pod
+    spec:
+      containers:
+      - name: anti-affinity-pod
+        image: harbor.qytanghost.com/public/nginx_curl
+        ports:
+        - containerPort: 80
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:  # Pod需要的标签
+              matchExpressions:
+              - key: qytaffinity
+                operator: In
+                values:
+                - qytang
+            topologyKey: rack  # Node需要的标签
