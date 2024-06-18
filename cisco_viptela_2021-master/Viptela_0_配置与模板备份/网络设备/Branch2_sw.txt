@@ -1,0 +1,137 @@
+hostname Branch2_SW
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ no switchport
+ ip address 10.1.2.254 255.255.255.0
+ ip helper-address 10.1.5.100
+ speed 1000
+ duplex full
+ no negotiation auto
+ spanning-tree portfast edge
+!
+interface GigabitEthernet0/1
+ switchport access vlan 20
+ switchport mode access
+ speed 1000
+ duplex full
+ no negotiation auto
+ spanning-tree portfast edge
+!
+interface GigabitEthernet0/2
+ switchport access vlan 20
+ switchport mode access
+ speed 1000
+ duplex full
+ no negotiation auto
+ spanning-tree portfast edge
+!
+interface GigabitEthernet0/3
+ switchport access vlan 20
+ switchport mode access
+ shutdown
+ speed 1000
+ duplex full
+ no negotiation auto
+ spanning-tree portfast edge
+!
+interface Vlan20
+ ip address 10.1.20.254 255.255.255.0
+!
+router bgp 20
+ bgp log-neighbor-changes
+ network 10.1.2.0 mask 255.255.255.0
+ neighbor 10.1.20.1 remote-as 2
+ neighbor 10.1.20.1 send-community
+ neighbor 10.1.20.2 remote-as 22
+ neighbor 10.1.20.2 route-map peer-as-22 in
+!
+ip forward-protocol nd
+!
+ip bgp-community new-format
+ip http server
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+route-map peer-as-22 permit 10
+ set community 88:88
+!
+!
+!
+control-plane
+!
+banner exec ^C
+IOSv - Cisco Systems Confidential -
+
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner incoming ^C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner login ^C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+!
+!
+end

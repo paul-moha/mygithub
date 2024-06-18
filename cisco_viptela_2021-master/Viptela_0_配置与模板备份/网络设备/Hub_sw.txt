@@ -1,0 +1,160 @@
+hostname Hub_SW
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ no switchport
+ ip address 172.16.41.1 255.255.255.0
+ speed 1000
+ duplex full
+ no negotiation auto
+!
+interface GigabitEthernet0/1
+ no switchport
+ ip address 172.16.42.1 255.255.255.0
+ speed 1000
+ duplex full
+ no negotiation auto
+!
+interface GigabitEthernet0/2
+ no switchport
+ ip address 10.1.41.1 255.255.255.0
+ speed 1000
+ duplex full
+ no negotiation auto
+!
+interface GigabitEthernet0/3
+ no switchport
+ ip address 10.1.42.1 255.255.255.0
+ speed 1000
+ duplex full
+ no negotiation auto
+!
+interface GigabitEthernet1/0
+ no switchport
+ ip address 10.1.4.254 255.255.255.0
+ ip helper-address 10.1.5.100
+ speed 1000
+ duplex full
+ no negotiation auto
+!
+router bgp 4
+ bgp log-neighbor-changes
+ network 10.1.4.0 mask 255.255.255.0
+ neighbor 10.1.41.254 remote-as 40
+ neighbor 10.1.41.254 send-community
+ neighbor 10.1.41.254 route-map send_med_50 out
+ neighbor 10.1.42.254 remote-as 40
+ neighbor 10.1.42.254 send-community
+ neighbor 10.1.42.254 route-map send_med_100 out
+ neighbor 172.16.41.254 remote-as 140
+ neighbor 172.16.42.254 remote-as 140
+ maximum-paths eibgp 2
+!
+ip forward-protocol nd
+!
+ip bgp-community new-format
+ip http server
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+ip prefix-list Deny_only_mpls seq 5 deny 10.1.6.0/24
+ip prefix-list Deny_only_mpls seq 10 permit 0.0.0.0/0 le 32
+!
+ip prefix-list only_mpls seq 5 permit 10.1.6.0/24
+!
+!
+route-map omp_to_bgp permit 10
+ set community 4444:2222
+!
+route-map send_med_100 permit 10
+ set metric 100
+!
+route-map Set_Community permit 10
+ match ip address prefix-list Deny_only_mpls
+ continue
+ set community 44:22
+!
+route-map Set_Community permit 20
+ set local-preference 50
+!
+route-map send_med_50 permit 10
+ set metric 50
+!
+!
+!
+control-plane
+!
+banner exec ^C
+IOSv - Cisco Systems Confidential -
+
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner incoming ^C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+banner login ^C
+IOSv - Cisco Systems Confidential -
+
+Supplemental End User License Restrictions
+
+This IOSv software is provided AS-IS without warranty of any kind. Under no circumstances may this software be used separate from the Cisco Modeling Labs Software that this software was provided with, or deployed or used as part of a production environment.
+
+By using the software, you agree to abide by the terms and conditions of the Cisco End User License Agreement at http://www.cisco.com/go/eula. Unauthorized use or distribution of this software is expressly prohibited.
+^C
+!
+line con 0
+line aux 0
+line vty 0 4
+ login
+!
+!
+end

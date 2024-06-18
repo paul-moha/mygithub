@@ -1,0 +1,87 @@
+vyos@vyos# show
+ interfaces {
+     ethernet eth0 {
+         address 202.100.1.254/24
+         duplex auto
+         hw-id 00:50:56:a1:14:2a
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth1 {
+         address 202.100.100.254/24
+         duplex auto
+         hw-id 00:50:56:a1:5d:16
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth2 {
+         address 202.100.10.254/24
+         duplex auto
+         hw-id 00:50:56:a1:50:9f
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth3 {
+         address 202.100.20.254/24
+         duplex auto
+         hw-id 00:50:56:a1:d6:fc
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth4 {
+         address 202.100.30.254/24
+         duplex auto
+         hw-id 00:50:56:a1:f2:a7
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth5 {
+         address 202.100.41.254/24
+         duplex auto
+         hw-id 00:50:56:a1:e6:b2
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth6 {
+         address 202.100.42.254/24
+         duplex auto
+         hw-id 00:50:56:a1:26:6f
+         smp_affinity auto
+         speed auto
+     }
+     ethernet eth7 {
+         address 202.100.50.254/24
+         duplex auto
+         hw-id 00:50:56:a1:a8:df
+         smp_affinity auto
+         speed auto
+     }
+ }
+ protocols {
+     static {
+         route 0.0.0.0/0 {
+             next-hop 202.100.1.1 {
+             }
+         }
+     }
+ }
+ service {
+     ssh {
+         port 22
+     }
+ }
+ system {
+     config-management {
+         commit-revisions 20
+     }
+     console {
+         device ttyS0 {
+             speed 9600
+         }
+     }
+     host-name vyos
+     ntp {
+     }
+     time-zone UTC
+ }
+[edit]
