@@ -1,0 +1,11 @@
+feature tacacs+
+
+tacacs-server key 7 "fewhg123"
+tacacs-server host 172.20.10.220 key 7 "fewhg123" 
+aaa group server tacacs+ MORE_TACACS 
+    server 172.20.10.220 
+    source-interface Vlan10
+
+
+aaa authentication login default group MORE_TACACS RADIUS_GROUP local 
+aaa accounting default group MORE_TACACS 
