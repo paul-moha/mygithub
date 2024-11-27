@@ -1,0 +1,97 @@
+[*06/12/2024 03:19:45.4846] ethernet_port wired0, ip 20.1.1.1, netmask 255.255.255.0, gw 20.1.1.254, mtu 1500, bcast 20.1.1.255, dns1 10.1.1.102, domain qytwireless.com, vid 0, static_ip_failover false, dhcp_vlan_failover false
+[*06/12/2024 03:19:45.6943] Check whether client_ip_table entry need to be cleared 0
+[*06/12/2024 03:19:45.6950] Clearing client entry
+[*06/12/2024 03:19:45.9157] /etc/dnsmasq.host.conf:
+[*06/12/2024 03:19:45.9188] no-resolv
+[*06/12/2024 03:19:45.9188] pid-file=/var/run/dnsmasq.host.pid
+[*06/12/2024 03:19:45.9188] port=53
+[*06/12/2024 03:19:45.9188] min-port=61000
+[*06/12/2024 03:19:45.9188] server=10.1.1.102
+[*06/12/2024 03:19:45.9188] domain=qytwireless.com
+[*06/12/2024 03:19:45.9188] bind-interfaces
+[*06/12/2024 03:19:45.9188] interface=lo
+[*06/12/2024 03:19:49.8129] Verify returns 0
+[*06/12/2024 03:19:50.8546] IOT Bootloader Flash Tool 1.4
+[*06/12/2024 03:19:50.8546] Firmware upgrade initiated by ble_init
+[*06/12/2024 03:19:50.8546] ble fw_ver  2.7.22
+[*06/12/2024 03:19:50.8546] Please wait...
+[*06/12/2024 03:19:50.8546] Chip sync ok
+[*06/12/2024 03:19:50.8546] IOT Firmware File Name:  ble_fw_single_2652.hex
+[*06/12/2024 03:19:50.8546] bundled_ver_split [u'2', u'7', u'20']
+[*06/12/2024 03:19:50.8546] FW version is latest. No need to upgrade ....
+[*06/12/2024 03:19:56.0850] AP IPv4 Address updated from 0.0.0.0 to 20.1.1.1
+[*06/12/2024 03:20:59.9681] AP is in good condition, BLE is off
+[*06/12/2024 03:20:59.9681] Set radio wifi0 power 4 antenna chain 4 15 0
+[*06/12/2024 03:20:59.9681] Set radio wifi1 power 4 antenna chain 8 255 0
+[*06/12/2024 03:20:59.9681] Set radio wifi2 power 4 antenna chain 4 15 0
+[*06/12/2024 03:20:59.9681] set_sys_cond_state: condition good state 1
+[*06/12/2024 03:21:09.4540] dtls_init: Use SUDI certificate
+[*06/12/2024 03:21:09.5138]
+[*06/12/2024 03:21:09.5138] CAPWAP State: Init
+[*06/12/2024 03:21:15.2427] Start: RPC thread 2945708944 created.
+[*06/12/2024 03:21:28.6273] Set PnP NTP Server pnpntpserver.qytwireless.com.
+[*06/12/2024 03:21:58.7404] PNP:Server not reachable, Start CAPWAP Discovery
+[*06/12/2024 03:21:58.7509]
+[*06/12/2024 03:21:58.7509] CAPWAP State: Discovery
+[*06/12/2024 03:21:58.7521] IP DNS query for CISCO-CAPWAP-CONTROLLER.qytwireless.com
+[*06/12/2024 03:21:58.7543] DNS resolved CISCO-CAPWAP-CONTROLLER.qytwireless.com
+[*06/12/2024 03:21:58.7544] DNS discover IP addr: 100.1.1.101
+[*06/12/2024 03:21:58.7544] DNS discover IP addr: 100.1.1.102
+[*06/12/2024 03:21:58.7658] Discovery Request sent to 100.1.1.101, discovery type DNS(3)
+[*06/12/2024 03:21:58.7679] Discovery Request sent to 100.1.1.102, discovery type DNS(3)
+[*06/12/2024 03:21:58.7686] Discovery Response from 100.1.1.101
+[*06/12/2024 03:21:58.7695] Discovery Request sent to 255.255.255.255, discovery type UNKNOWN(0)
+[*06/12/2024 03:21:58.7708] Discovery Response from 100.1.1.102
+[*06/12/2024 03:21:58.7778]
+[*06/12/2024 03:21:58.7778] CAPWAP State: Discovery
+[*06/12/2024 03:23:35.0000] Started wait dtls timer (60 sec)
+[*06/12/2024 03:23:35.0094]
+[*06/12/2024 03:23:35.0094] CAPWAP State: DTLS Setup
+[*06/12/2024 03:23:35.0234] First connect to vWLC, accept vWLC by default
+[*06/12/2024 03:23:35.0234]
+[*06/12/2024 03:23:35.0284] dtls_verify_server_cert: vWLC is using SSC, returning 1
+[*06/12/2024 03:23:35.4187] sudi99_request_check_and_load: Use HARSA SUDI certificate
+[*06/12/2024 03:23:35.7525]
+[*06/12/2024 03:23:35.7525] CAPWAP State: Join
+[*06/12/2024 03:23:35.7782] shared_setenv PART_BOOTCNT 0 &> /dev/null
+[*06/12/2024 03:23:35.8778] DOT11_CFG[0]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 0 radioFraEnabled 1, radioSubType 0, serviceType 0, radioType 1, bandId 0
+[*06/12/2024 03:23:35.8784] DOT11_CFG[1]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 1 radioFraEnabled 1, radioSubType 0, serviceType 1, radioType 2, bandId 1
+[*06/12/2024 03:23:35.8786] DOT11_CFG[2]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 2 radioFraEnabled 1, radioSubType 5, serviceType 0, radioType 2, bandId 1
+[*06/12/2024 03:23:35.8788] OOBImageDnld: OOB Image Download in ap_cap_bitmask(2)
+[*06/12/2024 03:23:35.8883] Sending Zero Wait DFS capability : 2
+[*06/12/2024 03:23:35.8884] Sending Join request to 100.1.1.101 through port 5256, packet size 1376
+[*06/12/2024 03:23:40.5033] DOT11_CFG[0]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 0 radioFraEnabled 1, radioSubType 0, serviceType 0, radioType 1, bandId 0
+[*06/12/2024 03:23:40.5037] DOT11_CFG[1]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 1 radioFraEnabled 1, radioSubType 0, serviceType 1, radioType 2, bandId 1
+[*06/12/2024 03:23:40.5041] DOT11_CFG[2]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 2 radioFraEnabled 1, radioSubType 5, serviceType 0, radioType 2, bandId 1
+[*06/12/2024 03:23:40.5043] OOBImageDnld: OOB Image Download in ap_cap_bitmask(2)
+[*06/12/2024 03:23:40.5149] Sending Zero Wait DFS capability : 2
+[*06/12/2024 03:23:40.5150] Sending Join request to 100.1.1.101 through port 5256, packet size 1376
+[*06/12/2024 03:23:40.5272] Join Response from 100.1.1.101, packet size 1397
+[*06/12/2024 03:23:40.5273] AC accepted previous sent request with result code: 0
+[*06/12/2024 03:23:40.5273] Received wlcType 0, timer 30
+[*06/12/2024 03:23:40.6813]
+[*06/12/2024 03:23:40.6813] CAPWAP State: Image Data
+[*06/12/2024 03:23:40.6819] AP image version 17.9.4.27 backup 17.14.0.79, Controller 17.9.4.27
+[*06/12/2024 03:23:40.6821] Version is the same, do not need update.
+[*06/12/2024 03:23:40.7469] status 'upgrade.sh: Script called with args:[NO_UPGRADE]'
+[*06/12/2024 03:23:40.7807] do NO_UPGRADE, part1 is active part
+[*06/12/2024 03:23:40.8039]
+[*06/12/2024 03:23:40.8039] CAPWAP State: Configure
+[*06/12/2024 03:23:40.8063] Telnet is not supported by AP, should not encode this payload
+[*06/12/2024 03:23:41.0030] Discarding msg CAPWAP_WTP_EVENT_REQUEST(type 9) in CAPWAP state: Configure(8).
+[*06/12/2024 03:23:41.0031] Discarding msg CAPWAP_WTP_EVENT_REQUEST(type 9) in CAPWAP state: Configure(8).
+[*06/12/2024 03:23:41.0031] Discarding msg CAPWAP_WTP_EVENT_REQUEST(type 9) in CAPWAP state: Configure(8).
+[*06/12/2024 03:23:41.0033] Discarding msg CAPWAP_WTP_EVENT_REQUEST(type 9) in CAPWAP state: Configure(8).
+[*06/12/2024 03:23:41.0113] Radio [2] Administrative state DISABLED  change to DISABLED
+[*06/12/2024 03:23:41.0128] Radio [1] Administrative state DISABLED  change to ENABLED
+[*06/12/2024 03:23:41.0134] Radio [0] Administrative state DISABLED  change to ENABLED
+[*06/12/2024 03:23:41.0159] DOT11_CFG[1]: Starting radio 1
+[*06/12/2024 03:23:41.0165] DOT11_DRV[1]: Start Radio1 - Begin
+[*06/12/2024 03:23:41.0179] DOT11_DRV[1]: Start Radio1 - End
+[*06/12/2024 03:23:41.0484] DOT11_CFG[0]: Starting radio 0
+[*06/12/2024 03:23:41.0489] DOT11_DRV[0]: Start Radio0 - Begin
+[*06/12/2024 03:23:41.0502] DOT11_DRV[0]: Start Radio0 - End
+[*06/12/2024 03:23:41.2806]
+[*06/12/2024 03:23:41.2806] CAPWAP State: Run
+[*06/12/2024 03:23:41.2928] wlan: [0:I:CMN_MLME] mlme_ext_vap_up: VAP (mon1) is up
+[*06/12/2024 03:23:41.3756] AP has joined controller qytwlc1

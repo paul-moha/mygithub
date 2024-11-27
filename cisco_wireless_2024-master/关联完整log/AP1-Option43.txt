@@ -1,0 +1,704 @@
+U-Boot REL 2016.01 (btldr release 304) (Jun 22 2023 - 16:02:53 -0700)
+
+This product contains some software licensed under the
+"GNU General Public License, version 2" provided with
+ABSOLUTELY NO WARRANTY under the terms of
+"GNU General Public License, version 2", available here:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+DRAM:  2 GiB
+Nand: Detected ONFI Micron TH58NYG3S0H 8G 1.8V 8-bit
+qpic_nand: changing oobsize to 160 from 224 bytes
+SF: Detected MX25U6435F with page size 256 Bytes, erase size 4 KiB, total 8 MiB
+Scanning shenv data blocks
+Total valid parts=4
+Active shenv part[1:1], write_counter=10740
+MFG data loaded
+PCI Link Intialized
+In:    serial@78B3000
+Out:   serial@78B3000
+Err:   serial@78B3000
+machid: 8010001
+SKU: Axel-I BID detected...
+i2c_0 chip addresses: 30 48 70
+Net:   MAC0 addr:c:75:bd:b5:fc:d0
+<DBG> Read AQR: phy_id=4, ID=0xffffffff, phy_addr=8
+<DBG> Read AQR: phy_id=5, ID=0x31c31c22, phy_addr=0
+PHY ID: 0x31c31c22... Found AQR114C B0 PHY.
+Loaded 7 5 PHY firmware from flash
+CRC check good on phy fw file (0x66D4)
+PHYFW:Loading IRAM...........done.
+PHYFW:Loading DRAM..............done.
+phy fw image load good CRC-167 matches (0xF5A5)
+PHY FW version 05.06.07
+PHY ID1: 0x31c3
+PHY ID2: 0x1c22
+EDMA ver 1 hw init
+eth0
+Auto boot mode, use bootipq directly
+APPS power cycled and restart reason is 0x10
+ Hit ESC key to stop autoboot:  0
+Specified BOOT: part1
+ubi0: attaching mtd2
+ubi0: scanning is finished
++-------------------------------+
+|               part1: 1650 PEBs|
+|               part2: 2300 PEBs|
++-------------------------------+
+ubi0: attached mtd2 (name "mtd=0", size 1024 MiB)
+ubi0: PEB size: 262144 bytes (256 KiB), LEB size: 253952 bytes
+ubi0: min./max. I/O unit sizes: 4096/4096, sub-page size 4096
+ubi0: VID header offset: 4096 (aligned 4096), data offset: 8192
+ubi0: good PEBs: 4094, bad PEBs: 2, corrupted PEBs: 0
+ubi0: user volume: 2, internal volumes: 1, max. volumes count: 128
+ubi0: max/mean erase counter: 1484/537, WL threshold: 4096, image sequence number: 514226575
+ubi0: available PEBs: 62, total reserved PEBs: 4032, PEBs reserved for bad PEB handling: 78
+
+Booting from part1
+
+Loading file 'part1/part.bin' to addr 0x54000000...
+Done
+Signature returns 0
+Image signing verification success, continue to run...
+Preferred boot heartbeat count: 1
+Writing to Nand...
+Erasing block 0x760000
+Erasing at 0x767000 -- 100% complete.
+done
+## Loading kernel from FIT Image at 54000400 ...
+   Using 'C9130_config@0' configuration
+   Trying 'kernel@0' kernel subimage
+     Description:  linux-qca-4.4-6e
+     Created:      2023-07-11   7:57:57 UTC
+     Type:         Kernel Image
+     Compression:  lzma compressed
+     Data Start:   0x540004c0
+     Data Size:    3420803 Bytes = 3.3 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: 0x41080000
+     Entry Point:  0x41080000
+   Verifying Hash Integrity ... OK
+## Loading ramdisk from FIT Image at 54000400 ...
+   Using 'C9130_config@0' configuration
+   Trying 'ramdisk@0' ramdisk subimage
+     Description:  initramfs
+     Created:      2023-07-11   7:57:57 UTC
+     Type:         RAMDisk Image
+     Compression:  lzma compressed
+     Data Start:   0x543437ec
+     Data Size:    3779308 Bytes = 3.6 MiB
+     Architecture: AArch64
+     OS:           Linux
+     Load Address: unavailable
+     Entry Point:  unavailable
+   Verifying Hash Integrity ... OK
+## Loading fdt from FIT Image at 54000400 ...
+   Using 'C9130_config@0' configuration
+   Trying 'fdt@0' fdt subimage
+     Description:  C9130 fdt
+     Created:      2023-07-11   7:57:57 UTC
+     Type:         Flat Device Tree
+     Compression:  uncompressed
+     Data Start:   0x546de35c
+     Data Size:    82372 Bytes = 80.4 KiB
+     Architecture: AArch64
+   Verifying Hash Integrity ... OK
+   Loading fdt from 0x546de35c to 0x4a3a7000
+   Booting using the fdt blob at 0x4a3a7000
+   Uncompressing Kernel Image ... OK
+   Loading Ramdisk to 49f65000, end 4a2ffaec ... OK
+   Loading Device Tree to 4a3a7000, end 4a3be1c3 ... OK
+Using machid 0x8010001 from environment
+
+Starting image ...
+
+Jumping to AARCH64 kernel via monitor
+[01/01/1970 00:00:00.0000] Booting Linux on physical CPU 0x0
+[01/01/1970 00:00:00.0000] Linux version 4.4.60 (aut@build-lnx-044) (gcc version 5.3.1 (OpenWrt/Linaro GCC 5.3-2016.04 r48430) ) #1 SMP Tue Jul 11 00:04:38 PDT 2023
+[01/01/1970 00:00:00.0000] Boot CPU: AArch64 Processor [410fd034]
+[01/01/1970 00:00:00.0000] Ignoring memory range 0x40000000 - 0x41000000
+[01/01/1970 00:00:00.0000] Kernel command line: console=ttyMSM0,9600n8 ubi.mtd=7 root=/dev/ram activepart=part1 activeboot=0 boardid=0xf swiotlb=1 crashkernel=128M@2816M
+[01/01/1970 00:00:00.0000] CPU1: Booted secondary processor [410fd034]
+[01/01/1970 00:00:00.0000] CPU2: Booted secondary processor [410fd034]
+[01/01/1970 00:00:00.0000] CPU3: Booted secondary processor [410fd034]
+[01/01/1970 00:00:00.0000] SMP: Total of 4 processors activated.
+[01/01/1970 00:00:03.0499] TZ Log : Will warn on Access Violation, as paniconaccessviolation is not set
+[01/01/1970 00:00:03.8999] buginf tty flushing thread started, ttyport=ffffffc01f349000
+[01/01/1970 00:00:03.8999] diag: IPC Logging disabled
+[01/01/1970 00:00:03.8999] TRACK: P[0]  PMask[4]
+[01/01/1970 00:00:03.8999] TRACK: P[1]  PMask[4]
+[01/01/1970 00:00:03.8999] TRACK: P[2]  PMask[4]
+[01/01/1970 00:00:03.8999] TRACK: P[3]  PMask[4]
+[01/01/1970 00:00:04.0199] m25p80 spi32766.0: found mx25u6435f, expected n25q128a11
+[01/01/1970 00:00:04.0399] clear_bam_transaction 885 NAND_ERR: atom_cnt: 1 ; chans_cnt: 1 ; comp_cnt: 0
+[01/01/1970 00:00:04.0399] Skip QCA8074V1 in V2 platform
+[01/01/1970 00:00:04.0399] ==================== CNSS DEBUGFS CREATE ===================
+[01/01/1970 00:00:04.0399] ===================== BDF TESTING =====================
+[01/01/1970 00:00:04.0399] cnss[2]: INFO: Platform driver probed successfully. plat ffffffc075d40018 tgt 0xfffe
+[01/01/1970 00:00:04.0399] dwc3-of-simple 8af8800.usb3: Disable pipe clock as disable-ss is set
+[01/01/1970 00:00:04.3299] cpufreq: cpufreq_online: CPU0: Running at unlisted freq: 800000 KHz
+[01/01/1970 00:00:04.3299] cpufreq: cpufreq_online: CPU0: Unlisted initial frequency changed to: 1017600 KHz
+[01/01/1970 00:00:04.3399] subsys-restart: subsys_register(): Reading instance-id for qcom_q6v5_wcss failed
+[01/01/1970 00:00:04.3399] subsys-restart: subsys_register(): Reading qcom,edge for qcom_q6v5_wcss failed
+[*01/01/1970 00:00:07.5515] buginf() enabled.
+[*01/01/1970 00:00:07.5608] Made it into bootsh: Jul 11 2023 00:45:00 T-81176d2ca1b2619ba72d25e37369f688ed7503a8-g81176d2c-aut
+[*01/01/1970 00:00:16.7956] bootsh mini ramfs booted /bootpart/part1/ramfs_data_cisco.squashfs
+
+Welcome to Cisco.
+
+Usage of this device is governed by Cisco's End User License Agreement,
+available at:
+http://www.cisco.com/c/en/us/td/docs/general/warranty/English/EU1KEN_.html.
+
+
+             Restricted Rights Legend
+
+Use, duplication, or disclosure by the Government is subject to
+restrictions as set forth in subparagraph (c) of the Commercial
+Computer Software - Restricted Rights clause at FAR sec. 52.227-19 and
+subparagraph (c) (1) (ii) of the Rights in Technical Data and Computer
+Software clause at DFARS sec. 252.227-7013.
+
+            Cisco Systems, Inc.
+            170 West Tasman Drive
+            San Jose, California 95134-1706
+
+This product contains cryptographic features and is subject to United
+States and local country laws governing import, export, transfer and
+use. Delivery of Cisco cryptographic products does not imply
+third-party authority to import, export, distribute or use encryption.
+Importers, exporters, distributors and users are responsible for
+compliance with U.S. and local country laws. By using this product you
+agree to comply with applicable laws and regulations. If you are unable
+to comply with U.S. and local laws, return this product immediately.
+
+A summary of U.S. laws governing Cisco cryptographic products may be found at:
+http://www.cisco.com/wwl/export/crypto/tool/stqrg.html
+
+If you require further assistance please contact us by sending email to
+export@cisco.com.
+
+
+This product contains some software licensed under the
+"GNU General Public License, version 2" provided with
+ABSOLUTELY NO WARRANTY under the terms of
+"GNU General Public License, version 2", available here:
+http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+
+
+This product contains some software licensed under the
+"GNU Library General Public License, version 2" provided
+with ABSOLUTELY NO WARRANTY under the terms of "GNU Library
+General Public License, version 2", available here:
+http://www.gnu.org/licenses/old-licenses/lgpl-2.0.html
+
+
+This product contains some software licensed under the
+"GNU Lesser General Public License, version 2.1" provided
+with ABSOLUTELY NO WARRANTY under the terms of "GNU Lesser
+General Public License, version 2.1", available here:
+http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+
+This product contains some software licensed under the
+"GNU General Public License, version 3" provided with
+ABSOLUTELY NO WARRANTY under the terms of
+"GNU General Public License, Version 3", available here:
+http://www.gnu.org/licenses/gpl.html.
+
+
+This product contains some software licensed under the
+"GNU Affero General Public License, version 3" provided
+with ABSOLUTELY NO WARRANTY under the terms of
+"GNU Affero General Public License, version 3", available here:
+http://www.gnu.org/licenses/agpl-3.0.html.
+
+[  OK  ] Created slice -.slice.
+[  OK  ] Reached target Timers.
+[  OK  ] Listening on Delayed Shutdown Socket.
+[  OK  ] Reached target Sockets.
+[  OK  ] Reached target Cisco File Systems (Pre).
+[  OK  ] Created slice system.slice.
+[  OK  ] Created slice system-serial\x2dgetty.slice.
+[  OK  ] Reached target Slices.
+         Starting Cisco UBIFS reformat/mount...
+[*01/01/1970 00:00:41.2991] root: Cisco Axel file system mounting
+[  OK  ] Created slice system-sshd\x2dkeygen.slice.
+[  OK  ] Started Cisco UBIFS reformat/mount.
+         Starting Cisco early mount...
+[  OK  ] Started Cisco early mount.
+[  OK  ] Reached target Local File Systems (Pre).
+         Starting Cisco seed generation...
+         Starting Cisco platform file generation...
+         Starting Cisco fips check...
+         Starting Cisco system time setup...
+[*01/21/2020 23:59:59.0144] GCM-128 POST passed
+[*01/21/2020 23:59:59.0144] GCM-256 POST passed
+[*01/21/2020 23:59:59.0187] Last reload time: Jun 12 02:22:27 2024
+[*06/12/2024 02:22:27.0005] Setting system time Wed Jun 12 02:22:27 UTC 2024
+[  OK  ] Started Cisco seed generation.
+[  OK  ] Started Cisco fips check.
+[  OK  ] Started Cisco system time setup.
+[  OK  ] Started Cisco platform file generation.
+         Starting qrtr service...
+[  OK  ] Reached target Local File Systems.
+         Starting Cisco pkg install service...
+         Starting Cisco act2 check...
+[  OK  ] Started Cisco system time saving.
+         Starting Cisco system time saving...
+         Starting Cisco S10 boot service...
+[  OK  ] Started qrtr service.
+[06/12/2024 02:22:33.2099] audit_printk_skb: 45 callbacks suppressed
+[  OK  ] Started Cisco pkg install service.
+[06/12/2024 02:22:27.2199] audit: audit_lost=16 audit_rate_limit=0 audit_backlog_limit=64
+[06/12/2024 02:22:27.2199] audit: printk limit exceeded
+[  OK  ] Started Cisco act2 check.
+[  OK  ] Started Cisco S10 boot service.
+         Starting Cisco nss service...
+         Starting Cisco nolan service...
+         Starting Cisco watchdog...[06/12/2024 02:22:28.2899] qcom wdt: Set timeout to 32 seconds
+
+[  OK  ] Started Cisco nss service.
+[  OK  ] Started Cisco nolan service.
+[  OK  ] Started Cisco watchdog.
+         Starting Cisco nolan USB service...
+         Starting Cisco Kclick...
+         Starting Cisco S15platform...
+[  OK  ] Started Cisco nolan USB service.
+[  OK  ] Started Cisco pre-PoE negotiation.
+         Starting Cisco pre-PoE negotiation...[06/12/2024 02:22:29.0099] Disabling lock debugging due to kernel taint
+
+[*06/12/2024 02:22:28.4122] 59
+[*06/12/2024 02:22:28.4905] Active version: 17.9.4.27
+[*06/12/2024 02:22:28.4934] Backup version: 17.14.0.79
+[*06/12/2024 02:22:28.7824] ssdk_phy_driver_init[340]:INFO:dev_id = 0, phy_adress = 0, phy_id = 0x31c31c22 phytype  match
+[*06/12/2024 02:22:30.6979] Init NSS DP GMAC6 (base = 0x3a007000)
+[*06/12/2024 02:22:30.8336] NSS firmware 1 booted
+[*06/12/2024 02:22:30.8370] NSS firmware 0 booted
+[*06/12/2024 02:22:31.2863] 254+0 records in
+[*06/12/2024 02:22:31.2864] 254+0 records out
+[*06/12/2024 02:22:31.3092] Found ETH PHY firmware ID=7 Format=7 Type=5
+[*06/12/2024 02:22:32.3419] 11923+0 records in
+[*06/12/2024 02:22:32.3419] 11923+0 records out
+[*06/12/2024 02:22:32.3992] 254+0 records in
+[*06/12/2024 02:22:32.3992] 254+0 records out
+[*06/12/2024 02:22:32.4124]
+[*06/12/2024 02:22:32.4125]
+[*06/12/2024 02:22:32.4125]
+[*06/12/2024 02:22:32.4125]
+[*06/12/2024 02:22:32.4125] Authenticating ACT2 ID:C9130
+[*06/12/2024 02:22:32.4125] Authenticating SN:KWC23410BGY
+[*06/12/2024 02:22:32.4130]
+[*06/12/2024 02:22:32.4130] (ACT2Boot) Hardware is Cisco (c) authentic :-)
+[*06/12/2024 02:22:32.4130]
+[*06/12/2024 02:22:32.4229] Seeding /dev/urandom from ACT2
+[*06/12/2024 02:22:32.4405] Found ETH PHY firmware ID=5 Format=7 Type=5
+[*06/12/2024 02:22:32.7419] Reading ACT2 SUDI certificates
+[*06/12/2024 02:22:33.4720] 11326+0 records in
+[*06/12/2024 02:22:33.4721] 11326+0 records out
+[*06/12/2024 02:22:33.5234] 254+0 records in
+[*06/12/2024 02:22:33.5234] 254+0 records out
+[*06/12/2024 02:22:33.6384] Current value of FACTORY_RESET=0
+[*01/21/2020 23:59:59.0137] Last reload time: Jun 12 02:22:27 2024
+[*06/12/2024 02:22:27.0003] Setting system time Wed Jun 12 02:22:27 UTC 2024
+[*06/12/2024 02:22:27.0126] Initializing wired0 0C:75:BD:B5:FC:D0 interface
+[*06/12/2024 02:22:27.0918] device wired0 entered promiscuous mode
+[*06/12/2024 02:22:27.4966]
+[*06/12/2024 02:22:27.4967] ACT2 Check passed
+[*06/12/2024 02:22:27.4967]
+[*06/12/2024 02:22:27.8540] Last reload reason : 2: Factory Reset
+[*06/12/2024 02:22:29.0450] NTKM - ntkm_init                      - Nitro KM loaded
+[  OK  ] Started Cisco Kclick.
+[  OK  ] Started Cisco S15platform.
+         Starting Cisco certificate create service...
+         Starting Cisco Sku service...
+         Starting Cisco sysctl service...
+         Starting Cisco Kclick...
+[*06/12/2024 02:22:31.8535] Cannot change rx-vlan-offload
+[*06/12/2024 02:22:31.8560] Cannot change tx-vlan-offload
+         Starting Cisco ME service...
+[  OK  ] Started Cisco certificate create service.
+[06/12/2024 02:22:32.2399] audit_printk_skb: 12 callbacks suppressed
+[*06/12/2024 02:22:32.2543] AP type is configured CAPWAP - Not checking MEMODE boot var
+[*06/12/2024 02:22:32.4067] [mhitest][A]: [mhitest_init] --->
+[*06/12/2024 02:22:32.4069] [mhitest][A][  OK  ] Started Cisco Sku service.
+[  OK  ] Started Cisco sysctl service.
+[  OK  ] Started Cisco Kclick.
+[  OK  ] Started Cisco ME service.
+         Starting rsyslog client...
+         Starting Cisco FIPS QCA radio POST...
+         Starting Cisco S16platfomm...
+         Starting Cisco syslog service...
+         Starting Cisco certtime service...
+[  OK  ] Started Tam server.
+         Starting Tam server...
+         Starting Cisco Tam service...
+[  OK  ] Started rsyslog client.
+[  OK  ] Started Cisco FIPS QCA radio POST.
+[  OK  ] Started Cisco S16platfomm.
+[  OK  ] Started Cisco syslog service.
+[  OK  ] Started Cisco Tam service.
+         Starting Cisco synclogd...
+         Starting RHL daemon...
+[06/12/2024 02:22:33.8499] arch_setup_msi_irqs
+[06/12/2024 02:22:33.8499] pcie_create_qgic_msi_irq:pos=0 irq=116, dev->msi[0]=116 116
+[06/12/2024 02:22:33.8799] pcie_create_qgic_msi_irq:pos=1 irq=117, dev->msi[0]=116 117
+[06/12/2024 02:22:33.9699] pcie_create_qgic_msi_irq:pos=2 irq=118, dev->msi[0]=116 118
+[06/12/2024 02:22:34.0699] pcie_create_qgic_msi_irq:pos=3 irq=119, dev->msi[0]=116 119
+[06/12/2024 02:22:34.0699] pcie_create_qgic_msi_irq:pos=4 irq=120, dev->msi[0]=116 120
+[06/12/2024 02:22:34.0699] pcie_create_qgic_msi_irq:pos=5 irq=121, dev->msi[0]=116 121
+[06/12/2024 02:22:34.0699] pcie_create_qgic_msi_irq:pos=6 irq=122, dev->msi[0]=116 122
+[06/12/2024 02:22:34.0699] pcie_create_qgic_msi_irq:pos=7 irq=123, dev->msi[0]=116 123
+[06/12/2024 02:22:34.5299] NXP-RHL-Driver 0000:01:00.0: RHL: AP SKU = 0, pow min,max = -4, 20
+[06/12/2024 02:22:34.5299] , Rx Diversity =0, 6g AP = 0, Ithaca Esku =0
+[06/12/2024 02:22:34.6399] NXP-RHL-Driver 0000:01:00.0: Final VSPA image size val 0xf34000
+[  OK  ] Started Cisco synclogd.
+[*06/12/2024 02:22:33.9439]
+[*06/12/2024 02:22:33.9439] >>>> aq_fw_download /tmp/ethphyfw_0_AQR114C.cld miireg 0
+[*06/12/2024 02:22:33.9439] CRC check good on image file (0x66D4)
+[*06/12/2024 02:22:33.9439] PHYFW:Loading IRAM ...... ...... Done.
+[*06/12/2024 02:22:33.9439] PHYFW:Loading DRAM ...... ...... Done.
+[*06/12/2024 02:22:33.9439] PHYFW Image load good - CRC-16 matches (0xF5A5)
+[*06/12/2024 02:22:33.9439] PHYFW Image loading complete!
+[*06/12/2024 02:22:34.1720] rhl_reset : got minor 53
+[*06/12/2024 02:22:34.8043] V2H call back init
+[*06/12/2024 02:22:34.8043] V2H callback registered
+[*06/12/2024 02:22:34.9512]
+[*06/12/2024 02:22:34.9512]  SSDK Init OK!
+[*06/12/2024 02:22:34.9512] operation done.
+[*06/12/2024 02:22:34.9512]
+[  OK  ] Started RHL daemon.
+[**    ] A start job is running for Cisco certtime service (30s / 2min 14s)[06/12/2024 02:22:48.6999] audit_printk_skb: 39 callbacks suppressed
+[  OK  ] Started Cisco certtime service.
+[  OK  ] Reached target System Initialization.
+[  OK  ] Reached target Paths.
+[  OK  ] Reached target Basic System.
+         Starting RSYNC User Key Generation...
+         Starting capwapd...
+[  OK  ] Started NTP_PROC daemon.
+         Starting NTP_PROC daemon...
+         Starting Cisco image/firmware updater service...
+         Starting Cisco klogd...
+         Starting Sensord daemon...
+         Starting Cisco printkd...
+[*06/12/2024 02:22:38.9686]
+[*06/12/2024 02:22:38.9686] Click sched monitor: schedulers = 2
+[*06/12/2024 02:22:52.2160] starting tam services using ACT2...
+[*06/12/2024 02:22:52.2160]
+[*06/12/2024 02:22:52.2160] TAM init done
+         Starting AP Trace daemon...
+         Starting Security Auditing Service...
+         Starting Cisco rtd service...
+         Starting Cisco kexec...
+         Starting Fast CGI daemon...
+[  OK  ] Started System Monitor service.
+         Starting System Monitor service...
+[  OK  ] Started NSS Firmware Monitor daemon.
+         Starting NSS Firmware Monitor daemon...
+[  OK  ] Started RHL monitor/reset daemon.
+[*06/12/2024 02:22:54.1329] reset device opened
+         Starting RHL monitor/reset daemon...
+         Starting Cisco brain service...
+         Starting WCPD process...
+         Starting Hostapd process...
+         Starting Cisco led service...
+         Starting Clean Air daemon...
+         Starting BLE init service...
+[  OK  ] Started Serial Getty on ttyS0.
+         Starting Serial Getty on ttyS0...
+[  OK  ] Reached target Login Prompts.
+         Starting ME Install Script...
+[  OK  ] Started RSYNC User Key Generation.
+[  OK  ] Started Cisco image/firmware updater service.
+[  OK  ] Started Cisco klogd.
+[  OK  ] Started Cisco printkd.
+[  OK  ] Started Cisco kexec.
+[  OK  ] Started Cisco led service.
+[  OK  ] Started ME Install Script.
+         Starting ntp file watcher...
+[*06/12/2024 02:22:55.6330] No valid NTP source
+[*06/12/2024 02:22:55.6330] No valid ntp server info file. Stop NTP!
+[  OK  ] Reached target sshd-keygen.target.
+         Starting OpenSSH server daemon...
+[  OK  ] Started AP Trace daemon.
+[  OK  ] Started Cisco rtd service.
+[  OK  ] Started Fast CGI daemon.
+[  OK  ] Started OpenSSH server daemon.
+[*06/12/2024 02:22:55.8638] EEPROM Size = 65536
+[*06/12/2024 02:22:55.8638] loading pow table from EEPROM to scratch buf
+[*06/12/2024 02:22:55.8638] 10200 bytes copied from RHL EEPROM to scratch buf
+[*06/12/2024 02:22:56.2480] hostapd:Hostapd: DCDS not [  OK  ] Started Sensord daemon.
+[  OK  ] Started Hostapd process.
+         Starting ntp watcher...
+[*06/12/2024 02:22:56.7442] pid 4329's current affinity mask: f
+                                                               [06/12/2024 02:22:56.7699] subsys-restart: subsys_start(): subsys_start:633, Setting state SUBSYS_ONLINE
+[06/12/2024 02:22:56.7899] cnss[2]: INFO: Waiting for FW ready. Device: 0xfffe, FW ready timeout: 15 seconds
+[06/12/2024 02:22:56.8999] diag: In diag_send_feature_mask_update, control channel is not open, p: 2, ffffffc00114c1a8
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: QMI WLFW service connected, state: 0x1
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: device_id : 65534 mem mode : [0]
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: platform name: Qualcomm Technologies, Inc. IPQ807x/AP-HK02
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: Target capability: chip_id: 0x0, chip_family: 0x0, board_id: 0xff, soc_id: 0xffffffff, fw_version: 0x2405885e, fw_build_timestamp: 2023-07-11 00:20, otp_version: 0x0 eeprom_caldata_read_timeout 0s
+[06/12/2024 02:22:56.9099] cnss_wlfw_bdf_dnld_send_sync:753 LOAD BDF initiated folder:[] bdf_type:[0x5] override:[0x0]
+[06/12/2024 02:22:56.9099] cnss_wlfw_load_bdf:605 LOAD BDF initiated folder:[IPQ8074/] bdf_type:[0x0] override:[0x0]
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: No board_id entry in device tree
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: BDF location : 0x4b0c0000
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: BDF IPQ8074/bdwlan.bin size 131072
+[06/12/2024 02:22:56.9099] cnss_wlfw_bdf_dnld_send_sync:753 LOAD BDF initiated folder:[] bdf_type:[0x6] override:[0x0]
+[06/12/2024 02:22:56.9099] cnss_wlfw_load_bdf:605 LOAD BDF initiated folder:[IPQ8074/] bdf_type:[0x2] override:[0x0]
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: per device BDF location : 0x4b0e0000
+[06/12/2024 02:22:56.9099] cnss[2]: INFO: CALDATA IPQ8074/caldata.bin size 131072 offset 0x20000
+[06/12/2024 02:22:57.0299] cnss[2]: INFO: FW ready received for device 0xfffe
+[06/12/2024 02:22:57.1499] cnss[2]: INFO: Sending mode message, mode: MISSION(0), state: 0x7
+[  OK  ] Started ntp file watcher.
+[*06/12/2024 02:22:57.0390] wlan: [4395:I:ANY] pld_ahb_wlan_enable: cnss_mode: Mission mode
+[*06/12/2024 02:22:57.1669] wlan: [4395:D:dfs] WLAN_DEBUG_DFS1 : dfs_psoc_obj_create_notification: DFS obj attach to psoc successfully
+[*06/12/2024 02:22:57.1672] wlan: [4395:I:ANY] __ol_ath_attach: Booting with Dynamic HW Mode feature enabled
+[*06/12/2024 02:22:57.2091] wlan: [4395:I:ANY] ol_target_init_complete: CDP soc attach success
+[*06/12/2024 02:22:57.2103] wlan: [702:D:dfs] WLAN_DEBUG_DFS_ALWAYS : dfs_agile_soc_obj_init: dfs->dfs_psoc_idx: 0
+[*06/12/2024 02:22:57.2103] wlan: [702:D:dfs] WLAN_DEBUG_DFS_ALWAYS : dfs_agile_soc_obj_init: dfs_soc_obj->num_dfs_privs: 1
+[*06/12/2024 02:22:57.2117] wlan: [702:D:dfs] WLAN_DEBUG_DFS : wlan_dfs_pdev_obj_create_notification: Do not allocate DFS object for 2G, pdev_id = 1
+[*06/12/2024 02:22:57.2129] wlan: [702:D:dfs] WLAN_DEBUG_DFS_ALWAYS : dfs_agile_soc_obj_init: dfs->dfs_psoc_idx: 1
+[*06/12/2024 02:22:57.2129] wlan: [702:D:dfs] WLAN_DEBUG_DFS_ALWAYS : dfs_agile_soc_obj_init: dfs_soc_obj->num_dfs_privs: 2
+[*06/12/2024 02:22:57.2139] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: pdev id:0 wmi_handle:ffffffc07423b400
+[*06/12/2024 02:22:57.2149] wlan: [702:F:DP] dp_rx_enable_mon_dest_frag: Feature DP_RX_MON_MEM_FRAG for mon_dest is disabled
+[*06/12/2024 02:22:57.2218] wlan: [702:I:ANY] dp_rx_pdev_mon_status_buffers_alloc: repleneshing mon status buffers...
+[*06/12/2024 02:22:57.2241] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: Pdev = 0 Number of peers = 418 vdevs = 18
+[*06/12/2024 02:22:57.2243] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: pdev id:1 wmi_handle:ffffffc04c5de000
+[*06/12/2024 02:22:57.2253] wlan: [702:F:DP] dp_rx_enable_mon_dest_frag: Feature DP_RX_MON_MEM_FRAG for mon_dest is disabled
+[*06/12/2024 02:22:57.2321] wlan: [702:I:ANY] dp_rx_pdev_mon_status_buffers_alloc: repleneshing mon status buffers...
+[*06/12/2024 02:22:57.2345] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: Pdev = 1 Number of peers = 418 vdevs = 18
+[*06/12/2024 02:22:57.2347] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: pdev id:2 wmi_handle:ffffffc046028000
+[*06/12/2024 02:22:57.2358] wlan: [702:F:DP] dp_rx_enable_mon_dest_frag: Feature DP_RX_MON_MEM_FRAG for mon_dest is disabled
+[*06/12/2024 02:22:57.2426] wlan: [702:I:ANY] dp_rx_pdev_mon_status_buffers_alloc: repleneshing mon status buffers...
+[*06/12/2024 02:22:57.2453] wlan: [702:I:ANY] init_deinit_update_pdev_tgt_info: Pdev = 2 Number of peers = 418 vdevs = 18
+[*06/12/2024 02:22:57.3460] wlan: [702:I:ANY] copy_fw_abi_version_tlv: copy_fw_abi_version_tlv: INIT_CMD version: 1, 0, 0x5f414351, 0x4c4d, 0x0, 0x0
+[*06/12/2024 02:22:57.6046] wlan: [702:I:ANY] dp_peer_map_attach_wifi3: dp_peer_map_attach_wifi3 max_peers 1325, max_ast_index: 4112
+[*06/12/2024 02:22:57.6046]
+[*06/12/2024 02:22:57.6064] wlan: [4395:I:ANY] ol_ath_update_wireless_modes: Wireless_modes = 391f9001 after update
+[*06/12/2024 02:22:57.6067] wlan: [4395:I:ANY] acfg_attach: acfg_attach: 4594: Netlink socket created:ffffffc0489eb000
+[*06/12/2024 02:22:57.6080] wlan: [4395:I:ANY] ol_ath_configure_cong_ctrl_max_msdus: pdev_idx = 0 tx_desc_limit = 32768
+[*06/12/2024 02:22:57.6082] wlan: [0:I:ANY] ol_ath_twt_enable_complete_event_handler: twt enabled
+[*06/12/2024 02:22:57.6100] wlan: [4395:I:ANY] ol_ath_update_wireless_modes: Wireless_modes = 680680c after update
+[*06/12/2024 02:22:57.6101] wlan: [4395:I:ANY] ol_ath_pdev_regdmn_init: LDPC not supported in 5G HE CAP
+[*06/12/2024 02:22:57.6109] wlan: [0:I:ANY] ol_ath_twt_enable_complete_event_handler: twt enabled
+[*06/12/2024 02:22:57.6111] wlan: [4395:I:ANY] ol_ath_configure_cong_ctrl_max_msdus: pdev_idx = 1 tx_desc_limit = 32768
+[*06/12/2024 02:22:57.6111] wlan: [4395:I:ANY] wlan_cfg80211_init: Number of 2G channels: 11
+[*06/12/2024 02:22:57.6130] wlan: [4395:I:ANY] ol_ath_update_wireless_modes: Wireless_modes = 391f9001 after update
+[*06/12/2024 02:22:57.6145] wlan: [0:I:ANY] ol_ath_twt_enable_complete_event_handler: twt enabled
+[*06/12/2024 02:22:57.6146] wlan: [4395:I:ANY] ol_ath_configure_cong_ctrl_max_msdus: pdev_idx = 2 tx_desc_limit = 32768
+[*06/12/2024 02:22:57.6155] wlan: [4395:E:QLD] qld_register: Handle or address is NULL
+[*06/12/2024 02:22:57.6156] wlan: [4395:I:ANY] init_ath_pci_3_0: 6ath_ol_pci_wifi3.0 :  (Atheros/multi-bss)
+[*06/12/2024 02:22:59.4209] EEPROM Size = 65536
+[*06/12/2024 02:22:59.4209] loading trx table from EEPROM to DTCM
+[*06/12/2024 02:22:59.4209] 24480 bytes copied from RHL EEPROM to DTCM
+[*06/12/2024 02:22:59.4209] EEPROM Size = 65536
+[*06/12/2024 02:22:59.4209] loading ro1 table from EEPROM to DTCM
+[*06/12/2024 02:22:59.4209] 12240 bytes copied from RHL EEPROM to DTCM
+[*06/12/2024 02:22:59.4209] EEPROM Size = 65536
+[*06/12/2024 02:22:59.4209] loading ro2 table from EEPROM to DTCM
+[*06/12/2024 02:22:59.4209] 12240 bytes copied from RHL EEPROM to DTCM
+[*06/12/2024 02:23:00.2526] wlan: [5140:E:CMN_MLME] mlme_ext_vap_setup: Mesh vap not supported by this radio!!
+[*06/12/2024 02:23:00.2526] wlan: [5140:E:CMN_MLME] mlme_ext_vap_create_pre_init: Unable to setup vap params
+[*06/12/2024 02:23:00.2526] wlan: [5140:E:CMN_MLME] mlme_ext_vap_create: failed to create a vap object
+[*06/12/2024 02:23:00.2526] wlan: [5140:I:ANY] wlan_vap_create: failed to create a vap object
+[*06/12/2024 02:23:00.2526]
+[*06/12/2024 02:23:00.2526] wlan: [5140:E:CMN_MLME] mlme_vdev_ext_obj_create:  VDEV MLME legacy obj creation failed
+[*06/12/2024 02:23:00.2527] wlan: [5140:E:CMN_MLME] mlme_vdev_obj_create_handler: Legacy vdev object creation failed
+[*06/12/2024 02:23:00.2527] wlan: [5140:I:ANY] osifp_create_wlan_vap: VDEV (creation) failed
+[*06/12/2024 02:23:00.2527] wlan: [5140:I:ANY] osif_create_vap: wlan vap failed
+[*06/12/2024 02:23:00.2527]
+[*06/12/2024 02:23:00.2527] wlan: [5140:I:ANY] wlan_cfg80211_add_virtual_intf: Failed to create VAP. osif_create_vap returned NULL!
+[*06/12/2024 02:23:00.8629] wlan: [5557:E:CMN_MLME] mlme_ext_vap_setup: Mesh vap not supported by this radio!!
+[*06/12/2024 02:23:00.8629] wlan: [5557:E:CMN_MLME] mlme_ext_vap_create_pre_init: Unable to setup vap params
+[*06/12/2024 02:23:00.8629] wlan: [5557:E:CMN_MLME] mlme_ext_vap_create: failed to create a vap object
+[*06/12/2024 02:23:00.8629] wlan: [5557:I:ANY] wlan_vap_create: failed to create a vap object
+[*06/12/2024 02:23:00.8629]
+[*06/12/2024 02:23:00.8629] wlan: [5557:E:CMN_MLME] mlme_vdev_ext_obj_create:  VDEV MLME legacy obj creation failed
+[*06/12/2024 02:23:00.8629] wlan: [5557:E:CMN_MLME] mlme_vdev_obj_create_handler: Legacy vdev object creation failed
+[*06/12/2024 02:23:00.8630] wlan: [5557:I:ANY] osifp_create_wlan_vap: VDEV (creation) failed
+[*06/12/2024 02:23:00.8630] wlan: [5557:I:ANY] osif_create_vap: wlan vap failed
+[*06/12/2024 02:23:00.8630]
+[*06/12/2024 02:23:00.8630] wlan: [5557:I:ANY] wlan_cfg80211_add_virtual_intf: Failed to create VAP. osif_create_vap returned NULL!
+[*06/12/2024 02:23:01.4747] wlan: [5968:E:CMN_MLME] mlme_ext_vap_setup: Mesh vap not supported by this radio!!
+[*06/12/2024 02:23:01.4747] wlan: [5968:E:CMN_MLME] mlme_ext_vap_create_pre_init: Unable to setup vap params
+[*06/12/2024 02:23:01.4747] wlan: [5968:E:CMN_MLME] mlme_ext_vap_create: failed to create a vap object
+[*06/12/2024 02:23:01.4747] wlan: [5968:I:ANY] wlan_vap_create: failed to create a vap object
+[*06/12/2024 02:23:01.4747]
+[*06/12/2024 02:23:01.4748] wlan: [5968:E:CMN_MLME] mlme_vdev_ext_obj_create:  VDEV MLME legacy obj creation failed
+[*06/12/2024 02:23:01.4748] wlan: [5968:E:CMN_MLME] mlme_vdev_obj_create_handler: Legacy vdev object creation failed
+[*06/12/2024 02:23:01.4748] wlan: [5968:I:ANY] osifp_create_wlan_vap: VDEV (creation) failed
+[*06/12/2024 02:23:01.4748] wlan: [5968:I:ANY] osif_create_vap: wlan vap failed
+[*06/12/2024 02:23:01.4748]
+[*06/12/2024 02:23:01.4748] wlan: [5968:I:ANY] wlan_cfg80211_add_virtual_intf: Failed to create VAP. osif_create_vap returned NULL!
+[*06/12/2024 02:23:02.6930] chatter: Device wired0 notify up link DOWN
+[*06/12/2024 02:23:03.1029] ip6_port srcr2, ip6local ::, ip6 ::, plen 0, gw6 ::, gw6_mac 00:00:00:00:00:00, mtu 1500, vid 0, mode6 2(slaac)
+[*06/12/2024 02:23:06.6590] chatter: Device wired0 notify state change link UP
+[  OK  ] Started Security Auditing Service.
+[  OK  ] Started Cisco brain service.
+
+[*06/12/2024 02:23:08.4490] device aptrace0 entered promiscuous mode
+[*06/12/2024 02:23:08.5062] pid 6868's current affinity mask: f
+[*06/12/2024 02:23:08.5062] pid 6868's new affinity mask: 3
+[*06/12/2024 02:23:08.5712] ip6_port srcr2, ip6local fe80::c1ea:8599:7a0f:1456, ip6 ::, plen 0, gw6 ::, gw6_mac 00:00:00:00:00:00, mtu 1500, vid 0, mode6 2(slaac)
+[*06/12/2024 02:23:08.6215] chpasswd: password for user changed
+[*06/12/2024 02:23:08.8244] DOT11_TXP[0]:Domain configured: 12 class:E
+
+
+User Access Verification
+Username: [*06/12/2024 02:23:09.2239] DOT11_TXP[0]:Regdb file: /radio_fw/C9130AXI_power_table_mapping.txt
+[*06/12/2024 02:23:09.2280] DOT11_TXP[0]:Domain configured: 12 class:E
+[*06/12/2024 02:23:09.6138] DOT11_TXP[0]:Regdb file: /radio_fw/C9130AXI_power_table_mapping.txt
+[*06/12/2024 02:23:09.6345] DOT11_TXP[0]:Domain configured: 1 class:E
+[*06/12/2024 02:23:09.6982] DOT11_TXP[0]:Regdb file: /radio_fw/C9130AXI_power_table_mapping.txt
+[*06/12/2024 02:23:09.7545] flags value is 0 process ble_init
+[*06/12/2024 02:23:09.9150] USB Device Disconnected from the AP
+[*06/12/2024 02:23:10.0015] Error: Socket open failed
+[*06/12/2024 02:23:10.2031] ethernet_port wired0, ip 20.1.1.1, netmask 255.255.255.0, gw 20.1.1.254, mtu 1500, bcast 20.1.1.255, dns1 0.0.0.0, vid 0, static_ip_failover false, dhcp_vlan_failover false
+[*06/12/2024 02:23:10.3980] Check whether client_ip_table entry need to be cleared 0
+[*06/12/2024 02:23:10.3985] Clearing client entry
+[*06/12/2024 02:23:10.4495] DOT11_DRV[3]: Skip Radio3, driver is not implemented - wcp/RadDrv3 :: Dot11AthDriverNL80211
+[*06/12/2024 02:23:10.4536]
+[*06/12/2024 02:23:10.4536]  Assertion failure radio_id < num_of_radios() in get_wgb_uplink_instance at 1830
+[*06/12/2024 02:23:10.4537] get_wgb_uplink_instance Wrong radio id 2
+[*06/12/2024 02:23:10.4619] DOT11_DRV[1]: vendor_set_slot_capability: slot 1, radio_service_type 1
+[*06/12/2024 02:23:10.4621] DOT11_DRV[1]: Init Radio1
+[*06/12/2024 02:23:10.4808] DOT11_DRV[1]: Stop Radio1 - Begin
+[*06/12/2024 02:23:10.4831] DOT11_DRV[1]: Stop Radio1 - End
+[*06/12/2024 02:23:10.4844] DOT11_DRV[1]: set_channel Channel set to 36
+[*06/12/2024 02:23:10.4870] DOT11_DRV[0]: vendor_set_slot_capability: slot 0, radio_service_type 0
+[*06/12/2024 02:23:10.4871] DOT11_DRV[0]: Init Radio0
+[*06/12/2024 02:23:10.5072] DOT11_DRV[0]: set_channel Channel set to 6
+[*06/12/2024 02:23:10.5091] DOT11_DRV[3]: vendor_set_slot_capability: slot 3, radio_service_type 0
+[*06/12/2024 02:23:10.5101] DOT11_DRV[2]: vendor_set_slot_capability: slot 2, radio_service_type 0
+[*06/12/2024 02:23:10.5102] DOT11_DRV[2]: Init Radio2
+[*06/12/2024 02:23:10.5228] DOT11_DRV[4]: off_channel timeout but no req in progress
+[*06/12/2024 02:23:10.9949] DOT11_DRV[0]: set_channel Channel set to 1
+[*06/12/2024 02:23:10.9999] DOT11_DRV[0]: set_channel Channel set to 1
+[*06/12/2024 02:23:11.0094] DOT11_DRV[0]: Channel set to 1, width 20
+[*06/12/2024 02:23:11.0095] DOT11_DRV[0]: Channel set to 1 skipped
+[*06/12/2024 02:23:11.1057] DOT11_DRV[0]: Channel set to 1, width 20
+[*06/12/2024 02:23:11.1058] DOT11_DRV[0]: Channel set to 1 skipped
+[*06/12/2024 02:23:11.1388] DOT11_DRV[1]: set_channel Channel set to 36
+[*06/12/2024 02:23:11.1525] DOT11_DRV[1]: set_channel Channel set to 36
+[*06/12/2024 02:23:11.1549] DOT11_DRV[1]: Channel set to 36, width 20
+[*06/12/2024 02:23:11.1550] DOT11_DRV[1]: Channel set to 36 skipped
+[*06/12/2024 02:23:11.1733] DOT11_DRV[1]: Channel set to 36, width 20
+[*06/12/2024 02:23:11.1733] DOT11_DRV[1]: Channel set to 36 skipped
+[*06/12/2024 02:23:16.2545] Verify returns 0
+[*06/12/2024 02:23:17.2796] IOT Bootloader Flash Tool 1.4
+[*06/12/2024 02:23:17.2796] Firmware upgrade initiated by ble_init
+[*06/12/2024 02:23:17.2796] ble fw_ver  2.7.22
+[*06/12/2024 02:23:17.2796] Please wait...
+[*06/12/2024 02:23:17.2796] Chip sync ok
+[*06/12/2024 02:23:17.2796] IOT Firmware File Name:  ble_fw_single_2652.hex
+[*06/12/2024 02:23:17.2797] bundled_ver_split [u'2', u'7', u'20']
+[*06/12/2024 02:23:17.2797] FW version is latest. No need to upgrade ....
+[*06/12/2024 02:23:20.7738] AP IPv4 Address updated from 0.0.0.0 to 20.1.1.1
+[*06/12/2024 02:24:26.5497] AP is in good condition, BLE is off
+[*06/12/2024 02:24:26.5497] Set radio wifi0 power 4 antenna chain 4 15 0
+[*06/12/2024 02:24:26.5497] Set radio wifi1 power 4 antenna chain 8 255 0
+[*06/12/2024 02:24:26.5497] Set radio wifi2 power 4 antenna chain 4 15 0
+[*06/12/2024 02:24:26.5497] set_sys_cond_state: condition good state 1
+[*06/12/2024 02:24:35.6495] dtls_init: Use SUDI certificate
+[*06/12/2024 02:24:35.7099]
+[*06/12/2024 02:24:35.7099] CAPWAP State: Init
+[*06/12/2024 02:24:39.7027] Start: RPC thread 2757018512 created.
+[*06/12/2024 02:24:39.7027] PNP:Server not reachable, Start CAPWAP Discovery
+[*06/12/2024 02:24:39.7109]
+[*06/12/2024 02:24:39.7109] CAPWAP State: Discovery
+[*06/12/2024 02:24:39.7120] Got WLC address 100.1.1.101 from DHCP.
+[*06/12/2024 02:24:39.7121] Got WLC address 100.1.1.102 from DHCP.
+[*06/12/2024 02:24:39.7206] Discovery Request sent to 100.1.1.101, discovery type DHCP(2)
+[*06/12/2024 02:24:39.7220] Discovery Request sent to 100.1.1.102, discovery type DHCP(2)
+[*06/12/2024 02:24:39.7230] Discovery Response from 100.1.1.101
+[*06/12/2024 02:24:39.7246] Discovery Request sent to 255.255.255.255, discovery type UNKNOWN(0)
+[*06/12/2024 02:24:39.7246] Discovery Response from 100.1.1.102
+[*06/12/2024 02:24:39.7347]
+[*06/12/2024 02:24:39.7347] CAPWAP State: Discovery
+[*06/12/2024 02:26:17.0001] Started wait dtls timer (60 sec)
+[*06/12/2024 02:26:17.0104]
+[*06/12/2024 02:26:17.0104] CAPWAP State: DTLS Setup
+[*06/12/2024 02:26:17.0237] First connect to vWLC, accept vWLC by default
+[*06/12/2024 02:26:17.0237]
+[*06/12/2024 02:26:17.0273] dtls_verify_server_cert: vWLC is using SSC, returning 1
+[*06/12/2024 02:26:17.4169] sudi99_request_check_and_load: Use HARSA SUDI certificate
+[*06/12/2024 02:26:17.7510]
+[*06/12/2024 02:26:17.7510] CAPWAP State: Join
+[*06/12/2024 02:26:17.7783] shared_setenv PART_BOOTCNT 0 &> /dev/null
+[*06/12/2024 02:26:18.1452] DOT11_CFG[0]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 0 radioFraEnabled 1, radioSubType 0, serviceType 0, radioType 1, bandId 0
+[*06/12/2024 02:26:18.1460] DOT11_CFG[1]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 1 radioFraEnabled 1, radioSubType 0, serviceType 1, radioType 2, bandId 1
+[*06/12/2024 02:26:18.1463] DOT11_CFG[2]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 2 radioFraEnabled 1, radioSubType 5, serviceType 0, radioType 2, bandId 1
+[*06/12/2024 02:26:18.1466] OOBImageDnld: OOB Image Download in ap_cap_bitmask(2)
+[*06/12/2024 02:26:18.1564] Sending Zero Wait DFS capability : 2
+[*06/12/2024 02:26:18.1565] Sending Join request to 100.1.1.102 through port 5256, packet size 1376
+[*06/12/2024 02:26:22.8831] DOT11_CFG[0]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 0 radioFraEnabled 1, radioSubType 0, serviceType 0, radioType 1, bandId 0
+[*06/12/2024 02:26:22.8834] DOT11_CFG[1]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 1 radioFraEnabled 1, radioSubType 0, serviceType 1, radioType 2, bandId 1
+[*06/12/2024 02:26:22.8836] DOT11_CFG[2]: Sending TLV_DOT11_RADIO_TXRX_CAPABILITY slotid 2 radioFraEnabled 1, radioSubType 5, serviceType 0, radioType 2, bandId 1
+[*06/12/2024 02:26:22.8838] OOBImageDnld: OOB Image Download in ap_cap_bitmask(2)
+[*06/12/2024 02:26:22.8935] Sending Zero Wait DFS capability : 2
+[*06/12/2024 02:26:22.8936] Sending Join request to 100.1.1.102 through port 5256, packet size 1376
+[*06/12/2024 02:26:22.9027] Join Response from 100.1.1.102, packet size 1397
+[*06/12/2024 02:26:22.9027] AC accepted previous sent request with result code: 0
+[*06/12/2024 02:26:22.9028] Received wlcType 0, timer 30
+[*06/12/2024 02:26:23.0554]
+[*06/12/2024 02:26:23.0555] CAPWAP State: Image Data
+[*06/12/2024 02:26:23.0560] AP image version 17.9.4.27 backup 17.14.0.79, Controller 17.9.4.27
+[*06/12/2024 02:26:23.0562] Version is the same, do not need update.
+[*06/12/2024 02:26:23.1220] status 'upgrade.sh: Script called with args:[NO_UPGRADE]'
+[*06/12/2024 02:26:23.1559] do NO_UPGRADE, part1 is active part
+[*06/12/2024 02:26:23.1813]
+[*06/12/2024 02:26:23.1813] CAPWAP State: Configure
+[*06/12/2024 02:26:23.1876] Telnet is not supported by AP, should not encode this payload
+[*06/12/2024 02:26:23.4024] Radio [2] Administrative state DISABLED  change to DISABLED
+[*06/12/2024 02:26:23.4044] Radio [1] Administrative state DISABLED  change to ENABLED
+[*06/12/2024 02:26:23.4055] Radio [0] Administrative state DISABLED  change to ENABLED
+[*06/12/2024 02:26:23.4101] DOT11_CFG[0]: Starting radio 0
+[*06/12/2024 02:26:23.4107] DOT11_DRV[0]: Start Radio0 - Begin
+[*06/12/2024 02:26:23.4123] DOT11_DRV[0]: Start Radio0 - End
+[*06/12/2024 02:26:23.5789] wlan: [0:I:CMN_MLME] mlme_ext_vap_up: VAP (mon0) is up
+[*06/12/2024 02:26:23.6958]
+[*06/12/2024 02:26:23.6958] CAPWAP State: Run
+sensord psage_base init: RHB Sage base ptr 29030000
+[*06/12/2024 02:26:23.7923] AP has joined controller qytwlc2
+[*06/12/2024 02:26:23.8649] wlan: [0:I:CMN_MLME] mlme_ext_vap_down: VAP (mon0) is down
+[*06/12/2024 02:26:23.8844] DOT11_DRV[2]: Failure to set band steer min RSSI 80 to VAP
+[*06/12/2024 02:26:23.8911] DOT11_DRV[0]: Stop Radio0 - Begin
+[*06/12/2024 02:26:23.8958] DOT11_DRV[0]: Stop Radio0 - End
+[*06/12/2024 02:26:23.8964] DOT11_DRV[0]: Start Radio0 - Begin
+[*06/12/2024 02:26:23.8975] DOT11_DRV[0]: Start Radio0 - End
+[*06/12/2024 02:26:24.0363] wlan: [0:I:CMN_MLME] mlme_ext_vap_down: VAP (mon0) is down
+[*06/12/2024 02:26:24.0401] Previous AP mode is 0, change to 0
+[*06/12/2024 02:26:24.0454] wlan: [0:I:CMN_MLME] mlme_ext_vap_up: VAP (mon0) is up
+[*06/12/2024 02:26:24.0557] Current session mode: ssh, Configured: Telnet-No, SSH-No, Console-Yes
+[*06/12/2024 02:26:24.0557]
+[*06/12/2024 02:26:24.0606] Current session mode: telnet, Configured: Telnet-No, SSH-No, Console-Yes
+[*06/12/2024 02:26:24.0606]
+[*06/12/2024 02:26:24.0615] Current session mode: console, Configured: Telnet-No, SSH-No, Console-Yes
+[*06/12/2024 02:26:24.0615]
+[*06/12/2024 02:26:24.0699] Password from WLC looks to be MD5 encoded..
+[*06/12/2024 02:26:24.0962] chpasswd: password for user changed
+[*06/12/2024 02:26:24.1797]
+[*06/12/2024 02:26:24.1797] Same LSC mode, no action needed
+[*06/12/2024 02:26:24.1819] CLSM[00:00:00:00:00:00]: U3 Client RSSI Stats feature is deprecated; can no longer be enabled
+[*06/12/2024 02:26:24.3058] nssmgrctl | setup_tunnel: Replace existing tunnel 0
+[*06/12/2024 02:26:24.3694] AP is in good condition, BLE is off
+[*06/12/2024 02:26:25.1765] Set radio wifi0 power 4 antenna chain 4 15 0
+sensord split_glue psage_base: RHB Sage base ptr 29030000
+sensord split_glue sage_addr: RHB Sage base ptr 29030000
+[*06/12/2024 02:26:25.7100] Set radio wifi1 power 4 antenna chain 8 255 0
+[*06/12/2024 02:26:26.2202] Set radio wifi2 power 4 antenna chain 4 15 0
+[*06/12/2024 02:26:26.4717] set_sys_cond_state: condition good state 1
+sensord crim: RHB Sage base ptr 29030000
+[*06/12/2024 02:26:26.7979] Got WSA Server config TLVs
+[*06/12/2024 02:26:28.0888] AP tag  change to default-policy-tag
+[*06/12/2024 02:26:30.0909] DOT11_DRV[1]: vendor_set_DFS_precac Received payload type 1 numChannels 0
+[*06/12/2024 02:26:30.0909] DOT11_DRV[1]:
+[*06/12/2024 02:27:01.1500] set cleanair [slot0][band0] enabled
+[*06/12/2024 02:27:01.1612] set cleanair [slot1][band1] enabled
+[*06/12/2024 02:27:02.2864] CLEANAIR: Slot 0 enabled
+[*06/12/2024 02:27:05.7050] CLEANAIR: Slot 0 config change
+[*06/12/2024 02:27:05.7056] CLEANAIR: Slot 1 channel change chk
+[*06/12/2024 02:27:20.0365] Warning: Stopping dbg_day0_bundle.service, but it can still be activated by:
+[*06/12/2024 02:27:20.0366]   dbg_day0_bundle.timer
+[*06/12/2024 02:27:21.9388] CLEANAIR: Slot 0 enabled

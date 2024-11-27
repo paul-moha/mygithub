@@ -1,0 +1,168 @@
+### 最基础配置(配置完毕后需要确认interface vlan 100是否up up,如果有问题可能需要把Gi2口shutdown/no shutdown)
+```shell
+hostname qytwlc2
+ip name-server 10.1.1.102
+ip domain name qytwireless.com
+clock timezone GMT +8
+clock calendar-valid
+ntp server ntp.aliyun.com
+ntp server 10.1.1.102
+!
+interface gigabitEthernet 1
+  ip address 10.1.1.51 255.255.255.0
+  no shutdown
+!
+interface gigabitEthernet 2
+  shutdown
+  switchport mode trunk
+  switchport trunk allowed vlan 1,20,30,100 
+  no shutdown
+!
+vlan 100
+  name MGMT_VLAN_100
+!
+inter vlan 100
+  ip address 100.1.1.102 255.255.255.0
+!
+username admin privilege 15 secret Cisc0123
+!
+wireless management interface Vlan 100
+!
+ip route 0.0.0.0 0.0.0.0 100.1.1.254
+!
+ip http timeout-policy idle 600 life 86400 requests 25
+ip http session-idle-timeout 1200
+!
+ap tri-radio
+
+```
+
+### 手动设置时间(EXEC模式)
+```shell
+clock set 10:00:00 27 may 2024
+```
+
+### 产生WLC用于AP注册的证书(EXEC模式)[一定要确认Vlan 100 up up]
+```shell
+wireless config vwlc-ssc key-size 2048 signature-algo sha256 password 0 Cisc0123
+
+```
+
+### 配置Virtual IP
+```shell
+parameter-map type webauth global
+yes
+virtual-ip ipv4 192.0.2.1
+exit
+access-session mac-move deny
+
+```
+
+### 导入WEB管理证书
+```shell
+crypto pki import WLC_TP pkcs12 terminal password Cisc0123
+
+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
+IvP4GlggBHDos/kECEwr0/5KurDeAgIIAA==
+
+
+ip http secure-trustpoint WLC_TP
+
+crypto pki trustpoint WLC_TP
+  revocation-check none
+
+```
+
+### 修改国家代码
+```shell
+ap dot11 24ghz shutdown
+
+ap dot11 5ghz shutdown
+
+ap dot11 6ghz shutdown
+
+wireless country CN
+ap dot11 24ghz cac voice acm
+ap dot11 5ghz cac voice acm
+ap dot11 6ghz cac voice acm
+
+no ap dot11 24ghz shutdown
+no ap dot11 5ghz shutdown
+no ap dot11 6ghz shutdown
+
+```
