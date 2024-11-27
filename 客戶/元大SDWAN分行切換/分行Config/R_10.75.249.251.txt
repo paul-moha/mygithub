@@ -1,0 +1,3537 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2024.04.23 11:06:49 =~=~=~=~=~=~=~=~=~=~=~=
+ter len 0
+R_10.75.249.251#show run
+Building configuration...
+
+Current configuration : 102613 bytes
+!
+! Last configuration change at 09:54:54 TWN Wed Apr 17 2024 by netadmin8
+! NVRAM config last updated at 09:55:09 TWN Wed Apr 17 2024 by netadmin8
+!
+version 16.9
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+no service dhcp
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname R_10.75.249.251
+!
+boot-start-marker
+boot system flash bootflash:/asr1001x-universalk9.16.09.06.SPA.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging buffered 102400
+enable secret 5 $1$Au4b$4VlqNR4U3B6lW0lE9qB8L0
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ Auth
+ server 10.75.206.72
+!
+aaa authentication login default group Auth local
+aaa authentication login CONSOLE none
+aaa authorization commands 1 default group Auth local 
+aaa authorization commands 1 CONSOLE none 
+aaa authorization commands 15 default group Auth local 
+aaa authorization commands 15 CONSOLE none 
+aaa accounting commands 1 default start-stop group Auth
+aaa accounting commands 15 default start-stop group Auth
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone TWN 8 0
+no ip source-route
+!
+!
+!
+!
+!
+!
+!
+no ip bootp server
+no ip domain lookup
+ip domain name yuantabank.com
+!
+!
+!
+login on-failure log
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid ASR1001-X sn JAE195307FF
+no license smart enable
+!
+spanning-tree extend system-id
+diagnostic bootup level minimal
+!
+!
+!
+username admin secret 5 $1$DEq1$D3YGyKUdq07Vn290FWJYj/
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+!
+track 193 ip sla 71193 reachability
+ delay down 60 up 60
+!
+track 221 ip sla 71221 reachability
+ delay down 60 up 60
+!
+track 231 ip sla 71231 reachability
+ delay down 60 up 60
+!
+track 247 ip sla 71247 reachability
+ delay down 60 up 60
+!
+track 731 ip sla 71731 reachability
+ delay down 60 up 60
+!
+track 747 ip sla 71747 reachability
+ delay down 60 up 60
+!
+cdp run
+!
+class-map match-all voice
+ match access-group 10
+!
+policy-map NG50M
+ class class-default
+  shape average 49500000   
+policy-map NG8M
+ class class-default
+  shape average 7920000   
+policy-map voice
+ class voice
+  police 300000 conform-action transmit  exceed-action drop 
+policy-map NG20M
+ class class-default
+  shape average 19800000   
+policy-map NG10M
+ class class-default
+  shape average 9900000   
+policy-map NG30M
+ class class-default
+  shape average 29800000   
+policy-map NG4M
+ class class-default
+  shape average 3960000   
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 10.75.255.2 255.255.255.255
+!
+interface Loopback1
+ ip address 10.75.255.5 255.255.255.255
+!
+interface Loopback2
+ ip address 10.75.255.6 255.255.255.255
+!
+interface Port-channel1
+ description SW3850_10.75.249.241:PO3
+ ip address 10.75.249.251 255.255.255.0
+ no ip redirects
+ no ip proxy-arp
+ no negotiation auto
+ hold-queue 150 in
+!
+interface Tunnel1
+ description "Monitor the ChenDe_Core_SW Gi1/0/24 & Tunnel1"
+ ip unnumbered GigabitEthernet0/0/2
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.71.254.1
+ tunnel destination 10.71.254.2
+!
+interface Tunnel2
+ description "Monitor the ChenDe_Core_SW Gi3/0/24 & Tunnel3"
+ ip unnumbered GigabitEthernet0/0/3
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.71.254.5
+ tunnel destination 10.71.254.6
+!
+interface Tunnel3
+ description Connect To NODE0080-A Tunnel2 ** Lease Line : 227D-70449 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.8
+!
+interface Tunnel4
+ description Connect To NODE0080-A Tunnel3 ** ADSL : 02-29710591 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.8
+!
+interface Tunnel5
+ description Connect To NODE0091-A Tunnel2 ** Lease Line : 227E-87857 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.9
+!
+interface Tunnel6
+ description Connect To NODE0091-A Tunnel3 ** ADSL : 03-2812179 **
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.9
+!
+interface Tunnel7
+ description Connect To NODE0161-A Tunnel2 ** Lease Line : 227E-87858 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.16
+!
+interface Tunnel8
+ description Connect To NODE0161-A Tunnel3 ** ADSL : 03-5153615 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.16
+!
+interface Tunnel9
+ description Connect To NODE0220-A Tunnel2 ** Lease Line : 227D-70451 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.22
+!
+interface Tunnel10
+ description Connect To NODE0220-A Tunnel3 ** ADSL : 02-29237862 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.22
+!
+interface Tunnel11
+ description Connect To NODE0345-A Tunnel2 ** Lease Line : 227E-87859 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.34
+!
+interface Tunnel12
+ description Connect To NODE0345-A Tunnel3 ** ADSL : 03-3121892 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.34
+!
+interface Tunnel13
+ description Connect To R_10.71.36.252_A Tunnel2 ** Lease Line : 223D-66633 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.36
+!
+interface Tunnel14
+ description Connect To R_10.71.36.252_A Tunnel3 ** FTTB : 223-YV003493 **
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.36
+!
+interface Tunnel17
+ description Connect To NODE03894-A Tunnel2 ** Lease Line : 227E-87856 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.38
+!
+interface Tunnel18
+ description Connect To NODE03894-A Tunnel3 ** ADSL : 03-4277894 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.38
+!
+interface Tunnel19
+ description Connect To NODE0334-A Tunnel2 ** Lease Line : 227D-71602 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.33
+!
+interface Tunnel20
+ description Connect To NODE0334-A Tunnel3 ** ADSL : 02-28377893 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.33
+!
+interface Tunnel21
+ description Connect To NODE0493-A Tunnel2 ** Lease Line : 227E-87860 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.49
+!
+interface Tunnel22
+ description Connect To NODE0493-A Tunnel3 ** ADSL : 03-3348681 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.49
+!
+interface Tunnel23
+ description Connect To NODE0585-A Tunnel2 ** Lease Line : 227D-70456 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.58
+!
+interface Tunnel24
+ description Connect To NODE0585-A Tunnel3 ** ADSL : 02-26576486 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.58
+!
+interface Tunnel25
+ description Connect To NODE0622-A Tunnel2 ** Lease Line : 227E-83453 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.62
+!
+interface Tunnel26
+ description Connect To NODE0622-A Tunnel3 ** ADSL : 03-3971544 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.62
+!
+interface Tunnel27
+ description Connect To NODE0633-A Tunnel2 ** Lease Line : 227E-87862 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.63
+!
+interface Tunnel28
+ description Connect To NODE0633-A Tunnel3 ** ADSL : 03-6581468 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.63
+!
+interface Tunnel29
+ description Connect To NODE0150-A Tunnel2 ** Lease Line : 223D-66629 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.15
+!
+interface Tunnel30
+ description Connect To NODE0150-A Tunnel3 ** ADSL : 02-29353890 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.15
+!
+interface Tunnel31
+ description Connect To NODE0596-A Tunnel2 ** Lease Line : 227E-87863 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 3 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.59
+!
+interface Tunnel32
+ description Connect To NODE0596-A Tunnel3 ** ADSL : 03-9562900 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.59
+!
+interface Tunnel33
+ description Connect To NODE0482-A Tunnel2 ** Lease Line : 227D-69532 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.48
+!
+interface Tunnel34
+ description Connect To NODE0482-A Tunnel3 ** ADSL : 02-22573557 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.48
+!
+interface Tunnel39
+ description Connect To NODE0839-A Tunnel2 ** Lease Line : 227D-71862 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.83
+!
+interface Tunnel40
+ description Connect To NODE0839-A Tunnel3 ** ADSL : 02-22404993 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.83
+!
+interface Tunnel41
+ description Connect To NODE0873-A Tunnel2 ** Lease Line : 227D-72030 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.87
+!
+interface Tunnel42
+ description Connect To NODE0873-A Tunnel3 ** FTTB : 297YV-000047 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.87
+!
+interface Tunnel43
+ description Connect To NODE0884-A Tunnel2 ** Lease Line : 227D-72031 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.88
+!
+interface Tunnel44
+ description Connect To NODE0884-A Tunnel3 ** ADSL : 02-27094332 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.88
+!
+interface Tunnel45
+ description Connect To NODE0840-A Tunnel2 ** Lease Line : 227D-72236 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.84
+!
+interface Tunnel46
+ description Connect To NODE0840-A Tunnel3 ** ADSL : 02-25173854 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.84
+!
+interface Tunnel47
+ description Connect To NODE0862-A Tunnel2 ** Lease Line : 227D-72414 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.86
+!
+interface Tunnel48
+ description Connect To NODE0862-A Tunnel3 ** ADSL : 02-28724751 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.86
+!
+interface Tunnel49
+ description Connect To NODE0895-A Tunnel2 ** Lease Line : 227D-72391 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.89
+!
+interface Tunnel50
+ description Connect To NODE0895-A Tunnel3 ** ADSL : 02-25416971 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.89
+!
+interface Tunnel51
+ description Connect To NODE0851-A Tunnel2 ** Lease Line : 227E-88338 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.85
+!
+interface Tunnel52
+ description Connect To NODE0851-A Tunnel3 ** ADSL : 03-5774751 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.85
+!
+interface Tunnel53
+ description Connect To NODE0909-A Tunnel2 ** Lease Line : 227D-72541 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.90
+!
+interface Tunnel54
+ description Connect To NODE0909-A Tunnel3 ** ADSL : 02-27193498 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.90
+!
+interface Tunnel55
+ description Connect To Node1098 Tunnel2 ** Lease Line : 223D-66895 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.123
+!
+interface Tunnel56
+ description Connect To Node1098-R Tunnel3 ** ADSL : 02-XXXXXXX**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.123
+!
+interface Tunnel57
+ description Connect To NODE0910-A Tunnel2 ** Lease Line : 227D-72624 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.91
+!
+interface Tunnel58
+ description Connect To NODE0910-A Tunnel3 ** ADSL : 02-89145326 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.91
+!
+interface Tunnel59
+ description Connect To NODE0932-A Tunnel2 ** Lease Line : 227D-72800 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.93
+!
+interface Tunnel60
+ description Connect To NODE0910-A Tunnel3 ** ADSL : 02-87864660 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.93
+!
+interface Tunnel61
+ description Connect To NODE0943-A Tunnel2 ** Lease Line : 227E-88215 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.94
+!
+interface Tunnel62
+ description Connect To NODE0943-A Tunnel3 ** ADSL : 03-3348131 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.94
+!
+interface Tunnel63
+ description Connect To NODE0965-A Tunnel2 ** Lease Line : 227E-88408 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.96
+!
+interface Tunnel64
+ description Connect To NODE0965-A Tunnel3 ** ADSL : 03-8328893 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.96
+!
+interface Tunnel65
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.21
+!
+interface Tunnel66
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.21
+!
+interface Tunnel69
+ description Connect To NODE0998-A Tunnel2 ** Lease Line : 227D-77276 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.99
+!
+interface Tunnel70
+ description Connect To NODE0998-A Tunnel3 ** ADSL : 02-27775795 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.99
+!
+interface Tunnel71
+ description Connect To NODE0415-A Tunnel2 ** Lease Line : 227D-70455 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.41
+ service-policy input voice
+ service-policy output voice
+!
+interface Tunnel72
+ description Connect To NODE0415-A Tunnel3 ** ADSL : 02-23756468 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.41
+!
+interface Tunnel73
+ description Connect To Node1009 Tunnel2 ** Lease Line : 227D-77817 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.100
+!
+interface Tunnel74
+ description Connect To Node1009 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.100
+!
+interface Tunnel77
+ description Connect To Node1021-R Tunnel2 ** Lease Line : 223D-66791 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.102
+!
+interface Tunnel78
+ description Connect To Node1021-R Tunnel3 ** ADSL : 02-25509637**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.102
+!
+interface Tunnel79
+ description Connect To Node1032 Tunnel2 ** Lease Line : 223D-66783 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.103
+!
+interface Tunnel80
+ description Connect To Node1032-R Tunnel3 ** ADSL : 02-87859340**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.103
+!
+interface Tunnel81
+ description Connect To Node1043 Tunnel2 ** Lease Line : 223D-66784 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.104
+!
+interface Tunnel82
+ description Connect To Node1043-R Tunnel3 ** ADSL : 02-27554655**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.104
+!
+interface Tunnel83
+ description Connect To Node1227-R Tunnel2 ** Lease Line : 223D-67025 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.122
+!
+interface Tunnel84
+ description Connect To Node1227-R Tunnel3 ** ADSL : 02-25501721**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.122
+!
+interface Tunnel85
+ description Connect To Node1065-R Tunnel2 ** Lease Line : 223D-67039 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.121
+!
+interface Tunnel86
+ description Connect To Node1065-R Tunnel3 ** ADSL : 02-28958791**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.121
+!
+interface Tunnel87
+ description Connect To Node1076 Tunnel2 ** Lease Line : 223D-66785 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.107
+!
+interface Tunnel88
+ description Connect To Node1076-R Tunnel3 ** ADSL :02-29845347 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.107
+!
+interface Tunnel89
+ description Connect To Node1087 Tunnel2 ** Lease Line : 223D-66790 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.108
+!
+interface Tunnel90
+ description Connect To Node1087-R Tunnel3 ** ADSL : 02-29905937**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.108
+!
+interface Tunnel91
+ description Connect To Node1205-R Tunnel2 ** Lease Line : 223D67635 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.120
+!
+interface Tunnel92
+ description Connect To Node1205-R Tunnel3 ** ADSL : 02-XXXXXXX**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.120
+!
+interface Tunnel93
+ description Connect To Node1076 Tunnel2 ** Lease Line : 223D-66785 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.97
+!
+interface Tunnel94
+ description Connect To Node1076-R Tunnel3 ** ADSL :02-29845347 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.97
+!
+interface Tunnel95
+ description Connect To Node1191-R Tunnel2 ** Lease Line : 223E-83233 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.119
+!
+interface Tunnel96
+ description Connect To Node1191-R Tunnel3 ** ADSL : 03-5285805 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.119
+!
+interface Tunnel97
+ description Connect To NODE0378-A Tunnel2 ** Lease Line :  223D67120 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.37
+!
+interface Tunnel98
+ description Connect To NODE0378-A Tunnel3 ** FTTB : 02-22778895 **
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.37
+!
+interface Tunnel101
+ description Connect To Node-1261R Tunnel2 ** Lease Line : 223D-67208 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.126
+!
+interface Tunnel102
+ description Connect To Node-1261R Tunnel3 ** ADSL : 02-29646335**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.126
+!
+interface Tunnel103
+ description Connect To Node1272-R Tunnel2 ** Lease Line : 223D-67228 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.127
+!
+interface Tunnel104
+ description Connect To Node1272-R Tunnel3 ** ADSL : 02-33651915**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.127
+!
+interface Tunnel105
+ description Connect To 10.71.128.254 Tunnel2 ** Lease Line :  223D-67258 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.128
+!
+interface Tunnel106
+ description Connect To 10.71.128.254 Tunnel3 ** ADSL : 02-27066121**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.128
+!
+interface Tunnel71003
+ description Connect To 10.71.3.250 Tunnel2 ** Lease Line : 223D-69198
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.3
+!
+interface Tunnel71123
+ no ip address
+ keepalive 1 3
+!
+interface Tunnel71130
+ description Connect To 10.71.130.250 Tunnel2 ** Lease Line : 223D-67556**
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.130
+!
+interface Tunnel71131
+ description Connect To 10.71.131.250 Tunnel2 ** Lease Line : 223D-67892
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.131
+!
+interface Tunnel71132
+ description Connect To 10.71.132.254 Tunnel2 ** Lease Line : 223D-67899
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.132
+!
+interface Tunnel71133
+ description Connect To R_10.71.133.250 Tunnel2 ** Lease Line : 223D-69196 **
+ ip unnumbered Loopback0
+ ip mtu 1470
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.133
+!
+interface Tunnel71135
+ description Connect To R_10.71.135.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.135
+!
+interface Tunnel71141
+ description Connect To R_10.71.141.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.141
+!
+interface Tunnel71142
+ description Connect To R_10.71.142.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.142
+!
+interface Tunnel71143
+ description Connect To R_10.71.143.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.143
+!
+interface Tunnel71146
+ description Connect To R_10.71.146.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.146
+!
+interface Tunnel71147
+ description Connect To R_10.71.147.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.147
+!
+interface Tunnel71150
+ description Connect To R_10.71.150.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.150
+!
+interface Tunnel71152
+ description Connect To R_10.71.152.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.152
+!
+interface Tunnel71157
+ description Connect To R_10.71.157.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.157
+!
+interface Tunnel71159
+ description Connect To R_10.71.159.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.159
+!
+interface Tunnel71161
+ description Connect To R_10.71.161.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.161
+!
+interface Tunnel71164
+ description Connect To R_10.71.164.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.164
+!
+interface Tunnel71165
+ description Connect To R_10.71.165.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.165
+!
+interface Tunnel71167
+ description Connect To R_10.71.167.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.167
+!
+interface Tunnel71168
+ description Connect To R_10.71.168.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.168
+!
+interface Tunnel71169
+ description Connect To R_10.71.169.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.169
+!
+interface Tunnel71170
+ description Connect To R_10.71.170.252 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.170
+!
+interface Tunnel71173
+ description Connect To R_10.71.173.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.173
+!
+interface Tunnel71175
+ description Connect To R_10.71.175.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.175
+!
+interface Tunnel71176
+ description Connect To R_10.71.176.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.176
+!
+interface Tunnel71177
+ description Connect To R_10.71.177.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.177
+!
+interface Tunnel71178
+ description Connect To R_10.71.178.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.178
+!
+interface Tunnel71188
+ description Connect To R_10.71.188.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.188
+!
+interface Tunnel71189
+ description Connect To R_10.71.189.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.189
+!
+interface Tunnel71192
+ description Connect To R_10.71.192.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.192
+!
+interface Tunnel71193
+ description Connect To R_10.71.193.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.193
+!
+interface Tunnel71194
+ description Connect To R_10.71.194.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.194
+!
+interface Tunnel71196
+ description Connect To R_10.71.196.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.196
+!
+interface Tunnel71197
+ description Connect To R_10.71.197.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.197
+!
+interface Tunnel71198
+ description Connect To R_10.71.198.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.198
+!
+interface Tunnel71201
+ description Connect To R_10.71.201.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.201
+!
+interface Tunnel71202
+ description Connect To R_10.71.202.250 Tunnel2
+ ip unnumbered Loopback0
+ ip tcp adjust-mss 1400
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.202
+!
+interface Tunnel71203
+ description Connect To R_10.71.203.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.203
+!
+interface Tunnel71204
+ description Connect To R_10.71.204.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.204
+!
+interface Tunnel71214
+ description Connect To SW_10.71.214.254 Tunnel2
+ ip unnumbered Loopback0
+ ip tcp adjust-mss 1400
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.214
+!
+interface Tunnel71219
+ description Connect To SW_10.71.219.254 Tunnel2
+ ip unnumbered Loopback0
+ ip tcp adjust-mss 1400
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.219
+!
+interface Tunnel71221
+ description Connect To R_10.71.221.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.221
+!
+interface Tunnel71231
+ description Connect to SW_10.71.231.254 Tunnel71231
+ ip unnumbered GigabitEthernet0/0/4.231
+ ip mtu 1470
+ keepalive 3 3
+ tunnel source 10.71.254.173
+ tunnel destination 10.71.254.174
+!
+interface Tunnel71244
+ description Connect To R_10.71.244.250 Tunnel2
+ ip address 10.71.254.181 255.255.255.252
+ ip mtu 1470
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.244
+!
+interface Tunnel71247
+ description Connect to SW_10.71.247.254 Tunnel71247
+ ip unnumbered GigabitEthernet0/0/4.247
+ ip mtu 1470
+ keepalive 3 3
+ tunnel source 10.71.254.33
+ tunnel destination 10.71.254.34
+!
+interface Tunnel71248
+ description Connect To R_10.71.248.250 Tunnel2
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.71.255.248
+!
+interface Tunnel71503
+ description Connect To 10.71.3.250 Tunnel3 ** ADSL :02-27099626**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.3
+!
+interface Tunnel71623
+ no ip address
+ keepalive 1 3
+!
+interface Tunnel71630
+ description Connect To 10.71.130.250 Tunnel3 ** ADSL : 223-W009013**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.130
+!
+interface Tunnel71631
+ description Connect To 10.71.131.250 Tunnel3 ** ADSL : 2681-W003346**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.131
+!
+interface Tunnel71632
+ description Connect To 10.71.132.254 Tunnel3 ** ADSL : 225-W015284**
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.132
+!
+interface Tunnel71633
+ description Connect To R_10.71.133.250 Tunnel3 ** ADSL : 02-27835942**  
+ ip unnumbered Loopback1
+ ip mtu 1470
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.133
+!
+interface Tunnel71635
+ description Connect To R_10.71.135.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.135
+!
+interface Tunnel71641
+ description Connect To R_10.71.141.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.141
+!
+interface Tunnel71642
+ description Connect To R_10.71.142.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.142
+!
+interface Tunnel71643
+ description Connect To R_10.71.143.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.143
+!
+interface Tunnel71646
+ description Connect To R_10.71.146.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.146
+!
+interface Tunnel71647
+ description Connect To R_10.71.147.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.147
+!
+interface Tunnel71650
+ description Connect To R_10.71.150.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.150
+!
+interface Tunnel71652
+ description Connect To R_10.71.152.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.152
+!
+interface Tunnel71657
+ description Connect To R_10.71.157.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.157
+!
+interface Tunnel71659
+ description Connect To R_10.71.159.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.159
+!
+interface Tunnel71661
+ description Connect To R_10.71.161.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.161
+!
+interface Tunnel71664
+ description Connect To R_10.71.164.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.164
+!
+interface Tunnel71665
+ description Connect To R_10.71.165.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.165
+!
+interface Tunnel71667
+ description Connect To R_10.71.167.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.167
+!
+interface Tunnel71668
+ description Connect To R_10.71.168.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.168
+!
+interface Tunnel71669
+ description Connect To R_10.71.169.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.169
+!
+interface Tunnel71670
+ description Connect To R_10.71.170.252 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.170
+!
+interface Tunnel71673
+ description Connect To R_10.71.173.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.173
+!
+interface Tunnel71675
+ description Connect To R_10.71.175.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.175
+!
+interface Tunnel71676
+ description Connect To R_10.71.176.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.176
+!
+interface Tunnel71677
+ description Connect To R_10.71.177.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.177
+!
+interface Tunnel71678
+ description Connect To R_10.71.178.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.178
+!
+interface Tunnel71688
+ description Connect To R_10.71.188.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.188
+!
+interface Tunnel71689
+ description Connect To R_10.71.189.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.189
+!
+interface Tunnel71692
+ description Connect To R_10.71.192.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.192
+!
+interface Tunnel71693
+ description Connect To R_10.71.193.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.193
+!
+interface Tunnel71694
+ description Connect To R_10.71.194.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.194
+!
+interface Tunnel71696
+ description Connect To R_10.71.196.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.196
+!
+interface Tunnel71697
+ description Connect To R_10.71.197.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.197
+!
+interface Tunnel71698
+ description Connect To R_10.71.198.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.198
+!
+interface Tunnel71701
+ description Connect To R_10.71.201.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.201
+!
+interface Tunnel71702
+ description Connect To R_10.71.202.250 Tunnel3
+ ip unnumbered Loopback1
+ ip tcp adjust-mss 1400
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.202
+!
+interface Tunnel71703
+ description Connect To R_10.71.203.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.203
+!
+interface Tunnel71704
+ description Connect To R_10.71.204.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.204
+!
+interface Tunnel71714
+ description Connect To SW_10.71.214.254 Tunnel3
+ ip unnumbered Loopback1
+ ip tcp adjust-mss 1400
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.214
+!
+interface Tunnel71719
+ description Connect To SW_10.71.219.254 Tunnel3
+ ip unnumbered Loopback1
+ ip tcp adjust-mss 1400
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.219
+!
+interface Tunnel71721
+ description Connect To R_10.71.221.250 Tunnel3
+ ip unnumbered Loopback1
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.221
+!
+interface Tunnel71731
+ description Connect to SW_10.71.231.254 Tunnel71731
+ ip unnumbered GigabitEthernet0/0/5.731
+ ip mtu 1470
+ keepalive 3 3
+ tunnel source 10.71.254.177
+ tunnel destination 10.71.254.178
+!
+interface Tunnel71744
+ description Connect To R_10.71.244.250 Tunnel3
+ ip address 10.71.254.185 255.255.255.252
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.244
+!
+interface Tunnel71747
+ description Connect to SW_10.71.247.254 Tunnel71747
+ ip unnumbered GigabitEthernet0/0/5.747
+ ip mtu 1470
+ keepalive 3 3
+ tunnel source 10.71.254.37
+ tunnel destination 10.71.254.38
+!
+interface Tunnel71748
+ description Connect To R_10.71.248.250 Tunnel3
+ ip unnumbered Loopback1
+ ip tcp adjust-mss 1400
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback1
+ tunnel destination 10.71.251.248
+!
+interface TenGigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface TenGigabitEthernet0/0/1
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ description SW3850_10.75.249.241:G1/0/22
+ no ip address
+ no ip redirects
+ no ip proxy-arp
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/1
+ description SW3850_10.75.249.241:G2/0/22
+ no ip address
+ no ip redirects
+ no ip proxy-arp
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/2
+ description ChenDe_Core_SW:G1/0/24(223D66627)
+ ip address 10.71.254.1 255.255.255.252
+ no ip redirects
+ no ip proxy-arp
+ ip policy route-map fuhwa
+ load-interval 30
+ speed 100
+ no negotiation auto
+ cdp enable
+ service-policy output NG50M
+!
+interface GigabitEthernet0/0/3
+ description ChenDe_Core_SW:G3/0/24(223D69726)
+ ip address 10.71.254.5 255.255.255.252
+ no ip redirects
+ no ip proxy-arp
+ ip policy route-map fuhwa
+ load-interval 30
+ speed 100
+ no negotiation auto
+ cdp enable
+ service-policy output NG50M
+!
+interface GigabitEthernet0/0/4
+ description SW_10.75.100.231:G1/0/48
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/4.8
+ description Connect to R_10.71.8.250
+ bandwidth 4000
+ encapsulation dot1Q 8
+ ip address 10.75.254.161 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.15
+ description Connect to R_10.71.15.250
+ bandwidth 4000
+ encapsulation dot1Q 15
+ ip address 10.75.254.177 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.21
+ description Connect to R_10.71.21.250
+ bandwidth 4000
+ encapsulation dot1Q 21
+ ip address 10.71.254.209 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.33
+ description Connect to R_10.71.33.250
+ bandwidth 4000
+ encapsulation dot1Q 33
+ ip address 10.75.254.181 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.36
+ description Connect to R_10.71.36.250
+ bandwidth 4000
+ encapsulation dot1Q 36
+ ip address 10.75.254.173 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.37
+ description Connect to R_10.71.37.250
+ bandwidth 4000
+ encapsulation dot1Q 37
+ ip address 10.75.254.73 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG8M
+!
+interface GigabitEthernet0/0/4.41
+ description Connect to R_10.71.41.250
+ bandwidth 4000
+ encapsulation dot1Q 41
+ ip address 10.75.254.133 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.48
+ description Connect to R_10.71.48.250
+ bandwidth 4000
+ encapsulation dot1Q 48
+ ip address 10.75.254.137 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.83
+ description Connect to R_10.71.83.250
+ bandwidth 4000
+ encapsulation dot1Q 83
+ ip address 10.71.254.97 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.86
+ description Connect to R_10.71.86.250
+ bandwidth 4000
+ encapsulation dot1Q 86
+ ip address 10.71.254.225 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.88
+ description Connect to R_10.71.88.250
+ bandwidth 4000
+ encapsulation dot1Q 88
+ ip address 10.71.254.217 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.89
+ description Connect to R_10.71.89.250
+ bandwidth 4000
+ encapsulation dot1Q 89
+ ip address 10.71.254.229 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.90
+ description Connect to R_10.71.90.250
+ bandwidth 4000
+ encapsulation dot1Q 90
+ ip address 10.75.254.237 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.91
+ description Connect to R_10.71.91.250
+ bandwidth 4000
+ encapsulation dot1Q 91
+ ip address 10.75.254.245 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.97
+ description Connect to R_10.71.97.250
+ bandwidth 4000
+ encapsulation dot1Q 97
+ ip address 10.75.254.81 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.99
+ description Connect to R_10.71.99.250
+ bandwidth 4000
+ encapsulation dot1Q 99
+ ip address 10.75.254.129 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.100
+ description Connect to R_10.71.100.250
+ bandwidth 4000
+ encapsulation dot1Q 100
+ ip address 10.75.254.121 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.102
+ description Connect to 10.71.102.250
+ bandwidth 4000
+ encapsulation dot1Q 102
+ ip address 10.75.254.85 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.103
+ description Connect to R_10.71.103.250
+ bandwidth 4000
+ encapsulation dot1Q 103
+ ip address 10.75.254.109 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.107
+ description Connect to R_10.71.107.250
+ bandwidth 4000
+ encapsulation dot1Q 107
+ ip address 10.75.254.117 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.108
+ description Connect to R_10.71.108.250
+ bandwidth 4000
+ encapsulation dot1Q 108
+ ip address 10.75.254.101 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.120
+ description Connect to R_10.71.120.250
+ bandwidth 4000
+ encapsulation dot1Q 120
+ ip address 10.75.254.93 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.121
+ description Connect to R_10.71.121.250
+ bandwidth 4000
+ encapsulation dot1Q 121
+ ip address 10.75.254.89 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.122
+ description Connect to R_10.71.122.250
+ bandwidth 4000
+ encapsulation dot1Q 122
+ ip address 10.75.254.105 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.123
+ description Connect to R_10.71.123.250
+ bandwidth 4000
+ encapsulation dot1Q 123
+ ip address 10.75.254.241 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.127
+ description Connect to R_10.71.127.250
+ bandwidth 4000
+ encapsulation dot1Q 127
+ ip address 10.75.254.65 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.131
+ description Connect to R_10.71.131.250
+ bandwidth 4000
+ encapsulation dot1Q 131
+ ip address 10.75.254.185 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.135
+ description Connect to R_10.71.135.252(223D50634)(SW_231_G1/0/41)
+ bandwidth 4000
+ encapsulation dot1Q 135
+ ip address 10.71.254.41 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.141
+ description Connect to R_10.71.141.250(223D69606)(SW_231_G1/0/29)
+ bandwidth 4000
+ encapsulation dot1Q 141
+ ip address 10.71.254.45 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.146
+ description Connect to R_10.71.146.250_G0/2(223D-50451)(SW_231_G1/0/44)
+ bandwidth 4000
+ encapsulation dot1Q 146
+ ip address 10.71.254.49 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.150
+ description Connect to R_10.71.150.250(223D69779)(SW_231_G1/0/46)
+ bandwidth 4000
+ encapsulation dot1Q 150
+ ip address 10.71.254.53 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.159
+ description Connect to R_10.71.159.250(223D69598)(SW_231_G1/0/32)
+ bandwidth 4000
+ encapsulation dot1Q 159
+ ip address 10.71.254.57 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.161
+ description Connect to R_10.71.161.250(223D69612)(SW_231_G1/0/33)
+ bandwidth 4000
+ encapsulation dot1Q 161
+ ip address 10.71.254.61 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.167
+ description Connect to R_10.71.167.250(223D69610)(SW_231_G1/0/34)
+ bandwidth 4000
+ encapsulation dot1Q 167
+ ip address 10.71.254.65 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.170
+ description Connect to R_10.71.135.252(223D50634)(SW_231_G1/0/28)
+ bandwidth 4000
+ encapsulation dot1Q 170
+ ip address 10.71.254.69 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.176
+ description Connect to R_10.71.176.250(223D69609)(SW_231_G1/0/37)
+ bandwidth 4000
+ encapsulation dot1Q 176
+ ip address 10.71.254.77 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.177
+ description Connect to R_10.71.177.250(223D69603)(SW_231_G1/0/38)
+ bandwidth 4000
+ encapsulation dot1Q 177
+ ip address 10.71.254.81 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.178
+ description Connect to R_10.71.178.250_G0/2(223D-50534)
+ bandwidth 4000
+ encapsulation dot1Q 178
+ ip address 10.71.254.193 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.188
+ description Connect to R_10.71.188.250(223D69594)(SW_231_G1/0/39)
+ bandwidth 4000
+ encapsulation dot1Q 188
+ ip address 10.71.254.85 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.189
+ description Connect to R_10.71.189.250(223D69611)(SW_231_G1/0/40)
+ bandwidth 4000
+ encapsulation dot1Q 189
+ ip address 10.71.254.89 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.192
+ description Connect to R_10.71.192.250(223D50238)(SW_231_G1/0/45)
+ bandwidth 4000
+ encapsulation dot1Q 192
+ ip address 10.71.254.101 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.201
+ description Connect to R_10.71.201.250(223D50133)(SW_231_G1/0/31)
+ bandwidth 4000
+ encapsulation dot1Q 201
+ ip address 10.71.254.233 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.203
+ description Connect to R_10.71.203.250(223D-50167)(SW_231_G1/0/36)
+ bandwidth 4000
+ encapsulation dot1Q 203
+ ip address 10.71.254.241 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.204
+ description Connect to R_10.71.204.250(223-D50293)(SW_231_G1/0/43)
+ bandwidth 4000
+ encapsulation dot1Q 204
+ ip address 10.71.254.245 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.214
+ description Connect to SW_10.71.214.254(223D50670)(SW_231_G1/0/35)
+ bandwidth 4000
+ encapsulation dot1Q 214
+ ip address 10.75.254.141 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.231
+ description Connect to  CO_SW_10.71.231.254_G1/0/24(L1 223D-50438)
+ bandwidth 10000
+ encapsulation dot1Q 231
+ ip address 10.71.254.173 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG10M
+!
+interface GigabitEthernet0/0/4.244
+ description Connect to R_10.71.244.250_G0/2(223D-50481)(SW_231_G1/0/30)
+ bandwidth 10000
+ encapsulation dot1Q 244
+ ip address 10.71.254.197 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG10M
+!
+interface GigabitEthernet0/0/4.247
+ description Connect to  CO_SW_10.71.247.254_G1/0/24(L1 223D-50439)
+ bandwidth 10000
+ encapsulation dot1Q 247
+ ip address 10.71.254.33 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG30M
+!
+interface GigabitEthernet0/0/5
+ description SW_10.75.100.232:G1/0/48
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/5.3
+ description Connect to R_10.71.3.250
+ bandwidth 4000
+ encapsulation dot1Q 3
+ ip address 10.75.254.45 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.9
+ description Connect to R_10.71.9.250
+ bandwidth 4000
+ encapsulation dot1Q 9
+ ip address 10.75.254.189 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.16
+ description Connect to R_10.71.16.250
+ bandwidth 4000
+ encapsulation dot1Q 16
+ ip address 10.75.254.157 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.22
+ description Connect to R_10.71.22.250
+ bandwidth 4000
+ encapsulation dot1Q 22
+ ip address 10.75.254.57 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.34
+ description Connect to R_10.71.34.250
+ bandwidth 4000
+ encapsulation dot1Q 34
+ ip address 10.75.254.153 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.38
+ description Connect to R_10.71.38.250
+ bandwidth 4000
+ encapsulation dot1Q 38
+ ip address 10.71.254.201 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.49
+ description Connect to R_10.71.49.0
+ bandwidth 4000
+ encapsulation dot1Q 49
+ ip address 10.75.254.145 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.58
+ description Connect to R_10.71.58.250
+ bandwidth 4000
+ encapsulation dot1Q 58
+ ip address 10.75.254.165 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.59
+ description Connect to R_10.71.59.250
+ bandwidth 4000
+ encapsulation dot1Q 59
+ ip address 10.75.254.197 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.62
+ description Connect to R_10.71.62.250
+ bandwidth 4000
+ encapsulation dot1Q 62
+ ip address 10.75.254.149 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.63
+ description Connect to R_10.71.63.250
+ bandwidth 4000
+ encapsulation dot1Q 63
+ ip address 10.71.254.205 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.84
+ description Connect to R_10.71.84.253-A
+ bandwidth 4000
+ encapsulation dot1Q 84
+ ip address 10.71.254.221 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.85
+ description Connect to R_10.71.85.250
+ bandwidth 4000
+ encapsulation dot1Q 85
+ ip address 10.75.254.233 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.87
+ description Connect to R_10.71.87.253-A
+ bandwidth 4000
+ encapsulation dot1Q 87
+ ip address 10.71.254.213 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.93
+ description Connect to R_10.71.93.250
+ bandwidth 4000
+ encapsulation dot1Q 93
+ ip address 10.75.254.253 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.94
+ description Connect to R_10.71.94.250
+ bandwidth 4000
+ encapsulation dot1Q 94
+ ip address 10.75.254.249 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.96
+ description Connect to R_10.71.96.250
+ bandwidth 4000
+ encapsulation dot1Q 96
+ ip address 10.75.254.125 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.104
+ description Connect to R_10.71.104.250
+ bandwidth 4000
+ encapsulation dot1Q 104
+ ip address 10.75.254.113 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.119
+ description Connect to R_10.71.119.250
+ bandwidth 4000
+ encapsulation dot1Q 119
+ ip address 10.75.254.193 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.126
+ description Connect to R_10.71.126.250
+ bandwidth 4000
+ encapsulation dot1Q 126
+ ip address 10.75.254.69 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.128
+ description Connect to R_10.71.128.250
+ bandwidth 4000
+ encapsulation dot1Q 128
+ ip address 10.75.254.61 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.130
+ description Connect to R_10.71.130.250
+ bandwidth 20000
+ encapsulation dot1Q 130
+ ip address 10.75.254.169 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.132
+ description Connect to R_10.71.132.250
+ bandwidth 4000
+ encapsulation dot1Q 132
+ ip address 10.75.254.49 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.133
+ description Connect to R_10.71.133.250
+ bandwidth 4000
+ encapsulation dot1Q 133
+ ip address 10.75.254.77 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.142
+ description Connect to R_10.71.142.250(223D69623)(SW_232_G1/0/29)
+ bandwidth 4000
+ encapsulation dot1Q 142
+ ip address 10.71.254.113 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.143
+ description Connect to R_10.71.143.250(223E83664)(SW_232_G1/0/38)
+ bandwidth 4000
+ encapsulation dot1Q 143
+ ip address 10.71.254.149 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.147
+ description Connect to R_10.71.142.250(223D69620)(SW_232_G1/0/30)
+ bandwidth 4000
+ encapsulation dot1Q 147
+ ip address 10.71.254.117 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.152
+ description Connect to R_10.71.152.250_G0/2(223E-83819)(SW_232_G1/0/40)
+ bandwidth 4000
+ encapsulation dot1Q 152
+ ip address 10.71.254.153 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.157
+ description Connect to R_10.71.157.250(223D69616)(SW_232_G1/0/32)
+ bandwidth 4000
+ encapsulation dot1Q 157
+ ip address 10.71.254.125 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.164
+ description Connect to R_10.71.164.250(223D69621)(SW_232_G1/0/33)
+ bandwidth 4000
+ encapsulation dot1Q 164
+ ip address 10.71.254.129 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.165
+ description Connect to R_10.71.165.250(223E-83793)(SW_232_G1/0/44)
+ bandwidth 4000
+ encapsulation dot1Q 165
+ ip address 10.71.254.157 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.168
+ description Connect to R_10.71.168.250(223E83671)(SW_232_G1/0/41)
+ bandwidth 4000
+ encapsulation dot1Q 168
+ ip address 10.71.254.161 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.169
+ description Connect to R_10.71.169.250(223D69618)(SW_232_G1/0/34)
+ bandwidth 4000
+ encapsulation dot1Q 169
+ ip address 10.71.254.133 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.173
+ description Connect to R_10.71.173.250(223D69617)(SW_232_G1/0/35)
+ bandwidth 4000
+ encapsulation dot1Q 173
+ ip address 10.71.254.137 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.175
+ description Connect to R_10.71.175.250(223E83665)(SW_232_G1/0/42)
+ bandwidth 4000
+ encapsulation dot1Q 175
+ ip address 10.71.254.165 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.193
+ description Connect to R_10.71.193.250(223D69619)(SW_232_G1/0/36)
+ bandwidth 4000
+ encapsulation dot1Q 193
+ ip address 10.71.254.141 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.194
+ description Connect to R_10.71.194.252(223D-50660)(SW_232_G1/0/5)
+ bandwidth 4000
+ encapsulation dot1Q 194
+ ip address 10.71.254.145 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.196
+ description Connect to R_10.71.196.250_G0/2(223D-50501)(SW_232_G1/0/39)
+ bandwidth 4000
+ encapsulation dot1Q 196
+ ip address 10.71.254.105 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.197
+ description Connect to R_10.71.197.250(223D69599)(SW_232_G1/0/28)
+ bandwidth 4000
+ encapsulation dot1Q 197
+ ip address 10.71.254.109 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.198
+ description Connect to R_10.71.198.250(223D69780)(SW_232_G1/0/46)
+ bandwidth 4000
+ encapsulation dot1Q 198
+ ip address 10.71.254.121 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.202
+ description Connect to R_10.71.202.250(223D-50157)(SW_232_G1/0/31)
+ bandwidth 4000
+ encapsulation dot1Q 202
+ ip address 10.71.254.237 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.219
+ description Connect to SW_10.71.219.254(223D50671)(SW_232_G1/0/37)
+ bandwidth 10000
+ encapsulation dot1Q 219
+ ip address 10.71.254.189 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG10M
+!
+interface GigabitEthernet0/0/5.221
+ description Connect to R_10.71.221.250(223D69595)(SW_232_G1/0/43)
+ bandwidth 20000
+ encapsulation dot1Q 221
+ ip address 10.71.254.169 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG20M
+!
+interface GigabitEthernet0/0/5.248
+ description description Connect to R_10.71.248.252(223D-50284)(SW_232_G1/0/45)
+ bandwidth 4000
+ encapsulation dot1Q 248
+ ip address 10.71.254.249 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.731
+ description Connect to  CO_SW_10.71.231.254_G2/0/24(L2 223D-50437)
+ bandwidth 10000
+ encapsulation dot1Q 731
+ ip address 10.71.254.177 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG10M
+!
+interface GigabitEthernet0/0/5.747
+ description Connect to  CO_SW_10.71.247.254_G2/0/24(L2 223D-50440)
+ bandwidth 10000
+ encapsulation dot1Q 747
+ ip address 10.71.254.37 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG30M
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ shutdown
+ negotiation auto
+!
+router ospf 1
+ router-id 10.75.255.2
+ redistribute static metric 20 subnets route-map branch
+ network 10.71.254.0 0.0.0.3 area 0
+ network 10.71.254.4 0.0.0.3 area 0
+ network 10.75.249.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip tftp source-interface GigabitEthernet0
+no ip nat service sip udp port 5060
+ip route 10.71.231.0 255.255.255.0 10.71.254.174 track 231
+ip route 10.71.240.0 255.255.255.0 10.71.254.34 track 247
+ip route 10.71.241.0 255.255.255.0 10.71.254.34 track 247
+ip route 10.71.242.0 255.255.255.0 10.71.254.34 track 247
+ip route 10.71.245.0 255.255.255.0 10.71.254.34 track 247
+ip route 10.71.247.0 255.255.255.0 10.71.254.34 track 247
+ip route 10.71.231.0 255.255.255.0 10.71.254.178 track 731
+ip route 10.71.240.0 255.255.255.0 10.71.254.38 track 747
+ip route 10.71.241.0 255.255.255.0 10.71.254.38 track 747
+ip route 10.71.242.0 255.255.255.0 10.71.254.38 track 747
+ip route 10.71.245.0 255.255.255.0 10.71.254.38 track 747
+ip route 10.71.247.0 255.255.255.0 10.71.254.38 track 747
+ip route 10.71.3.0 255.255.255.0 Tunnel71003
+ip route 10.71.3.0 255.255.255.0 Tunnel71503 50
+ip route 10.71.8.0 255.255.255.0 Tunnel3
+ip route 10.71.8.0 255.255.255.0 Tunnel4 50
+ip route 10.71.9.0 255.255.255.0 Tunnel5
+ip route 10.71.9.0 255.255.255.0 Tunnel6 50
+ip route 10.71.15.0 255.255.255.0 Tunnel29
+ip route 10.71.15.0 255.255.255.0 Tunnel30 50
+ip route 10.71.16.0 255.255.255.0 Tunnel7
+ip route 10.71.16.0 255.255.255.0 Tunnel8 50
+ip route 10.71.21.0 255.255.255.0 Tunnel65
+ip route 10.71.21.0 255.255.255.0 Tunnel66 50
+ip route 10.71.22.0 255.255.255.0 Tunnel9
+ip route 10.71.22.0 255.255.255.0 Tunnel10 50
+ip route 10.71.33.0 255.255.255.0 Tunnel19
+ip route 10.71.33.0 255.255.255.0 Tunnel20 50
+ip route 10.71.34.0 255.255.255.0 Tunnel11
+ip route 10.71.34.0 255.255.255.0 Tunnel12 50
+ip route 10.71.36.0 255.255.255.0 Tunnel13
+ip route 10.71.36.0 255.255.255.0 Tunnel14 50
+ip route 10.71.37.0 255.255.255.0 Tunnel97
+ip route 10.71.37.0 255.255.255.0 Tunnel98 50
+ip route 10.71.38.0 255.255.255.0 Tunnel17
+ip route 10.71.38.0 255.255.255.0 Tunnel18 50
+ip route 10.71.41.0 255.255.255.0 Tunnel71
+ip route 10.71.41.0 255.255.255.0 Tunnel72 50
+ip route 10.71.48.0 255.255.255.0 Tunnel33
+ip route 10.71.48.0 255.255.255.0 Tunnel34 50
+ip route 10.71.49.0 255.255.255.0 Tunnel21
+ip route 10.71.49.0 255.255.255.0 Tunnel22 50
+ip route 10.71.58.0 255.255.255.0 Tunnel23
+ip route 10.71.58.0 255.255.255.0 Tunnel24 50
+ip route 10.71.59.0 255.255.255.0 Tunnel31
+ip route 10.71.59.0 255.255.255.0 Tunnel32 50
+ip route 10.71.62.0 255.255.255.0 Tunnel25
+ip route 10.71.62.0 255.255.255.0 Tunnel26 50
+ip route 10.71.63.0 255.255.255.0 Tunnel27
+ip route 10.71.63.0 255.255.255.0 Tunnel28 50
+ip route 10.71.83.0 255.255.255.0 Tunnel39
+ip route 10.71.83.0 255.255.255.0 Tunnel40 50
+ip route 10.71.84.0 255.255.255.0 Tunnel45
+ip route 10.71.84.0 255.255.255.0 Tunnel46 50
+ip route 10.71.85.0 255.255.255.0 Tunnel51
+ip route 10.71.85.0 255.255.255.0 Tunnel52 50
+ip route 10.71.86.0 255.255.255.0 Tunnel47
+ip route 10.71.86.0 255.255.255.0 Tunnel48 50
+ip route 10.71.87.0 255.255.255.0 Tunnel41
+ip route 10.71.87.0 255.255.255.0 Tunnel42 50
+ip route 10.71.88.0 255.255.255.0 Tunnel43
+ip route 10.71.88.0 255.255.255.0 Tunnel44 50
+ip route 10.71.89.0 255.255.255.0 Tunnel49
+ip route 10.71.89.0 255.255.255.0 Tunnel50 50
+ip route 10.71.90.0 255.255.255.0 Tunnel53
+ip route 10.71.90.0 255.255.255.0 Tunnel54 50
+ip route 10.71.91.0 255.255.255.0 Tunnel57
+ip route 10.71.91.0 255.255.255.0 Tunnel58 50
+ip route 10.71.93.0 255.255.255.0 Tunnel59
+ip route 10.71.93.0 255.255.255.0 Tunnel60 50
+ip route 10.71.94.0 255.255.255.0 Tunnel61
+ip route 10.71.94.0 255.255.255.0 Tunnel62 50
+ip route 10.71.96.0 255.255.255.0 Tunnel63
+ip route 10.71.96.0 255.255.255.0 Tunnel64 50
+ip route 10.71.97.0 255.255.255.0 Tunnel93
+ip route 10.71.97.0 255.255.255.0 Tunnel94 50
+ip route 10.71.99.0 255.255.255.0 Tunnel69
+ip route 10.71.99.0 255.255.255.0 Tunnel70 50
+ip route 10.71.100.0 255.255.255.0 Tunnel73
+ip route 10.71.100.0 255.255.255.0 Tunnel74 50
+ip route 10.71.102.0 255.255.255.0 Tunnel77
+ip route 10.71.102.0 255.255.255.0 Tunnel78 50
+ip route 10.71.103.0 255.255.255.0 Tunnel79
+ip route 10.71.103.0 255.255.255.0 Tunnel80 50
+ip route 10.71.104.0 255.255.255.0 Tunnel81
+ip route 10.71.104.0 255.255.255.0 Tunnel82 50
+ip route 10.71.107.0 255.255.255.0 Tunnel87
+ip route 10.71.107.0 255.255.255.0 Tunnel88 50
+ip route 10.71.108.0 255.255.255.0 Tunnel89
+ip route 10.71.108.0 255.255.255.0 Tunnel90 50
+ip route 10.71.119.0 255.255.255.0 Tunnel95
+ip route 10.71.119.0 255.255.255.0 Tunnel96 50
+ip route 10.71.120.0 255.255.255.0 Tunnel91
+ip route 10.71.120.0 255.255.255.0 Tunnel92 50
+ip route 10.71.121.0 255.255.255.0 Tunnel85
+ip route 10.71.121.0 255.255.255.0 Tunnel86 50
+ip route 10.71.122.0 255.255.255.0 Tunnel83
+ip route 10.71.122.0 255.255.255.0 Tunnel84 50
+ip route 10.71.123.0 255.255.255.0 Tunnel55
+ip route 10.71.123.0 255.255.255.0 Tunnel56 50
+ip route 10.71.126.0 255.255.255.0 Tunnel101
+ip route 10.71.126.0 255.255.255.0 Tunnel102 50
+ip route 10.71.127.0 255.255.255.0 Tunnel103
+ip route 10.71.127.0 255.255.255.0 Tunnel104 50
+ip route 10.71.128.0 255.255.255.0 Tunnel105
+ip route 10.71.128.0 255.255.255.0 Tunnel106 50
+ip route 10.71.130.0 255.255.255.0 Tunnel71130
+ip route 10.71.130.0 255.255.255.0 Tunnel71630 50
+ip route 10.71.131.0 255.255.255.0 Tunnel71131
+ip route 10.71.131.0 255.255.255.0 Tunnel71631 50
+ip route 10.71.132.0 255.255.255.0 Tunnel71132
+ip route 10.71.132.0 255.255.255.0 Tunnel71632 50
+ip route 10.71.133.0 255.255.255.0 Tunnel71133
+ip route 10.71.133.0 255.255.255.0 Tunnel71633 50
+ip route 10.71.135.0 255.255.255.0 Tunnel71135
+ip route 10.71.135.0 255.255.255.0 Tunnel71635 50
+ip route 10.71.141.0 255.255.255.0 Tunnel71141
+ip route 10.71.141.0 255.255.255.0 Tunnel71641 50
+ip route 10.71.142.0 255.255.255.0 Tunnel71142
+ip route 10.71.142.0 255.255.255.0 Tunnel71642 50
+ip route 10.71.143.0 255.255.255.0 Tunnel71143
+ip route 10.71.143.0 255.255.255.0 Tunnel71643 50
+ip route 10.71.146.0 255.255.255.0 Tunnel71146
+ip route 10.71.146.0 255.255.255.0 Tunnel71646 50
+ip route 10.71.147.0 255.255.255.0 Tunnel71147
+ip route 10.71.147.0 255.255.255.0 Tunnel71647 50
+ip route 10.71.150.0 255.255.255.0 Tunnel71150
+ip route 10.71.150.0 255.255.255.0 Tunnel71650 50
+ip route 10.71.152.0 255.255.255.0 Tunnel71152
+ip route 10.71.152.0 255.255.255.0 Tunnel71652 50
+ip route 10.71.157.0 255.255.255.0 Tunnel71157
+ip route 10.71.157.0 255.255.255.0 Tunnel71657 50
+ip route 10.71.159.0 255.255.255.0 Tunnel71159
+ip route 10.71.159.0 255.255.255.0 Tunnel71659 50
+ip route 10.71.161.0 255.255.255.0 Tunnel71161
+ip route 10.71.161.0 255.255.255.0 Tunnel71661 50
+ip route 10.71.164.0 255.255.255.0 Tunnel71164
+ip route 10.71.164.0 255.255.255.0 Tunnel71664 50
+ip route 10.71.165.0 255.255.255.0 Tunnel71165
+ip route 10.71.165.0 255.255.255.0 Tunnel71665 50
+ip route 10.71.167.0 255.255.255.0 Tunnel71167
+ip route 10.71.167.0 255.255.255.0 Tunnel71667 50
+ip route 10.71.168.0 255.255.255.0 Tunnel71168
+ip route 10.71.168.0 255.255.255.0 Tunnel71668 50
+ip route 10.71.169.0 255.255.255.0 Tunnel71169
+ip route 10.71.169.0 255.255.255.0 Tunnel71669 50
+ip route 10.71.170.0 255.255.255.0 Tunnel71170
+ip route 10.71.170.0 255.255.255.0 Tunnel71670 50
+ip route 10.71.173.0 255.255.255.0 Tunnel71173
+ip route 10.71.173.0 255.255.255.0 Tunnel71673 50
+ip route 10.71.175.0 255.255.255.0 Tunnel71175
+ip route 10.71.175.0 255.255.255.0 Tunnel71675 50
+ip route 10.71.176.0 255.255.255.0 Tunnel71176
+ip route 10.71.176.0 255.255.255.0 Tunnel71676 50
+ip route 10.71.177.0 255.255.255.0 Tunnel71177
+ip route 10.71.177.0 255.255.255.0 Tunnel71677 50
+ip route 10.71.178.0 255.255.255.0 Tunnel71178
+ip route 10.71.178.0 255.255.255.0 Tunnel71678 50
+ip route 10.71.188.0 255.255.255.0 Tunnel71188
+ip route 10.71.188.0 255.255.255.0 Tunnel71688 50
+ip route 10.71.189.0 255.255.255.0 Tunnel71189
+ip route 10.71.189.0 255.255.255.0 Tunnel71689 50
+ip route 10.71.192.0 255.255.255.0 Tunnel71192
+ip route 10.71.192.0 255.255.255.0 Tunnel71692 50
+ip route 10.71.193.0 255.255.255.0 Tunnel71193
+ip route 10.71.193.0 255.255.255.0 Tunnel71693 50
+ip route 10.71.194.0 255.255.255.0 Tunnel71194
+ip route 10.71.194.0 255.255.255.0 Tunnel71694 50
+ip route 10.71.196.0 255.255.255.0 Tunnel71196
+ip route 10.71.196.0 255.255.255.0 Tunnel71696 50
+ip route 10.71.197.0 255.255.255.0 Tunnel71197
+ip route 10.71.197.0 255.255.255.0 Tunnel71697 50
+ip route 10.71.198.0 255.255.255.0 Tunnel71198
+ip route 10.71.198.0 255.255.255.0 Tunnel71698 50
+ip route 10.71.201.0 255.255.255.0 Tunnel71201
+ip route 10.71.201.0 255.255.255.0 Tunnel71701 50
+ip route 10.71.202.0 255.255.255.0 Tunnel71202
+ip route 10.71.202.0 255.255.255.0 Tunnel71702 50
+ip route 10.71.203.0 255.255.255.0 Tunnel71203
+ip route 10.71.203.0 255.255.255.0 Tunnel71703 50
+ip route 10.71.204.0 255.255.255.0 Tunnel71204
+ip route 10.71.204.0 255.255.255.0 Tunnel71704 50
+ip route 10.71.211.0 255.255.255.0 10.71.254.10
+ip route 10.71.211.0 255.255.255.0 10.71.254.14
+ip route 10.71.214.0 255.255.255.0 Tunnel71214
+ip route 10.71.214.0 255.255.255.0 Tunnel71714 50
+ip route 10.71.216.0 255.255.255.0 Tunnel71130
+ip route 10.71.216.0 255.255.255.0 Tunnel71630 50
+ip route 10.71.217.0 255.255.255.0 Tunnel97
+ip route 10.71.217.0 255.255.255.0 Tunnel98 50
+ip route 10.71.219.0 255.255.255.0 Tunnel71219
+ip route 10.71.219.0 255.255.255.0 Tunnel71719 50
+ip route 10.71.220.0 255.255.255.0 Tunnel77
+ip route 10.71.220.0 255.255.255.0 Tunnel78
+ip route 10.71.221.0 255.255.255.0 Tunnel71221 20
+ip route 10.71.221.0 255.255.255.0 Tunnel71721 50
+ip route 10.71.230.0 255.255.255.0 Tunnel65
+ip route 10.71.230.0 255.255.255.0 Tunnel66 50
+ip route 10.71.244.0 255.255.255.0 10.71.254.182
+ip route 10.71.244.0 255.255.255.0 10.71.254.186 50
+ip route 10.71.246.0 255.255.255.0 Tunnel27
+ip route 10.71.246.0 255.255.255.0 Tunnel28 50
+ip route 10.71.250.3 255.255.255.255 10.75.254.46
+ip route 10.71.250.8 255.255.255.255 10.75.254.162
+ip route 10.71.250.9 255.255.255.255 10.75.254.190
+ip route 10.71.250.15 255.255.255.255 10.75.254.178
+ip route 10.71.250.16 255.255.255.255 10.75.254.158
+ip route 10.71.250.21 255.255.255.255 10.71.254.210
+ip route 10.71.250.22 255.255.255.255 10.75.254.58
+ip route 10.71.250.33 255.255.255.255 10.71.254.182
+ip route 10.71.250.33 255.255.255.255 10.75.254.182
+ip route 10.71.250.34 255.255.255.255 10.75.254.154
+ip route 10.71.250.36 255.255.255.255 10.75.254.174
+ip route 10.71.250.37 255.255.255.255 10.75.254.74
+ip route 10.71.250.38 255.255.255.255 10.71.254.202
+ip route 10.71.250.41 255.255.255.255 10.75.254.134
+ip route 10.71.250.48 255.255.255.255 10.75.254.138
+ip route 10.71.250.49 255.255.255.255 10.75.254.146
+ip route 10.71.250.58 255.255.255.255 10.75.254.166
+ip route 10.71.250.59 255.255.255.255 10.75.254.198
+ip route 10.71.250.62 255.255.255.255 10.75.254.150
+ip route 10.71.250.63 255.255.255.255 10.71.254.206
+ip route 10.71.250.83 255.255.255.255 10.71.254.98
+ip route 10.71.250.84 255.255.255.255 10.71.254.222
+ip route 10.71.250.85 255.255.255.255 10.75.254.234
+ip route 10.71.250.86 255.255.255.255 10.71.254.226
+ip route 10.71.250.87 255.255.255.255 10.71.254.214
+ip route 10.71.250.88 255.255.255.255 10.71.254.218
+ip route 10.71.250.89 255.255.255.255 10.71.254.230
+ip route 10.71.250.90 255.255.255.255 10.75.254.238
+ip route 10.71.250.91 255.255.255.255 10.75.254.246
+ip route 10.71.250.93 255.255.255.255 10.75.254.254
+ip route 10.71.250.94 255.255.255.255 10.75.254.250
+ip route 10.71.250.96 255.255.255.255 10.75.254.126
+ip route 10.71.250.97 255.255.255.255 10.75.254.82
+ip route 10.71.250.99 255.255.255.255 10.75.254.130
+ip route 10.71.250.100 255.255.255.255 10.75.254.122
+ip route 10.71.250.101 255.255.255.255 10.75.254.98
+ip route 10.71.250.102 255.255.255.255 10.75.254.86
+ip route 10.71.250.103 255.255.255.255 10.75.254.110
+ip route 10.71.250.104 255.255.255.255 10.75.254.114
+ip route 10.71.250.107 255.255.255.255 10.75.254.118
+ip route 10.71.250.108 255.255.255.255 10.75.254.102
+ip route 10.71.250.119 255.255.255.255 10.75.254.194
+ip route 10.71.250.120 255.255.255.255 10.75.254.94
+ip route 10.71.250.121 255.255.255.255 10.75.254.90
+ip route 10.71.250.122 255.255.255.255 10.75.254.106
+ip route 10.71.250.123 255.255.255.255 10.75.254.242
+ip route 10.71.250.126 255.255.255.255 10.75.254.70
+ip route 10.71.250.127 255.255.255.255 10.75.254.66
+ip route 10.71.250.128 255.255.255.255 10.75.254.62
+ip route 10.71.250.129 255.255.255.255 10.75.254.54
+ip route 10.71.250.130 255.255.255.255 10.75.254.170
+ip route 10.71.250.131 255.255.255.255 10.75.254.186
+ip route 10.71.250.132 255.255.255.255 10.75.254.50
+ip route 10.71.250.133 255.255.255.255 10.75.254.78
+ip route 10.71.250.135 255.255.255.255 10.71.254.42
+ip route 10.71.250.141 255.255.255.255 10.71.254.46
+ip route 10.71.250.142 255.255.255.255 10.71.254.114
+ip route 10.71.250.143 255.255.255.255 10.71.254.150
+ip route 10.71.250.146 255.255.255.255 10.71.254.50
+ip route 10.71.250.147 255.255.255.255 10.71.254.118
+ip route 10.71.250.150 255.255.255.255 10.71.254.54
+ip route 10.71.250.152 255.255.255.255 10.71.254.154
+ip route 10.71.250.157 255.255.255.255 10.71.254.126
+ip route 10.71.250.159 255.255.255.255 10.71.254.58
+ip route 10.71.250.161 255.255.255.255 10.71.254.62
+ip route 10.71.250.164 255.255.255.255 10.71.254.130
+ip route 10.71.250.165 255.255.255.255 10.71.254.158
+ip route 10.71.250.167 255.255.255.255 10.71.254.66
+ip route 10.71.250.168 255.255.255.255 10.71.254.162
+ip route 10.71.250.169 255.255.255.255 10.71.254.134
+ip route 10.71.250.170 255.255.255.255 10.71.254.70
+ip route 10.71.250.171 255.255.255.255 10.71.254.74
+ip route 10.71.250.173 255.255.255.255 10.71.254.138
+ip route 10.71.250.175 255.255.255.255 10.71.254.166
+ip route 10.71.250.176 255.255.255.255 10.71.254.78
+ip route 10.71.250.177 255.255.255.255 10.71.254.82
+ip route 10.71.250.178 255.255.255.255 10.71.254.194
+ip route 10.71.250.188 255.255.255.255 10.71.254.86
+ip route 10.71.250.189 255.255.255.255 10.71.254.90
+ip route 10.71.250.190 255.255.255.255 10.71.254.94
+ip route 10.71.250.192 255.255.255.255 10.71.254.102
+ip route 10.71.250.193 255.255.255.255 10.71.254.142
+ip route 10.71.250.194 255.255.255.255 10.71.254.146
+ip route 10.71.250.196 255.255.255.255 10.71.254.106
+ip route 10.71.250.197 255.255.255.255 10.71.254.110
+ip route 10.71.250.198 255.255.255.255 10.71.254.122
+ip route 10.71.250.201 255.255.255.255 10.71.254.234
+ip route 10.71.250.202 255.255.255.255 10.71.254.238
+ip route 10.71.250.203 255.255.255.255 10.71.254.242
+ip route 10.71.250.204 255.255.255.255 10.71.254.246
+ip route 10.71.250.214 255.255.255.255 10.75.254.142
+ip route 10.71.250.219 255.255.255.255 10.71.254.190
+ip route 10.71.250.221 255.255.255.255 10.71.254.170
+ip route 10.71.250.244 255.255.255.255 10.71.254.198
+ip route 10.71.251.0 255.255.255.0 10.75.249.254
+ip route 10.71.255.3 255.255.255.255 10.75.254.46
+ip route 10.71.255.8 255.255.255.255 10.75.254.162
+ip route 10.71.255.9 255.255.255.255 10.75.254.190
+ip route 10.71.255.15 255.255.255.255 10.75.254.178
+ip route 10.71.255.16 255.255.255.255 10.75.254.158
+ip route 10.71.255.21 255.255.255.255 10.71.254.210
+ip route 10.71.255.22 255.255.255.255 10.75.254.58
+ip route 10.71.255.33 255.255.255.255 10.75.254.182
+ip route 10.71.255.34 255.255.255.255 10.75.254.154
+ip route 10.71.255.36 255.255.255.255 10.75.254.174
+ip route 10.71.255.37 255.255.255.255 10.75.254.74
+ip route 10.71.255.38 255.255.255.255 10.71.254.202
+ip route 10.71.255.41 255.255.255.255 10.75.254.134
+ip route 10.71.255.48 255.255.255.255 10.75.254.138
+ip route 10.71.255.49 255.255.255.255 10.75.254.146
+ip route 10.71.255.58 255.255.255.255 10.75.254.166
+ip route 10.71.255.59 255.255.255.255 10.75.254.198
+ip route 10.71.255.62 255.255.255.255 10.75.254.150
+ip route 10.71.255.63 255.255.255.255 10.71.254.206
+ip route 10.71.255.83 255.255.255.255 10.71.254.98
+ip route 10.71.255.84 255.255.255.255 10.71.254.222
+ip route 10.71.255.85 255.255.255.255 10.75.254.234
+ip route 10.71.255.86 255.255.255.255 10.71.254.226
+ip route 10.71.255.87 255.255.255.255 10.71.254.214
+ip route 10.71.255.88 255.255.255.255 10.71.254.218
+ip route 10.71.255.89 255.255.255.255 10.71.254.230
+ip route 10.71.255.90 255.255.255.255 10.75.254.238
+ip route 10.71.255.91 255.255.255.255 10.75.254.246
+ip route 10.71.255.93 255.255.255.255 10.75.254.254
+ip route 10.71.255.94 255.255.255.255 10.75.254.250
+ip route 10.71.255.96 255.255.255.255 10.75.254.126
+ip route 10.71.255.97 255.255.255.255 10.75.254.82
+ip route 10.71.255.99 255.255.255.255 10.75.254.130
+ip route 10.71.255.100 255.255.255.255 10.75.254.122
+ip route 10.71.255.101 255.255.255.255 10.75.254.98
+ip route 10.71.255.102 255.255.255.255 10.75.254.86
+ip route 10.71.255.103 255.255.255.255 10.75.254.110
+ip route 10.71.255.104 255.255.255.255 10.75.254.114
+ip route 10.71.255.107 255.255.255.255 10.75.254.118
+ip route 10.71.255.108 255.255.255.255 10.75.254.102
+ip route 10.71.255.119 255.255.255.255 10.75.254.194
+ip route 10.71.255.120 255.255.255.255 10.75.254.94
+ip route 10.71.255.121 255.255.255.255 10.75.254.90
+ip route 10.71.255.122 255.255.255.255 10.75.254.106
+ip route 10.71.255.123 255.255.255.255 10.75.254.242
+ip route 10.71.255.126 255.255.255.255 10.75.254.70
+ip route 10.71.255.127 255.255.255.255 10.75.254.66
+ip route 10.71.255.128 255.255.255.255 10.75.254.62
+ip route 10.71.255.129 255.255.255.255 10.75.254.54
+ip route 10.71.255.130 255.255.255.255 10.75.254.170
+ip route 10.71.255.131 255.255.255.255 10.75.254.186
+ip route 10.71.255.132 255.255.255.255 10.75.254.50
+ip route 10.71.255.133 255.255.255.255 10.75.254.78
+ip route 10.71.255.135 255.255.255.255 10.71.254.42
+ip route 10.71.255.141 255.255.255.255 10.71.254.46
+ip route 10.71.255.142 255.255.255.255 10.71.254.114
+ip route 10.71.255.143 255.255.255.255 10.71.254.150
+ip route 10.71.255.146 255.255.255.255 10.71.254.50
+ip route 10.71.255.147 255.255.255.255 10.71.254.118
+ip route 10.71.255.150 255.255.255.255 10.71.254.54
+ip route 10.71.255.152 255.255.255.255 10.71.254.154
+ip route 10.71.255.157 255.255.255.255 10.71.254.126
+ip route 10.71.255.159 255.255.255.255 10.71.254.58
+ip route 10.71.255.161 255.255.255.255 10.71.254.62
+ip route 10.71.255.164 255.255.255.255 10.71.254.130
+ip route 10.71.255.165 255.255.255.255 10.71.254.158
+ip route 10.71.255.167 255.255.255.255 10.71.254.66
+ip route 10.71.255.168 255.255.255.255 10.71.254.162
+ip route 10.71.255.169 255.255.255.255 10.71.254.134
+ip route 10.71.255.170 255.255.255.255 10.71.254.70
+ip route 10.71.255.171 255.255.255.255 10.71.254.74
+ip route 10.71.255.173 255.255.255.255 10.71.254.138
+ip route 10.71.255.175 255.255.255.255 10.71.254.166
+ip route 10.71.255.176 255.255.255.255 10.71.254.78
+ip route 10.71.255.177 255.255.255.255 10.71.254.82
+ip route 10.71.255.178 255.255.255.255 10.71.254.194
+ip route 10.71.255.188 255.255.255.255 10.71.254.86
+ip route 10.71.255.189 255.255.255.255 10.71.254.90
+ip route 10.71.255.190 255.255.255.255 10.71.254.94
+ip route 10.71.255.192 255.255.255.255 10.71.254.102
+ip route 10.71.255.193 255.255.255.255 10.71.254.142
+ip route 10.71.255.194 255.255.255.255 10.71.254.146
+ip route 10.71.255.196 255.255.255.255 10.71.254.106
+ip route 10.71.255.197 255.255.255.255 10.71.254.110
+ip route 10.71.255.198 255.255.255.255 10.71.254.122
+ip route 10.71.255.201 255.255.255.255 10.71.254.234
+ip route 10.71.255.202 255.255.255.255 10.71.254.238
+ip route 10.71.255.203 255.255.255.255 10.71.254.242
+ip route 10.71.255.204 255.255.255.255 10.71.254.246
+ip route 10.71.255.214 255.255.255.255 10.75.254.142
+ip route 10.71.255.219 255.255.255.255 10.71.254.190
+ip route 10.71.255.221 255.255.255.255 10.71.254.170
+ip route 10.71.255.228 255.255.255.255 10.71.254.2
+ip route 10.71.255.244 255.255.255.255 10.71.254.198
+ip route 10.75.0.0 255.255.0.0 10.75.249.254
+ip route 10.75.255.1 255.255.255.255 10.75.249.250
+ip route 10.77.3.0 255.255.255.0 Tunnel71003
+ip route 10.77.3.0 255.255.255.0 Tunnel71503 50
+ip route 10.77.8.0 255.255.255.0 Tunnel3
+ip route 10.77.8.0 255.255.255.0 Tunnel4 50
+ip route 10.77.9.0 255.255.255.0 Tunnel5
+ip route 10.77.9.0 255.255.255.0 Tunnel6 50
+ip route 10.77.15.0 255.255.255.0 Tunnel29
+ip route 10.77.15.0 255.255.255.0 Tunnel30 50
+ip route 10.77.16.0 255.255.255.0 Tunnel7
+ip route 10.77.16.0 255.255.255.0 Tunnel8 50
+ip route 10.77.21.0 255.255.255.0 Tunnel65
+ip route 10.77.21.0 255.255.255.0 Tunnel66 50
+ip route 10.77.22.0 255.255.255.0 Tunnel9
+ip route 10.77.22.0 255.255.255.0 Tunnel10 50
+ip route 10.77.33.0 255.255.255.0 Tunnel19
+ip route 10.77.33.0 255.255.255.0 Tunnel20 50
+ip route 10.77.34.0 255.255.255.0 Tunnel11
+ip route 10.77.34.0 255.255.255.0 Tunnel12 50
+ip route 10.77.36.0 255.255.255.0 Tunnel13
+ip route 10.77.36.0 255.255.255.0 Tunnel14 50
+ip route 10.77.37.0 255.255.255.0 Tunnel97
+ip route 10.77.37.0 255.255.255.0 Tunnel98 50
+ip route 10.77.38.0 255.255.255.0 Tunnel17
+ip route 10.77.38.0 255.255.255.0 Tunnel18 50
+ip route 10.77.41.0 255.255.255.0 Tunnel71
+ip route 10.77.41.0 255.255.255.0 Tunnel72 50
+ip route 10.77.48.0 255.255.255.0 Tunnel33
+ip route 10.77.48.0 255.255.255.0 Tunnel34 50
+ip route 10.77.49.0 255.255.255.0 Tunnel21
+ip route 10.77.49.0 255.255.255.0 Tunnel22 50
+ip route 10.77.58.0 255.255.255.0 Tunnel23
+ip route 10.77.58.0 255.255.255.0 Tunnel24 50
+ip route 10.77.59.0 255.255.255.0 Tunnel31
+ip route 10.77.59.0 255.255.255.0 Tunnel32 50
+ip route 10.77.62.0 255.255.255.0 Tunnel25
+ip route 10.77.62.0 255.255.255.0 Tunnel26 50
+ip route 10.77.63.0 255.255.255.0 Tunnel27
+ip route 10.77.63.0 255.255.255.0 Tunnel28 50
+ip route 10.77.83.0 255.255.255.0 Tunnel39
+ip route 10.77.83.0 255.255.255.0 Tunnel40 50
+ip route 10.77.84.0 255.255.255.0 Tunnel45
+ip route 10.77.84.0 255.255.255.0 Tunnel46 50
+ip route 10.77.85.0 255.255.255.0 Tunnel51
+ip route 10.77.85.0 255.255.255.0 Tunnel52 50
+ip route 10.77.86.0 255.255.255.0 Tunnel47
+ip route 10.77.86.0 255.255.255.0 Tunnel48 50
+ip route 10.77.87.0 255.255.255.0 Tunnel41
+ip route 10.77.87.0 255.255.255.0 Tunnel42 50
+ip route 10.77.88.0 255.255.255.0 Tunnel43
+ip route 10.77.88.0 255.255.255.0 Tunnel44 50
+ip route 10.77.89.0 255.255.255.0 Tunnel49
+ip route 10.77.89.0 255.255.255.0 Tunnel50 50
+ip route 10.77.90.0 255.255.255.0 Tunnel53
+ip route 10.77.90.0 255.255.255.0 Tunnel54 50
+ip route 10.77.91.0 255.255.255.0 Tunnel57
+ip route 10.77.91.0 255.255.255.0 Tunnel58 50
+ip route 10.77.93.0 255.255.255.0 Tunnel59
+ip route 10.77.93.0 255.255.255.0 Tunnel60 50
+ip route 10.77.94.0 255.255.255.0 Tunnel61
+ip route 10.77.94.0 255.255.255.0 Tunnel62 50
+ip route 10.77.96.0 255.255.255.0 Tunnel63
+ip route 10.77.96.0 255.255.255.0 Tunnel64 50
+ip route 10.77.97.0 255.255.255.0 Tunnel93
+ip route 10.77.97.0 255.255.255.0 Tunnel94 50
+ip route 10.77.99.0 255.255.255.0 Tunnel69
+ip route 10.77.99.0 255.255.255.0 Tunnel70 50
+ip route 10.77.100.0 255.255.255.0 Tunnel73
+ip route 10.77.100.0 255.255.255.0 Tunnel74 50
+ip route 10.77.102.0 255.255.255.0 Tunnel77
+ip route 10.77.102.0 255.255.255.0 Tunnel78 50
+ip route 10.77.103.0 255.255.255.0 Tunnel79
+ip route 10.77.103.0 255.255.255.0 Tunnel80 50
+ip route 10.77.104.0 255.255.255.0 Tunnel81
+ip route 10.77.104.0 255.255.255.0 Tunnel82 50
+ip route 10.77.107.0 255.255.255.0 Tunnel87
+ip route 10.77.107.0 255.255.255.0 Tunnel88 50
+ip route 10.77.108.0 255.255.255.0 Tunnel89
+ip route 10.77.108.0 255.255.255.0 Tunnel90 50
+ip route 10.77.119.0 255.255.255.0 Tunnel95
+ip route 10.77.119.0 255.255.255.0 Tunnel96 50
+ip route 10.77.120.0 255.255.255.0 Tunnel91
+ip route 10.77.120.0 255.255.255.0 Tunnel92 50
+ip route 10.77.121.0 255.255.255.0 Tunnel85
+ip route 10.77.121.0 255.255.255.0 Tunnel86 50
+ip route 10.77.122.0 255.255.255.0 Tunnel83
+ip route 10.77.122.0 255.255.255.0 Tunnel84 50
+ip route 10.77.123.0 255.255.255.0 Tunnel55
+ip route 10.77.123.0 255.255.255.0 Tunnel56 50
+ip route 10.77.126.0 255.255.255.0 Tunnel101
+ip route 10.77.126.0 255.255.255.0 Tunnel102 50
+ip route 10.77.127.0 255.255.255.0 Tunnel103
+ip route 10.77.127.0 255.255.255.0 Tunnel104 50
+ip route 10.77.128.0 255.255.255.0 Tunnel105
+ip route 10.77.128.0 255.255.255.0 Tunnel106 50
+ip route 10.77.130.0 255.255.255.0 Tunnel71130
+ip route 10.77.130.0 255.255.255.0 Tunnel71630 50
+ip route 10.77.131.0 255.255.255.0 Tunnel71131
+ip route 10.77.131.0 255.255.255.0 Tunnel71631 50
+ip route 10.77.132.0 255.255.255.0 Tunnel71132
+ip route 10.77.132.0 255.255.255.0 Tunnel71632 50
+ip route 10.77.133.0 255.255.255.0 Tunnel71133
+ip route 10.77.133.0 255.255.255.0 Tunnel71633 50
+ip route 10.77.135.0 255.255.255.0 Tunnel71135
+ip route 10.77.135.0 255.255.255.0 Tunnel71635 50
+ip route 10.77.141.0 255.255.255.0 Tunnel71141
+ip route 10.77.141.0 255.255.255.0 Tunnel71641 50
+ip route 10.77.142.0 255.255.255.0 Tunnel71142
+ip route 10.77.142.0 255.255.255.0 Tunnel71642 50
+ip route 10.77.143.0 255.255.255.0 Tunnel71143
+ip route 10.77.143.0 255.255.255.0 Tunnel71643 50
+ip route 10.77.146.0 255.255.255.0 Tunnel71146
+ip route 10.77.146.0 255.255.255.0 Tunnel71646 50
+ip route 10.77.147.0 255.255.255.0 Tunnel71147
+ip route 10.77.147.0 255.255.255.0 Tunnel71647 50
+ip route 10.77.150.0 255.255.255.0 Tunnel71150
+ip route 10.77.150.0 255.255.255.0 Tunnel71650 50
+ip route 10.77.152.0 255.255.255.0 Tunnel71152
+ip route 10.77.152.0 255.255.255.0 Tunnel71652 50
+ip route 10.77.157.0 255.255.255.0 Tunnel71157
+ip route 10.77.157.0 255.255.255.0 Tunnel71657 50
+ip route 10.77.159.0 255.255.255.0 Tunnel71159
+ip route 10.77.159.0 255.255.255.0 Tunnel71659 50
+ip route 10.77.161.0 255.255.255.0 Tunnel71161
+ip route 10.77.161.0 255.255.255.0 Tunnel71661 50
+ip route 10.77.164.0 255.255.255.0 Tunnel71164
+ip route 10.77.164.0 255.255.255.0 Tunnel71664 50
+ip route 10.77.165.0 255.255.255.0 Tunnel71165
+ip route 10.77.165.0 255.255.255.0 Tunnel71665 50
+ip route 10.77.167.0 255.255.255.0 Tunnel71167
+ip route 10.77.167.0 255.255.255.0 Tunnel71667 50
+ip route 10.77.168.0 255.255.255.0 Tunnel71168
+ip route 10.77.168.0 255.255.255.0 Tunnel71668 50
+ip route 10.77.169.0 255.255.255.0 Tunnel71169
+ip route 10.77.169.0 255.255.255.0 Tunnel71669 50
+ip route 10.77.170.0 255.255.255.0 Tunnel71170
+ip route 10.77.170.0 255.255.255.0 Tunnel71670 50
+ip route 10.77.173.0 255.255.255.0 Tunnel71173
+ip route 10.77.173.0 255.255.255.0 Tunnel71673 50
+ip route 10.77.175.0 255.255.255.0 Tunnel71175
+ip route 10.77.175.0 255.255.255.0 Tunnel71675 50
+ip route 10.77.176.0 255.255.255.0 Tunnel71176
+ip route 10.77.176.0 255.255.255.0 Tunnel71676 50
+ip route 10.77.177.0 255.255.255.0 Tunnel71177
+ip route 10.77.177.0 255.255.255.0 Tunnel71677 50
+ip route 10.77.178.0 255.255.255.0 Tunnel71178
+ip route 10.77.178.0 255.255.255.0 Tunnel71678 50
+ip route 10.77.188.0 255.255.255.0 Tunnel71188
+ip route 10.77.188.0 255.255.255.0 Tunnel71688 50
+ip route 10.77.189.0 255.255.255.0 Tunnel71189
+ip route 10.77.189.0 255.255.255.0 Tunnel71689 50
+ip route 10.77.192.0 255.255.255.0 Tunnel71192
+ip route 10.77.192.0 255.255.255.0 Tunnel71692 50
+ip route 10.77.193.0 255.255.255.0 Tunnel71193
+ip route 10.77.193.0 255.255.255.0 Tunnel71693 50
+ip route 10.77.194.0 255.255.255.0 Tunnel71194
+ip route 10.77.194.0 255.255.255.0 Tunnel71694 50
+ip route 10.77.196.0 255.255.255.0 Tunnel71196
+ip route 10.77.196.0 255.255.255.0 Tunnel71696 50
+ip route 10.77.197.0 255.255.255.0 Tunnel71197
+ip route 10.77.197.0 255.255.255.0 Tunnel71697 50
+ip route 10.77.198.0 255.255.255.0 Tunnel71198
+ip route 10.77.198.0 255.255.255.0 Tunnel71698 50
+ip route 10.77.201.0 255.255.255.0 Tunnel71201
+ip route 10.77.201.0 255.255.255.0 Tunnel71701 50
+ip route 10.77.202.0 255.255.255.0 Tunnel71202
+ip route 10.77.202.0 255.255.255.0 Tunnel71702 50
+ip route 10.77.203.0 255.255.255.0 Tunnel71203
+ip route 10.77.203.0 255.255.255.0 Tunnel71703 50
+ip route 10.77.204.0 255.255.255.0 Tunnel71204
+ip route 10.77.204.0 255.255.255.0 Tunnel71704 50
+ip route 10.77.221.0 255.255.255.0 Tunnel71221
+ip route 10.77.221.0 255.255.255.0 Tunnel71721 50
+ip route 10.77.248.0 255.255.255.0 Tunnel71248
+ip route 10.77.248.0 255.255.255.0 Tunnel71748 50
+ip route 10.78.255.148 255.255.255.255 10.75.249.250
+ip route 10.141.5.0 255.255.255.0 10.75.249.250
+ip route 10.220.7.166 255.255.255.255 10.75.249.254
+ip route 59.120.48.163 255.255.255.255 10.75.249.254
+ip route 59.120.49.140 255.255.255.255 10.75.249.254
+ip route 59.120.49.153 255.255.255.255 10.75.249.254
+ip route 60.248.104.86 255.255.255.255 10.75.249.254
+ip route 60.248.104.88 255.255.255.255 10.75.249.254
+ip route 60.248.149.69 255.255.255.255 10.75.249.254
+ip route 60.248.149.70 255.255.255.255 10.75.249.254
+ip route 60.248.149.78 255.255.255.255 10.75.249.254
+ip route 60.250.165.40 255.255.255.255 10.75.249.254
+ip route 60.250.165.48 255.255.255.255 10.75.249.254
+ip route 60.250.169.40 255.255.255.255 10.75.249.254
+ip route 60.250.169.43 255.255.255.255 10.75.249.254
+ip route 61.30.49.25 255.255.255.255 10.75.249.254
+ip route 61.30.148.140 255.255.255.255 10.75.249.254
+ip route 61.63.37.58 255.255.255.255 10.75.249.254
+ip route 61.67.14.164 255.255.255.255 10.75.249.254
+ip route 61.218.75.133 255.255.255.255 10.75.249.254
+ip route 61.219.2.28 255.255.255.255 10.75.249.254
+ip route 61.220.135.67 255.255.255.255 10.75.249.254
+ip route 172.16.11.32 255.255.255.240 10.75.249.254
+ip route 172.16.201.33 255.255.255.255 10.75.249.254
+ip route 172.21.248.0 255.255.255.252 10.71.254.250 name BR71248_tloc_Ex_Route_NHSDH
+ip route 172.25.154.164 255.255.255.255 10.75.249.254
+ip route 172.26.26.207 255.255.255.255 10.75.249.254
+ip route 192.168.16.12 255.255.255.255 10.75.249.254 name CHT-FTP
+ip route 192.169.254.50 255.255.255.255 10.75.249.254
+ip route 202.39.173.234 255.255.255.255 10.75.249.254
+ip route 203.66.154.29 255.255.255.255 10.75.249.254
+ip route 203.66.154.40 255.255.255.255 10.75.249.254
+ip route 203.66.154.58 255.255.255.255 10.75.249.254
+ip route 203.66.154.59 255.255.255.255 10.75.249.254
+ip route 203.66.154.67 255.255.255.255 10.75.249.254
+ip route 203.66.181.3 255.255.255.255 10.75.249.254
+ip route 203.69.131.3 255.255.255.255 10.75.249.254
+ip route 203.73.160.26 255.255.255.255 10.75.249.254
+ip route 203.74.181.23 255.255.255.255 10.75.251.10
+ip route 204.105.0.107 255.255.255.255 10.75.249.254
+ip route 210.64.11.182 255.255.255.255 10.75.249.254
+ip route 210.67.129.7 255.255.255.255 10.75.249.254
+ip route 210.67.175.143 255.255.255.255 10.75.249.254
+ip route 210.69.124.245 255.255.255.255 10.75.249.254
+ip route 210.69.155.123 255.255.255.255 10.75.249.254
+ip route 210.241.14.219 255.255.255.255 10.75.249.254
+ip route 210.242.218.0 255.255.255.0 10.75.249.254
+ip route 210.243.204.88 255.255.255.255 10.75.249.254
+ip route 211.20.191.0 255.255.255.0 10.75.249.254
+ip route 211.21.149.25 255.255.255.255 10.75.249.254
+ip route 211.72.253.128 255.255.255.128 10.75.249.254
+ip route 211.79.149.106 255.255.255.255 10.75.249.254
+ip route 220.130.115.128 255.255.255.128 10.75.249.254
+!
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+ip access-list extended IP_243-2
+ permit ip 10.71.243.0 0.0.0.255 10.71.0.0 0.0.255.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.0.0 0.0.255.255
+ permit ip 10.71.243.0 0.0.0.255 10.91.0.0 0.0.255.255
+ permit ip 10.71.243.0 0.0.0.255 10.78.0.0 0.0.255.255
+ permit ip 10.71.243.0 0.0.0.255 10.88.0.0 0.0.255.255
+ permit ip 10.71.243.0 0.0.0.255 10.98.0.0 0.0.255.255
+ip access-list extended IP_243-3
+ permit ip 10.71.243.0 0.0.0.255 10.81.241.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.242.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.243.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.244.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.245.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.235.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.81.239.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.91.218.0 0.0.0.255
+ permit ip 10.71.243.0 0.0.0.255 10.91.240.0 0.0.0.255
+ip access-list extended IP_71_234-2
+ permit ip 10.71.234.0 0.0.0.255 10.71.0.0 0.0.255.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.0.0 0.0.255.255
+ permit ip 10.71.234.0 0.0.0.255 10.91.0.0 0.0.255.255
+ permit ip 10.71.234.0 0.0.0.255 10.78.0.0 0.0.255.255
+ permit ip 10.71.234.0 0.0.0.255 10.88.0.0 0.0.255.255
+ permit ip 10.71.234.0 0.0.0.255 10.98.0.0 0.0.255.255
+ip access-list extended IP_71_234-3
+ permit ip 10.71.234.0 0.0.0.255 10.81.241.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.242.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.243.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.244.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.245.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.235.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.81.239.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.91.218.0 0.0.0.255
+ permit ip 10.71.234.0 0.0.0.255 10.91.240.0 0.0.0.255
+ip access-list extended IP_71_235-2
+ permit ip 10.71.235.0 0.0.0.255 10.71.0.0 0.0.255.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.0.0 0.0.255.255
+ permit ip 10.71.235.0 0.0.0.255 10.91.0.0 0.0.255.255
+ permit ip 10.71.235.0 0.0.0.255 10.78.0.0 0.0.255.255
+ permit ip 10.71.235.0 0.0.0.255 10.88.0.0 0.0.255.255
+ permit ip 10.71.235.0 0.0.0.255 10.98.0.0 0.0.255.255
+ip access-list extended IP_71_235-3
+ permit ip 10.71.235.0 0.0.0.255 10.81.241.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.242.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.243.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.244.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.245.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.235.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.81.239.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.91.218.0 0.0.0.255
+ permit ip 10.71.235.0 0.0.0.255 10.91.240.0 0.0.0.255
+ip access-list extended NTP-Deny
+ deny   ip any any
+ip access-list extended NTP-Server
+ permit ip host 10.75.215.1 any
+ deny   ip any any
+ip access-list extended branch_net
+ permit ip 10.71.0.0 0.0.255.255 any
+ permit ip 10.225.1.0 0.0.0.255 any
+ permit ip 172.26.81.0 0.0.0.255 any
+ permit ip 192.168.254.0 0.0.0.255 any
+ permit ip 10.77.0.0 0.0.255.255 any
+ip sla responder
+ip sla 71193
+ icmp-echo 10.71.254.142 source-ip 10.71.254.141
+ threshold 2000
+ frequency 30
+ip sla schedule 71193 life forever start-time now
+ip sla 71221
+ icmp-echo 10.71.254.170 source-ip 10.71.254.169
+ threshold 2000
+ frequency 30
+ip sla schedule 71221 life forever start-time now
+ip sla 71231
+ icmp-echo 10.71.254.174 source-ip 10.71.254.173
+ threshold 2000
+ frequency 30
+ip sla schedule 71231 life forever start-time now
+ip sla 71247
+ icmp-echo 10.71.254.34 source-ip 10.71.254.33
+ threshold 2000
+ frequency 30
+ip sla schedule 71247 life forever start-time now
+ip sla 71731
+ icmp-echo 10.71.254.178 source-ip 10.71.254.177
+ threshold 2000
+ frequency 30
+ip sla schedule 71731 life forever start-time now
+ip sla 71747
+ icmp-echo 10.71.254.38 source-ip 10.71.254.37
+ threshold 2000
+ frequency 30
+ip sla schedule 71747 life forever start-time now
+ip sla 72063750
+ icmp-echo 10.71.254.2 source-ip 10.71.254.1
+ip sla schedule 72063750 life forever start-time now
+logging history debugging
+logging alarm informational
+logging source-interface GigabitEthernet0/0/0
+logging host 10.75.251.122
+logging host 10.75.13.12
+access-list 10 permit 10.225.1.0 0.0.0.255
+access-list 99 permit 10.75.13.126
+access-list 99 permit 10.75.13.131
+access-list 99 permit 10.64.14.0 0.0.0.255
+access-list 99 permit 10.75.125.0 0.0.0.255
+access-list 99 permit 10.75.200.0 0.0.0.255
+access-list 99 permit 10.75.248.0 0.0.0.255
+access-list 99 permit 10.75.249.0 0.0.0.255
+!
+!
+route-map branch permit 10 
+ match ip address branch_net
+!
+route-map fuhwa permit 7 
+ match ip address IP_243-3 IP_71_234-3 IP_71_235-3
+ set ip next-hop 10.75.249.254
+!
+route-map fuhwa permit 10 
+ match ip address IP_243-2 IP_71_234-2 IP_71_235-2
+ set ip next-hop 10.75.249.254
+!
+snmp-server community @Yuanta RO
+snmp-server community onlynetsecure RW
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+snmp-server host 10.75.249.138 version 2c @Yuanta 
+snmp ifmib ifindex persist
+tacacs-server host 10.75.206.72
+tacacs-server directed-request
+tacacs-server key 7 014254570F5E50
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+banner motd ^C
+**************************************************************
+ 
+   WARNING: This system is for the use of authorized clients only.
+            Individuals using the computer network system without
+            authorization, or in excess of their authorization, are
+            subject to having all their activity on this computer
+            network system monitored and recorded by system
+            personnel.  To protect the computer network system from
+            unauthorized use and to ensure the computer network systems
+            is functioning properly, system administrators monitor this
+            system.  Anyone using this computer network system
+            expressly consents to such monitoring and is advised that
+            if such monitoring reveals possible conduct of criminal
+            activity, system personnel may provide the evidence of
+            such activity to law enforcement officers. 
+            Access is restricted to authorized users only.
+            Unauthorized access is a violation of state and federal,
+            civil and criminal laws.
+**************************************************************
+^C
+!
+line con 0
+ exec-timeout 15 0
+ authorization commands 1 CONSOLE
+ authorization commands 15 CONSOLE
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ access-class 99 in
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ access-class 99 in
+ logging synchronous
+ transport input none
+!
+ntp access-group peer NTP-Server
+ntp access-group serve NTP-Deny
+ntp access-group query-only NTP-Deny
+ntp server 10.75.215.1
+!
+!
+!
+!
+!
+end
+
+R_10.75.249.251#exit

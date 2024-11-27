@@ -1,0 +1,1304 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2024.04.23 11:12:10 =~=~=~=~=~=~=~=~=~=~=~=
+ter len 0
+R_10.91.249.250#show run
+Building configuration...
+
+Current configuration : 33848 bytes
+!
+! Last configuration change at 18:11:55 TWN Mon Apr 15 2024 by netadmin11
+! NVRAM config last updated at 18:20:52 TWN Mon Apr 15 2024 by netadmin11
+!
+version 16.9
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+no service dhcp
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname R_10.91.249.250
+!
+boot-start-marker
+boot system flash bootflash:/asr1001x-universalk9.16.09.06.SPA.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging buffered 102400
+enable secret 5 $1$cxTo$eftZNTM8E5PfMRg/h19XE1
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ Auth
+ server 10.75.206.72
+!
+aaa authentication login default group Auth local
+aaa authentication login CONSOLE none
+aaa authorization commands 1 default group Auth local 
+aaa authorization commands 1 CONSOLE none 
+aaa authorization commands 15 default group Auth local 
+aaa authorization commands 15 CONSOLE none 
+aaa accounting commands 1 default start-stop group Auth
+aaa accounting commands 15 default start-stop group Auth
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone TWN 8 0
+no ip source-route
+!
+!
+!
+!
+!
+!
+!
+no ip bootp server
+no ip domain lookup
+ip domain name yuantabank.com
+!
+!
+!
+login on-failure log
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid ASR1001-X sn JAE192000N1
+no license smart enable
+!
+spanning-tree extend system-id
+diagnostic bootup level minimal
+!
+!
+!
+username admin password 7 096A7119385042255B1E00
+!
+redundancy
+ mode none
+!
+!
+!
+!
+controller SONET 0/1/0
+ framing sdh
+ clock source line
+ aug mapping au-4
+ !
+ au-4 1 tug-3 1
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 2
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-31
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-31
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-31
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-31
+  tug-2 5 e1 2 channel-group 0 timeslots 1-31
+  tug-2 5 e1 3 channel-group 0 timeslots 1-31
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-31
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-31
+ !
+ au-4 1 tug-3 3
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-31
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+!
+!
+!
+cdp run
+!
+policy-map NG10M
+ class class-default
+  shape average 9900000   
+policy-map NG4M
+ class class-default
+  shape average 3960000   
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 10.91.255.249 255.255.255.255
+!
+interface Loopback1
+ ip address 10.91.251.249 255.255.255.255
+!
+interface Port-channel1
+ description Connect to SW_10.91.249.254 Po1
+ ip address 10.91.249.250 255.255.255.240
+ no negotiation auto
+!
+interface Tunnel21
+ description Connect to 10.75.249.254_Tunnel21
+ ip unnumbered GigabitEthernet0/0/0
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.75.254.6
+ tunnel destination 10.75.254.5
+!
+interface Tunnel22
+ description Connect to 10.75.249.254_Tunnel22
+ ip unnumbered GigabitEthernet0/0/1
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.75.254.10
+ tunnel destination 10.75.254.9
+!
+interface Tunnel235
+ description Monitor to TCBANK_10.91.235.0_Line1(72D-61695)
+ ip unnumbered GigabitEthernet0/0/4.235
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.91.254.229
+ tunnel destination 10.91.254.230
+!
+interface Tunnel1235
+ description Monitor to TCBANK_10.91.235.0_Line2(72D-61696)
+ ip unnumbered GigabitEthernet0/0/5.1235
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source 10.91.254.233
+ tunnel destination 10.91.254.234
+!
+interface TenGigabitEthernet0/0/0
+ no ip address
+ shutdown
+!
+interface TenGigabitEthernet0/0/1
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0/0
+ description Connect to 10.75.249.241_3750 Gi1/0/12
+ ip address 10.75.254.6 255.255.255.252
+ ip ospf network point-to-point
+ speed 100
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/1
+ description Connect to 10.75.249.241_3750 Gi2/0/12
+ ip address 10.75.254.10 255.255.255.252
+ ip ospf network point-to-point
+ speed 100
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/2
+ description Connect to SW_10.91.249.254 Gi1/0/24
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/3
+ description Connect to SW_10.91.249.254 Gi2/0/24
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/4
+ description Connect to SW_10.91.249.231_G1/0/48
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/4.11
+ description Connect to Node0116-R
+ bandwidth 4000
+ encapsulation dot1Q 11
+ ip address 10.91.254.45 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.40
+ description Connect to R_10.91.40.250(72D-61933)(SW_231_G1/0/5)
+ bandwidth 4000
+ encapsulation dot1Q 40
+ ip address 10.91.254.81 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.42
+ description Connect to Node0426-R
+ bandwidth 4000
+ encapsulation dot1Q 42
+ ip address 10.91.254.49 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.51
+ description Connect to Node0518-R
+ bandwidth 4000
+ encapsulation dot1Q 51
+ ip address 10.91.254.37 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.52
+ description Connect to Node0529-R
+ bandwidth 4000
+ encapsulation dot1Q 52
+ ip address 10.91.254.65 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.110
+ description Connect to Node1102-R F0/0/0
+ bandwidth 4000
+ encapsulation dot1Q 110
+ ip address 10.91.254.69 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.125
+ description Connect to NODE1250-R
+ bandwidth 4000
+ encapsulation dot1Q 125
+ ip address 10.91.254.21 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ cdp enable
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.134
+ description Connect to R_10.91.134.250(72D-61714)(SW_231_G1/0/17)
+ bandwidth 4000
+ encapsulation dot1Q 134
+ ip address 10.91.254.133 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.136
+ description Connect to R_10.91.136.250(72E-83873)(SW_231_G1/0/18)
+ bandwidth 4000
+ encapsulation dot1Q 136
+ ip address 10.91.254.137 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.137
+ description Connect to R_10.91.137.250(72D-61699)(SW_231_G1/0/19)
+ bandwidth 4000
+ encapsulation dot1Q 137
+ ip address 10.91.254.141 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.138
+ description Connect to R_10.91.138.250(72D-61700)(SW_231_G1/0/20)
+ bandwidth 4000
+ encapsulation dot1Q 138
+ ip address 10.91.254.145 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.139
+ description Connect to R_10.91.139.250(72E-83876)(SW_231_G1/0/9)
+ bandwidth 4000
+ encapsulation dot1Q 139
+ ip address 10.91.254.101 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.140
+ description Connect to R_10.91.140.250(72E-83874)(SW_231_G1/0/10)
+ bandwidth 4000
+ encapsulation dot1Q 140
+ ip address 10.91.254.105 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.145
+ description Connect to R_10.91.145.250(72D-61701)(SW_231_G1/0/21)
+ bandwidth 4000
+ encapsulation dot1Q 145
+ ip address 10.91.254.149 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.158
+ description Connect to R_10.91.158.250(72E-83875)(SW_231_G1/0/12)
+ bandwidth 4000
+ encapsulation dot1Q 158
+ ip address 10.91.254.113 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.160
+ description Connect to R_10.91.160.250(72E-83878)(SW_231_G1/0/13)
+ bandwidth 4000
+ encapsulation dot1Q 160
+ ip address 10.91.254.117 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.162
+ description Connect to R_10.91.162.250(72E-83879)(SW_231_G1/0/14)
+ bandwidth 4000
+ encapsulation dot1Q 162
+ ip address 10.91.254.121 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.163
+ description Connect to R_10.91.163.250(72E-83880)(SW_231_G1/0/15)
+ bandwidth 4000
+ encapsulation dot1Q 163
+ ip address 10.91.254.125 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/4.225
+ description Connect to TCBANK_2811-F0/0(72D-61697)(SW_231_G1/0/23)
+ bandwidth 10000
+ encapsulation dot1Q 225
+ ip address 10.91.254.221 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface GigabitEthernet0/0/4.235
+ description Connect to TCBANK_939-4506-2_G2/1(72D-61695)(SW_231_G1/0/22)
+ bandwidth 4000
+ encapsulation dot1Q 235
+ ip address 10.91.254.229 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface GigabitEthernet0/0/4.241
+ description Connect to TCBANK_2811-F0/1/0(72D-61715)(SW_231_G1/0/24)
+ bandwidth 10000
+ encapsulation dot1Q 241
+ ip address 10.91.254.237 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface GigabitEthernet0/0/5
+ description Connect to SW_10.91.249.232_G1/0/48
+ no ip address
+ speed 1000
+ no negotiation auto
+ cdp enable
+!
+interface GigabitEthernet0/0/5.25
+ description Connect to R_10.91.25.252_G0/0/0(72D-61713)(SW_232_G1/0/20)
+ bandwidth 4000
+ encapsulation dot1Q 25
+ ip address 10.91.254.73 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.29
+ description Connect to Node0297-R
+ bandwidth 4000
+ encapsulation dot1Q 29
+ ip address 10.91.254.61 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.60
+ description Connect to NODE0600-R
+ bandwidth 4000
+ encapsulation dot1Q 60
+ ip address 10.91.254.5 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.61
+ description Connect to Node0611-A
+ bandwidth 4000
+ encapsulation dot1Q 61
+ ip address 10.91.254.9 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.68
+ description Connect to Node0688-R
+ bandwidth 4000
+ encapsulation dot1Q 68
+ ip address 10.91.254.13 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.69
+ description Connect to NODE0699-R
+ bandwidth 4000
+ encapsulation dot1Q 69
+ ip address 10.91.254.17 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.80
+ description Connect to NODE0806-R
+ bandwidth 4000
+ encapsulation dot1Q 80
+ ip address 10.91.254.25 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.82
+ description Connect to NODE0828-R
+ bandwidth 4000
+ encapsulation dot1Q 82
+ ip address 10.91.254.29 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.145
+ description Connect to R_10.91.145.250(72D-61701)(SW_232_G1/0/8)
+ bandwidth 4000
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.149
+ description Connect to new R_10.91.149.250_G0/2(72D-62014)
+ bandwidth 4000
+ encapsulation dot1Q 149
+ ip address 10.91.254.153 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.154
+ description Connect to R_10.91.154.250(72D-61703)(SW_232_G1/0/10)
+ bandwidth 4000
+ encapsulation dot1Q 154
+ ip address 10.91.254.157 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.155
+ description Connect to R_10.91.155.250(72D-61704)(SW_232_G1/0/11)
+ bandwidth 4000
+ encapsulation dot1Q 155
+ ip address 10.91.254.161 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.156
+ description Connect to R_10.91.156.250(72D-61705)(SW_232_G1/0/12)
+ bandwidth 4000
+ encapsulation dot1Q 156
+ ip address 10.91.254.165 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.172
+ description Connect to R_10.91.172.250(72D-61706)(SW_232_G1/0/13)
+ bandwidth 4000
+ encapsulation dot1Q 172
+ ip address 10.91.254.169 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.174
+ description Connect to R_10.91.174.250(72D-61707)(SW_232_G1/0/14)
+ bandwidth 4000
+ encapsulation dot1Q 174
+ ip address 10.91.254.173 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.183
+ description Connect to R_10.91.183.250(72D-61709)(SW_232_G1/0/16)
+ bandwidth 4000
+ encapsulation dot1Q 183
+ ip address 10.91.254.181 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.185
+ description Connect to R_10.91.185.250(72D-61711)(SW_232_G1/0/18)
+ bandwidth 4000
+ encapsulation dot1Q 185
+ ip address 10.91.254.189 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.186
+ description Connect to R_10.91.186.250(72D-61712)(SW_232_G1/0/19)
+ bandwidth 4000
+ encapsulation dot1Q 186
+ ip address 10.91.254.193 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.187
+ description Connect to R_10.91.187.252_G0/0/0(72-D62098)(SW_232_G1/0/21)
+ bandwidth 4000
+ encapsulation dot1Q 187
+ ip address 10.91.254.197 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.199
+ description Connect to R_10.91.199.250(72D-61840)(SW_232_G1/0/17)
+ bandwidth 4000
+ encapsulation dot1Q 199
+ ip address 10.91.254.177 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG4M
+!
+interface GigabitEthernet0/0/5.232
+ description Connect to R_10.91.11.250_2(6E-80584)(SW_232_G1/0/8)
+ bandwidth 4000
+ encapsulation dot1Q 232
+ ip address 10.91.254.53 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ service-policy output NG10M
+!
+interface GigabitEthernet0/0/5.1225
+ description Connect to TCBANK_2811-F0/1(72D-61698)(SW_232_G1/0/23)
+ bandwidth 10000
+ encapsulation dot1Q 1225
+ ip address 10.91.254.225 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface GigabitEthernet0/0/5.1235
+ description Connect to TCBANK_939-4506-2_G6/1(72D-61696)(SW_232_G1/0/22)
+ bandwidth 4000
+ encapsulation dot1Q 1235
+ ip address 10.91.254.233 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface GigabitEthernet0/0/5.1241
+ description Connect to TCBANK_2811-F0/1/1(72D-61716)(SW_232_G1/0/24)
+ bandwidth 10000
+ encapsulation dot1Q 1241
+ ip address 10.91.254.241 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+!
+interface Serial0/1/0.1/1/1/1:0
+ description 72D-62091
+ bandwidth 512000
+ ip address 10.98.244.1 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/1/2:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/1/3:0
+ description Connect to 72E-83041
+ ip address 10.98.244.85 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/2/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/1/2/2:0
+ description Connect to 72D-88684
+ ip address 10.98.244.69 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/2/3:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/3/1:0
+ description Connect to 72D-88685
+ ip address 10.98.244.73 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/3/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/1/3/3:0
+ description Connect to 72E-83043
+ ip address 10.98.244.97 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/4/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/1/4/2:0
+ description Connect to 72E-83045
+ ip address 10.98.244.61 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/4/3:0
+ description Connect to 72E-83046
+ ip address 10.98.244.109 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/5/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/1/5/2:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/5/3:0
+ description Connect to 72E-83777
+ ip address 10.98.244.101 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/6/1:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/6/2:0
+ description Connect to 72E-83884
+ ip address 10.98.244.225 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/6/3:0
+ description Connect to 72D-88693
+ ip address 10.98.244.53 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/7/1:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/1/7/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/1/7/3:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/1/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/2/1/2:0
+ description Connect to 72D-87935
+ ip address 10.98.244.13 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/1/3:0
+ description Connect to 72D87984
+ ip address 10.88.253.21 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/2/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/2/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/3/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/2/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/3/3:0
+ description Connect to 72E-83934
+ ip address 10.98.244.157 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/4/2:0
+ no ip address
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/6/1:0
+ description Connect to 72E-89955
+ ip address 10.98.244.41 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/6/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/2/6/3:0
+ description Connect to 72E-83394
+ ip address 10.98.244.93 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/7/2:0
+ description Connect to 72E-83180
+ ip address 10.98.244.113 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/2/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/1/2:0
+ description Connect to 72D-60880
+ ip address 10.98.244.125 255.255.255.252
+ encapsulation ppp
+!
+interface Serial0/1/0.1/3/1/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/3/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/2/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/3/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/3/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/1/0.1/3/3/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/4/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/3:0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ shutdown
+ negotiation auto
+!
+router ospf 1
+ router-id 10.91.255.249
+ area 4 nssa
+ redistribute connected metric 60 subnets route-map branch_connect
+ redistribute static metric 60 subnets route-map branch_loopback
+ network 10.75.254.4 0.0.0.3 area 4
+ network 10.75.254.8 0.0.0.3 area 4
+ network 10.75.254.44 0.0.0.3 area 4
+ network 10.75.254.48 0.0.0.3 area 4
+ network 10.91.224.0 0.0.0.255 area 4
+ network 10.91.225.0 0.0.0.255 area 4
+ network 10.91.226.0 0.0.0.255 area 4
+ network 10.91.227.0 0.0.0.255 area 4
+ network 10.91.228.0 0.0.0.255 area 4
+ network 10.91.229.0 0.0.0.255 area 4
+ network 10.91.230.0 0.0.0.255 area 4
+ network 10.91.235.0 0.0.0.255 area 4
+ network 10.91.236.0 0.0.0.255 area 4
+ network 10.91.237.0 0.0.0.255 area 4
+ network 10.91.239.0 0.0.0.255 area 4
+ network 10.91.241.0 0.0.0.255 area 4
+ network 10.91.242.0 0.0.0.255 area 4
+ network 10.91.243.0 0.0.0.255 area 4
+ network 10.91.244.0 0.0.0.255 area 4
+ network 10.91.245.0 0.0.0.255 area 4
+ network 10.91.246.0 0.0.0.255 area 4
+ network 10.91.247.0 0.0.0.255 area 4
+ network 10.91.249.0 0.0.0.255 area 4
+ network 10.91.254.44 0.0.0.3 area 4
+ network 10.91.254.52 0.0.0.3 area 4
+ network 10.91.255.0 0.0.0.255 area 4
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+no ip nat service sip udp port 5060
+ip route 10.88.255.134 255.255.255.255 Serial0/1/0.1/2/1/3:0
+ip route 10.91.137.0 255.255.255.0 10.91.254.142
+ip route 10.91.224.0 255.255.255.0 10.91.254.230
+ip route 10.91.224.0 255.255.255.0 10.91.254.234
+ip route 10.91.225.0 255.255.255.0 10.91.254.230
+ip route 10.91.225.0 255.255.255.0 10.91.254.234
+ip route 10.91.226.0 255.255.255.0 10.91.254.230
+ip route 10.91.226.0 255.255.255.0 10.91.254.234
+ip route 10.91.227.0 255.255.255.0 10.91.254.230
+ip route 10.91.227.0 255.255.255.0 10.91.254.234
+ip route 10.91.228.0 255.255.255.0 10.91.254.230
+ip route 10.91.228.0 255.255.255.0 10.91.254.234
+ip route 10.91.229.0 255.255.255.0 10.91.254.230
+ip route 10.91.229.0 255.255.255.0 10.91.254.234
+ip route 10.91.230.0 255.255.255.0 10.91.254.230
+ip route 10.91.230.0 255.255.255.0 10.91.254.234
+ip route 10.91.235.0 255.255.255.0 10.91.254.230
+ip route 10.91.235.0 255.255.255.0 10.91.254.234
+ip route 10.91.236.0 255.255.255.0 10.91.254.230
+ip route 10.91.236.0 255.255.255.0 10.91.254.234
+ip route 10.91.237.0 255.255.255.0 10.91.254.230
+ip route 10.91.237.0 255.255.255.0 10.91.254.234
+ip route 10.91.239.0 255.255.255.0 10.91.249.254
+ip route 10.91.244.0 255.255.255.0 10.91.254.230
+ip route 10.91.244.0 255.255.255.0 10.91.254.234
+ip route 10.91.250.11 255.255.255.255 10.91.254.54
+ip route 10.91.250.25 255.255.255.255 10.91.254.74
+ip route 10.91.250.29 255.255.255.255 10.91.254.62
+ip route 10.91.250.40 255.255.255.255 10.91.254.82
+ip route 10.91.250.42 255.255.255.255 10.91.254.50
+ip route 10.91.250.51 255.255.255.255 10.91.254.38
+ip route 10.91.250.52 255.255.255.255 10.91.254.66
+ip route 10.91.250.60 255.255.255.255 10.91.254.6
+ip route 10.91.250.61 255.255.255.255 10.91.254.10
+ip route 10.91.250.68 255.255.255.255 10.91.254.14
+ip route 10.91.250.69 255.255.255.255 10.91.254.18
+ip route 10.91.250.80 255.255.255.255 10.91.254.26
+ip route 10.91.250.82 255.255.255.255 10.91.254.30
+ip route 10.91.250.110 255.255.255.255 10.91.254.70
+ip route 10.91.250.125 255.255.255.255 10.91.254.22
+ip route 10.91.250.134 255.255.255.255 10.91.254.134
+ip route 10.91.250.136 255.255.255.255 10.91.254.138
+ip route 10.91.250.137 255.255.255.255 10.91.254.142
+ip route 10.91.250.138 255.255.255.255 10.91.254.146
+ip route 10.91.250.139 255.255.255.255 10.91.254.102
+ip route 10.91.250.140 255.255.255.255 10.91.254.106
+ip route 10.91.250.145 255.255.255.255 10.91.254.150
+ip route 10.91.250.149 255.255.255.255 10.91.254.154
+ip route 10.91.250.154 255.255.255.255 10.91.254.158
+ip route 10.91.250.155 255.255.255.255 10.91.254.162
+ip route 10.91.250.156 255.255.255.255 10.91.254.166
+ip route 10.91.250.158 255.255.255.255 10.91.254.114
+ip route 10.91.250.160 255.255.255.255 10.91.254.118
+ip route 10.91.250.162 255.255.255.255 10.91.254.122
+ip route 10.91.250.163 255.255.255.255 10.91.254.126
+ip route 10.91.250.172 255.255.255.255 10.91.254.170
+ip route 10.91.250.174 255.255.255.255 10.91.254.174
+ip route 10.91.250.183 255.255.255.255 10.91.254.182
+ip route 10.91.250.185 255.255.255.255 10.91.254.190
+ip route 10.91.250.186 255.255.255.255 10.91.254.194
+ip route 10.91.250.187 255.255.255.255 10.91.254.198
+ip route 10.91.250.199 255.255.255.255 10.91.254.178
+ip route 10.91.250.232 255.255.255.255 10.91.254.54
+ip route 10.91.255.11 255.255.255.255 10.91.254.54
+ip route 10.91.255.25 255.255.255.255 10.91.254.74
+ip route 10.91.255.29 255.255.255.255 10.91.254.62
+ip route 10.91.255.40 255.255.255.255 10.91.254.82
+ip route 10.91.255.42 255.255.255.255 10.91.254.50
+ip route 10.91.255.51 255.255.255.255 10.91.254.38
+ip route 10.91.255.52 255.255.255.255 10.91.254.66
+ip route 10.91.255.60 255.255.255.255 10.91.254.6
+ip route 10.91.255.61 255.255.255.255 10.91.254.10
+ip route 10.91.255.68 255.255.255.255 10.91.254.14
+ip route 10.91.255.69 255.255.255.255 10.91.254.18
+ip route 10.91.255.80 255.255.255.255 10.91.254.26
+ip route 10.91.255.82 255.255.255.255 10.91.254.30
+ip route 10.91.255.110 255.255.255.255 10.91.254.70
+ip route 10.91.255.125 255.255.255.255 10.91.254.22
+ip route 10.91.255.134 255.255.255.255 10.91.254.134
+ip route 10.91.255.136 255.255.255.255 10.91.254.138
+ip route 10.91.255.137 255.255.255.255 10.91.254.142
+ip route 10.91.255.138 255.255.255.255 10.91.254.146
+ip route 10.91.255.139 255.255.255.255 10.91.254.102
+ip route 10.91.255.140 255.255.255.255 10.91.254.106
+ip route 10.91.255.145 255.255.255.255 10.91.254.150
+ip route 10.91.255.149 255.255.255.255 10.91.254.154
+ip route 10.91.255.154 255.255.255.255 10.91.254.158
+ip route 10.91.255.155 255.255.255.255 10.91.254.162
+ip route 10.91.255.156 255.255.255.255 10.91.254.166
+ip route 10.91.255.158 255.255.255.255 10.91.254.114
+ip route 10.91.255.160 255.255.255.255 10.91.254.118
+ip route 10.91.255.162 255.255.255.255 10.91.254.122
+ip route 10.91.255.163 255.255.255.255 10.91.254.126
+ip route 10.91.255.172 255.255.255.255 10.91.254.170
+ip route 10.91.255.174 255.255.255.255 10.91.254.174
+ip route 10.91.255.183 255.255.255.255 10.91.254.182
+ip route 10.91.255.185 255.255.255.255 10.91.254.190
+ip route 10.91.255.186 255.255.255.255 10.91.254.194
+ip route 10.91.255.187 255.255.255.255 10.91.254.198
+ip route 10.91.255.199 255.255.255.255 10.91.254.178
+ip route 10.91.255.232 255.255.255.255 10.91.254.54
+ip route 10.97.137.0 255.255.255.0 10.91.254.142
+ip route 10.98.245.11 255.255.255.255 Serial0/1/0.1/1/4/2:0
+ip route 10.98.245.12 255.255.255.255 Serial0/1/0.1/1/6/3:0
+ip route 10.98.245.13 255.255.255.255 Serial0/1/0.1/1/1/3:0
+ip route 10.98.245.14 255.255.255.255 Serial0/1/0.1/2/3/3:0
+ip route 10.98.245.17 255.255.255.255 Serial0/1/0.1/1/3/1:0
+ip route 10.98.245.42 255.255.255.255 Serial0/1/0.1/1/2/2:0
+ip route 10.98.245.49 255.255.255.255 Serial0/1/0.1/1/3/3:0
+ip route 10.98.245.50 255.255.255.255 Serial0/1/0.1/2/6/3:0
+ip route 10.98.245.52 255.255.255.255 Serial0/1/0.1/1/5/3:0
+ip route 10.98.245.104 255.255.255.255 Serial0/1/0.1/3/1/2:0
+ip route 10.98.245.155 255.255.255.255 10.98.244.2
+ip route 10.98.245.184 255.255.255.255 Serial0/1/0.1/2/1/2:0
+ip route 10.98.245.190 255.255.255.255 Serial0/1/0.1/2/7/2:0
+ip route 10.98.245.199 255.255.255.255 Serial0/1/0.1/1/4/3:0
+ip route 10.98.245.212 255.255.255.255 Serial0/1/0.1/2/6/1:0
+ip route 10.98.245.237 255.255.255.255 Serial0/1/0.1/1/6/2:0
+ip tacacs source-interface Port-channel1 
+!
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+ip access-list extended NTP-Deny
+ deny   ip any any
+ip access-list extended NTP-Server
+ permit ip host 10.75.215.1 any
+ deny   ip any any
+ip access-list extended branch_connect_net
+ permit ip 10.98.244.0 0.0.0.255 any
+ permit ip 10.91.235.0 0.0.0.255 any
+ permit ip 10.91.225.0 0.0.0.255 any
+ permit ip 10.91.226.0 0.0.0.255 any
+ permit ip 10.91.227.0 0.0.0.255 any
+ permit ip 10.91.228.0 0.0.0.255 any
+ permit ip 10.91.229.0 0.0.0.255 any
+ permit ip 10.91.230.0 0.0.0.255 any
+ permit ip 10.91.236.0 0.0.0.255 any
+ permit ip 10.91.237.0 0.0.0.255 any
+ permit ip 10.91.224.0 0.0.0.255 any
+ip access-list extended branch_loopback_net
+ permit ip 10.91.255.0 0.0.0.255 any
+ permit ip 10.91.250.0 0.0.0.255 any
+ permit ip 10.98.245.0 0.0.0.255 any
+ permit ip host 10.88.255.134 any
+logging history debugging
+logging trap debugging
+logging source-interface Port-channel1
+logging host 10.75.251.122
+logging host 10.75.13.12
+access-list 99 permit 10.75.13.126
+access-list 99 permit 10.75.13.131
+access-list 99 permit 10.64.14.0 0.0.0.255
+access-list 99 permit 10.75.125.0 0.0.0.255
+access-list 99 permit 10.75.200.0 0.0.0.255
+access-list 99 permit 10.75.248.0 0.0.0.255
+access-list 99 permit 10.75.249.0 0.0.0.255
+!
+!
+route-map branch_connect permit 10 
+ match ip address branch_connect_net
+!
+route-map branch_loopback permit 10 
+ match ip address branch_loopback_net
+!
+snmp-server community @Yuanta RO
+snmp-server community onlynetsecure RW
+snmp-server trap link ietf
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+snmp-server host 10.75.249.138 public 
+snmp ifmib ifindex persist
+tacacs-server host 10.75.206.72
+tacacs-server directed-request
+tacacs-server key 7 040A59555B741A
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+no parser cache
+!
+line con 0
+ exec-timeout 15 0
+ password 7 0322641B275A747B1E1B1D
+ authorization commands 1 CONSOLE
+ authorization commands 15 CONSOLE
+ login authentication CONSOLE
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input none
+!
+ntp access-group peer NTP-Server
+ntp access-group serve NTP-Deny
+ntp access-group query-only NTP-Deny
+ntp server 10.75.215.1
+!
+!
+!
+!
+!
+end
+
+R_10.91.249.250#exit

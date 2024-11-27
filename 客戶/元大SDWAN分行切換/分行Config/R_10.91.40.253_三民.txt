@@ -1,0 +1,504 @@
+
+Current configuration : 16384 bytes
+!
+! Last configuration change at 14:26:20 TWN Wed Apr 26 2023
+!
+version 17.3
+service timestamps debug datetime msec localtime show-timezone
+service timestamps log datetime msec localtime show-timezone
+service password-encryption
+! Call-home is enabled by Smart-Licensing.
+service call-home
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+!
+no service dhcp
+no service finger
+no service pad
+no ip boot server
+!
+banner motd /
+
+************************************************************************
+   WARNING: This system is for the use of authorized clients only.
+            Individuals using the computer network system without
+            authorization, or in excess of their authorization, are
+            subject to having all their activity on this computer
+            network system monitored and recorded by system
+            personnel.  To protect the computer network system from
+            unauthorized use and to ensure the computer network systems
+            is functioning properly, system administrators monitor this
+            system.  Anyone using this computer network system
+            expressly consents to such monitoring and is advised that
+            if such monitoring reveals possible conduct of criminal
+            activity, system personnel may provide the evidence of
+            such activity to law enforcement officers.
+            Access is restricted to authorized users only.
+            Unauthorized access is a violation of state and federal,
+            civil and criminal laws.
+**************************************************************************/
+!
+hostname R_10.91.40.253
+!
+boot-start-marker
+boot system bootflash:packages.conf
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging buffered 102400
+enable secret S_1n_aCc155
+!
+aaa new-model
+aaa local authentication attempts max-fail 5
+!
+!
+aaa group server tacacs+ Auth
+ server name 10.75.206.72
+ server-private 10.75.206.72 key 123456
+ ip tacacs source-interface GigabitEthernet0/0/1.1
+!
+aaa authentication login default group Auth local
+aaa authentication login CONSOLE none
+aaa authorization commands 1 default group Auth local 
+aaa authorization commands 1 CONSOLE none 
+aaa authorization commands 15 default group Auth local 
+aaa authorization commands 15 CONSOLE none 
+aaa accounting commands 1 default start-stop group Auth
+aaa accounting commands 15 default start-stop group Auth
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone TWN 8 0
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name yuantabank.com
+service sequence-numbers
+!
+!
+!
+login on-failure log
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+vtp mode off
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki trustpoint TP-self-signed-219417961
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-219417961
+ revocation-check none
+ rsakeypair TP-self-signed-219417961
+!
+crypto pki trustpoint SLA-TrustPoint
+ enrollment pkcs12
+ revocation-check crl
+!
+!
+crypto pki certificate chain TP-self-signed-219417961
+ certificate self-signed 01
+  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  30312E30 2C060355 04031325 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32313934 31373936 31301E17 0D323330 34323030 36323832 
+  385A170D 33333034 31393036 32383238 5A303031 2E302C06 03550403 1325494F 
+  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3231 39343137 
+  39363130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 
+  82010100 AFDBB540 A856E808 F59DDF9A B407924A 4C7F54B3 0E0503DF 0C83B77B 
+  E0BB516A 6D88F938 E9A41A5D 39E6D4FE 31D0B860 8903675D F1FC6209 03A5B8A3 
+  27492B12 804127B1 082906B1 2D404466 E45A1ACC 89628C8A 3E94B1F3 F04540C0 
+  F38238FB 558C42D7 6CD1587A 5CA40037 1573DCD2 7365C687 8814D3D4 227BC327 
+  6700F356 9A47EAD7 9C00CC98 609CDC30 23D61A43 FAFF4475 A6979B83 845494A5 
+  A5B85A54 9DA1BDFD D47B136B B442C3F5 957B6F99 40B39B6D 5AD481DA A9B570F2 
+  F2BDBC3F 68B4240C 0664D79C 8E2A01A9 5D013F88 37C7D3B4 111102C9 A19CD187 
+  86ABB672 0A149DE6 0DC26FBE 10B97F14 C65D7F38 53568EBC 6B7BFD20 7F2AAFD6 
+  571C9D65 02030100 01A35330 51300F06 03551D13 0101FF04 05300301 01FF301F 
+  0603551D 23041830 168014E6 AB614DC2 E10BE10B 20F91B20 B280AA13 C1F63030 
+  1D060355 1D0E0416 0414E6AB 614DC2E1 0BE10B20 F91B20B2 80AA13C1 F630300D 
+  06092A86 4886F70D 01010505 00038201 01005A9E CFD04150 1BB36185 027A900F 
+  CB77809B 033CC223 9640170E F0C8DC43 2FD40112 83E69AB8 8EAF82FF BE71CAE9 
+  DFA8634F D0C60780 D844E98F 9A9D1834 5E516AD4 DF52CE5F DAD358B2 FBDAC434 
+  7B65FA11 7254ADF4 DC972096 343806B6 220534E0 3F6A28D9 922FF80F 028DC260 
+  2C16A48F C10C87B7 8286BBAB 4E617D88 FB25C269 0A355138 F17508D3 154125BA 
+  A211A8C1 2650D4E7 9050BA24 D6764E68 D9820E79 36167C8E 1E2DF4E1 92E202F4 
+  E77EFF83 BF50FDF5 1A63B772 6887008A 643496AB 6D9EF84B 7E922584 CAC2E03D 
+  8FB041DD FF1161AC 4297DC76 F61120F4 604AE22E E44C0820 A8301387 B112BD55 
+  BD583148 83EB6389 7C425558 D8F92661 8B44
+  	quit
+crypto pki certificate chain SLA-TrustPoint
+ certificate ca 01
+  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 
+  32310E30 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 
+  6F204C69 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 
+  3834375A 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 
+  43697363 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 
+  526F6F74 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 
+  82010A02 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D 
+  CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 
+  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE 
+  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC 
+  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 
+  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 
+  C7479096 B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 
+  C55F0D76 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 
+  DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 
+  06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 
+  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 
+  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 
+  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B 
+  D98987BF E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 
+  467A3DF4 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C 
+  7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B 
+  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 
+  80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB 
+  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 
+  D697DF7F 28
+  	quit
+!
+!
+license udi pid C8200L-1N-4T sn FGL2714LEYR
+memory free low-watermark processor 67522
+!
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+username admin privilege 15 secret cisco
+!
+redundancy
+ mode none
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback1
+ ip address 10.91.250.40 255.255.255.0
+!
+interface Tunnel1
+ description Connect to R_10.75.190.250 Tunnel91040
+ ip unnumbered GigabitEthernet0/0/0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source 10.92.40.250
+ tunnel destination 10.72.250.245
+!
+interface Tunnel4
+ description Connect to R_10.75.190.250 Tunnel91540
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source 10.91.250.40
+ tunnel destination 10.75.190.250
+!
+interface Tunnel9999
+ description Connet to DR R_10.72.245.250 Tunnel110
+ ip unnumbered GigabitEthernet0/0/0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source 10.92.40.250
+ tunnel destination 10.72.245.250
+!
+interface GigabitEthernet0/0/0
+ description HiLink FTTB 20M/5M 72-YV002725
+ ip address 10.92.40.250 255.255.255.0
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ negotiation auto
+ no shutdown
+!
+interface GigabitEthernet0/0/1
+ description to SW_10.91.40.251_B_G1/1/4
+ no ip address
+ negotiation auto
+!
+interface GigabitEthernet0/0/1.1
+ encapsulation dot1Q 1 native
+ ip address 10.91.40.253 255.255.255.0
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ standby 1 ip 10.91.40.254
+ standby 1 preempt
+ ip ospf cost 100
+ no shutdown
+!
+interface GigabitEthernet0/0/1.3
+ encapsulation dot1Q 3
+ ip address 10.97.40.253 255.255.255.0
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ standby 3 ip 10.97.40.254
+ standby 3 preempt
+ ip ospf cost 100
+ no shutdown
+!
+interface GigabitEthernet0/0/2
+ description to R_10.91.40.252_G0/0/2
+ ip address 192.168.100.2 255.255.255.252
+ no ip redirects
+ no ip unreachables
+ no ip proxy-arp
+ negotiation auto
+ no shutdown
+!
+interface GigabitEthernet0/0/3
+ no ip address
+ negotiation auto
+!
+router ospf 1
+ router-id 10.91.250.40
+ redistribute static
+ network 10.91.40.0 0.0.0.255 area 0
+ network 10.97.40.0 0.0.0.255 area 0
+ network 192.168.100.0 0.0.0.3 area 0
+!
+no ip http server
+no ip http authentication local
+no ip http secure-server
+ip forward-protocol nd
+ip route 10.71.225.192 255.255.255.255 Tunnel1 200
+ip route 10.71.234.0 255.255.255.0 Tunnel1
+ip route 10.71.234.0 255.255.255.0 Tunnel4 50
+ip route 10.71.235.0 255.255.255.0 Tunnel1
+ip route 10.71.235.0 255.255.255.0 Tunnel4 50
+ip route 10.71.243.0 255.255.255.0 Tunnel1
+ip route 10.71.243.0 255.255.255.0 Tunnel4 50
+ip route 10.75.0.0 255.255.0.0 Tunnel1 200
+ip route 10.75.35.0 255.255.255.0 Tunnel1
+ip route 10.75.35.0 255.255.255.0 Tunnel4 50
+ip route 10.75.135.0 255.255.255.0 Tunnel1
+ip route 10.75.135.0 255.255.255.0 Tunnel4 50
+ip route 10.75.141.0 255.255.255.240 Tunnel1
+ip route 10.75.141.0 255.255.255.240 Tunnel4 50
+ip route 10.75.206.0 255.255.255.0 Tunnel1
+ip route 10.75.206.0 255.255.255.0 Tunnel4 50
+ip route 10.75.215.0 255.255.255.0 Tunnel1
+ip route 10.75.215.0 255.255.255.0 Tunnel4 50
+ip route 10.75.234.0 255.255.255.0 Tunnel1
+ip route 10.75.234.0 255.255.255.0 Tunnel4 50
+ip route 10.75.235.0 255.255.255.0 Tunnel1 200
+ip route 10.75.255.8 255.255.255.255 Tunnel1
+ip route 10.131.21.0 255.255.255.0 Tunnel1 200
+ip route 10.131.26.0 255.255.255.0 Tunnel1 200
+ip route 10.141.1.0 255.255.255.0 Tunnel1 200
+ip route 10.153.60.200 255.255.255.255 Tunnel1 name PROXY
+ip route 10.153.60.200 255.255.255.255 Tunnel4 50 name PROXY
+ip route 10.153.99.0 255.255.255.0 Tunnel1 name PROXY
+ip route 10.153.99.0 255.255.255.0 Tunnel4 50 name PROXY
+ip route 10.155.0.0 255.255.0.0 Tunnel1
+ip route 10.155.0.0 255.255.0.0 Tunnel4 50
+ip route 10.210.255.0 255.255.255.0 Tunnel1 name Polaris
+ip route 10.210.255.0 255.255.255.0 Tunnel4 50 name Polaris
+ip route 10.223.49.0 255.255.255.0 Tunnel1
+ip route 10.223.49.0 255.255.255.0 Tunnel4 50
+ip route 10.223.51.151 255.255.255.255 Tunnel1
+ip route 10.223.51.151 255.255.255.255 Tunnel4 50
+ip route 10.223.70.23 255.255.255.255 Tunnel1
+ip route 10.223.70.23 255.255.255.255 Tunnel4 50
+ip route 10.223.75.0 255.255.255.0 Tunnel1
+ip route 10.223.75.0 255.255.255.0 Tunnel4 50
+ip route 10.223.76.0 255.255.255.0 Tunnel1
+ip route 10.223.76.0 255.255.255.0 Tunnel4 50
+ip route 10.223.78.0 255.255.255.0 Tunnel1
+ip route 10.223.78.0 255.255.255.0 Tunnel4 50
+ip route 10.223.79.0 255.255.255.0 Tunnel1
+ip route 10.223.79.0 255.255.255.0 Tunnel4 50
+ip route 10.223.93.124 255.255.255.255 Tunnel1
+ip route 10.223.93.124 255.255.255.255 Tunnel4 50
+ip route 13.107.64.0 255.255.192.0 Tunnel1
+ip route 13.107.64.0 255.255.192.0 Tunnel4 50
+ip route 52.112.0.0 255.252.0.0 Tunnel1
+ip route 52.112.0.0 255.252.0.0 Tunnel4 50
+ip route 52.120.0.0 255.252.0.0 Tunnel1
+ip route 52.120.0.0 255.252.0.0 Tunnel4 50
+ip route 203.73.115.253 255.255.255.255 172.32.29.93
+ip route 210.71.218.128 255.255.255.128 Tunnel1 200
+ip route 210.242.218.0 255.255.255.0 Tunnel1 200
+
+ip route 10.91.251.40 255.255.255.255 192.168.100.1
+ip route 10.75.190.250 255.255.255.255 192.168.100.1
+ip route 10.91.251.40 255.255.255.255 10.91.40.252 200
+ip route 10.75.190.250 255.255.255.255 10.91.40.252 200 
+ip route 10.91.40.0 255.255.255.0 192.168.100.1 200
+ip route 10.97.40.0 255.255.255.0 192.168.100.1 200
+ip route 10.72.245.0 255.255.255.0 10.92.40.254
+ip route 10.72.250.245 255.255.255.255 10.92.40.254
+ip route 10.73.201.0 255.255.255.0 10.92.40.254
+ip route 10.76.107.0 255.255.255.0 10.92.40.254
+ip route 10.76.186.0 255.255.255.0 10.92.40.254
+ip route 10.74.102.0 255.255.255.0 Tunnel9999
+
+ip ssh time-out 60
+crypto key generate rsa modulus 2048
+ip ssh version 2
+!
+!
+no ip access-list extended ACL_ATM
+ip access-list extended ACL_ATM
+ 10 permit icmp 10.75.0.0 0.0.255.255 10.91.40.0 0.0.0.255
+ 20 permit icmp 10.91.40.0 0.0.0.255 10.75.0.0 0.0.255.255
+ 30 permit icmp 10.223.49.0 0.0.0.255 10.91.40.0 0.0.0.255
+ 40 permit icmp 10.91.40.0 0.0.0.255 10.223.49.0 0.0.0.255
+ 50 permit icmp 10.64.14.0 0.0.0.255 10.91.40.0 0.0.0.255
+ 60 permit icmp 10.91.40.0 0.0.0.255 10.64.14.0 0.0.0.255
+ 70 permit ip 10.91.40.0 0.0.0.255 host 224.0.0.2
+ 80 permit ip 10.97.40.0 0.0.0.255 host 224.0.0.2
+ 90 permit ip host 10.75.206.213 10.91.40.0 0.0.0.255
+ 100 permit ip 10.91.40.0 0.0.0.255 host 10.75.206.213
+ 110 permit ip host 10.75.206.214 10.91.40.0 0.0.0.255
+ 120 permit ip 10.91.40.0 0.0.0.255 host 10.75.206.214
+ 130 permit tcp host 10.97.40.86 host 10.75.206.107 eq 443 8000 8001 8080
+ 140 permit tcp host 10.75.206.107 eq 443 8000 8001 8080 host 10.97.40.86
+ 150 permit tcp host 10.75.206.107 host 10.97.40.86 eq 27464
+ 160 permit tcp host 10.97.40.86 eq 27464 host 10.75.206.107
+ 170 permit tcp host 10.97.40.86 host 10.75.206.189 eq 443 8000 8001 12345 27464
+ 180 permit tcp host 10.75.206.189 eq 443 8000 8001 12345 27464 host 10.97.40.86
+ 190 permit tcp host 10.75.206.189 host 10.97.40.86 eq 443 12345 27464
+ 200 permit tcp host 10.97.40.86 eq 443 12345 27464 host 10.75.206.189
+ 210 permit tcp host 10.97.40.86 host 10.75.235.126 eq 8998 8999
+ 220 permit tcp host 10.75.235.126 eq 8998 8999 host 10.97.40.86
+ 230 permit tcp host 10.75.235.126 host 10.97.40.86 eq 8998 8999
+ 240 permit tcp host 10.97.40.86 eq 8998 8999 host 10.75.235.126
+ 250 permit tcp host 10.97.40.86 host 10.75.235.127 eq 8998 8999
+ 260 permit tcp host 10.75.235.127 eq 8998 8999 host 10.97.40.86
+ 270 permit tcp host 10.75.235.127 host 10.97.40.86 eq 8998 8999
+ 280 permit tcp host 10.97.40.86 eq 8998 8999 host 10.75.235.127
+ 290 permit tcp host 10.97.40.86 host 10.75.235.128 eq 8998 8999
+ 300 permit tcp host 10.75.235.128 eq 8998 8999 host 10.97.40.86
+ 310 permit tcp host 10.75.235.128 host 10.97.40.86 eq 8998 8999
+ 320 permit tcp host 10.97.40.86 eq 8998 8999 host 10.75.235.128
+ 330 permit tcp host 10.97.40.86 host 10.75.235.129 eq 8998 8999
+ 340 permit tcp host 10.75.235.129 eq 8998 8999 host 10.97.40.86
+ 350 permit tcp host 10.75.235.129 host 10.97.40.86 eq 8998 8999
+ 360 permit tcp host 10.97.40.86 eq 8998 8999 host 10.75.235.129
+ 370 permit tcp host 10.97.40.86 host 10.75.235.201 eq www
+ 380 permit tcp host 10.75.235.201 eq www host 10.97.40.86
+ 390 permit tcp host 10.75.235.201 host 10.97.40.86 eq www
+ 400 permit tcp host 10.97.40.86 eq www host 10.75.235.201
+ 410 permit tcp host 10.97.40.86 host 10.75.201.61 range 17101 18499
+ 420 permit tcp host 10.75.201.61 range 17101 18499 host 10.97.40.86
+ 430 permit tcp host 10.97.40.86 host 10.75.201.62 range 17101 18499
+ 440 permit tcp host 10.75.201.62 range 17101 18499 host 10.97.40.86
+ 450 permit ip 10.97.40.0 0.0.0.255 host 10.97.40.252
+ 460 permit ip 10.97.40.0 0.0.0.255 host 10.97.40.253
+ 470 permit ip 10.97.40.0 0.0.0.255 host 10.97.40.254
+ 480 permit ip 10.97.40.0 0.0.0.255 host 10.75.215.11
+ 490 permit ip 10.97.40.0 0.0.0.255 host 10.75.235.120
+ 500 permit ip host 10.75.215.11 10.97.40.0 0.0.0.255
+ 510 permit ip host 10.75.235.120 10.97.40.0 0.0.0.255
+ 520 permit ip host 10.75.216.11 host 10.97.40.250
+ 530 permit ip host 10.97.40.250 host 10.75.216.11
+ 540 deny   ip any any
+ip access-list extended NTP-Deny
+ 10 deny   ip any any
+ip access-list extended NTP-Server
+ 10 permit ip host 10.75.215.1 any
+ 20 deny   ip any any
+!
+logging history debugging
+logging source-interface GigabitEthernet0/0/1.1
+logging host 10.75.13.12
+no ip access-list standard 99
+ip access-list standard 99
+ 10 permit 10.75.206.164
+ 20 permit 10.75.206.163
+ 30 permit 10.223.76.20
+ 40 permit 10.75.206.6
+ 50 permit 10.75.206.76
+ 60 permit 10.75.206.75
+ 70 permit 10.64.14.0 0.0.0.255
+ 80 permit 10.75.125.0 0.0.0.255
+ 90 permit 10.75.200.0 0.0.0.255
+ 100 permit 10.75.248.0 0.0.0.255
+ 110 permit 10.75.249.0 0.0.0.255
+ 120 permit 10.75.13.126
+ 130 permit 10.75.13.131
+!
+snmp-server community onlynetsecure RW
+snmp-server community @Yuanta RO
+snmp-server trap link ietf
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+no snmp-server host 10.75.13.126 @Yuanta 
+no snmp-server host 10.75.249.138 public 
+snmp-server host 10.75.206.163 version 2c @Yuanta
+snmp-server host 10.75.206.164 version 2c @Yuanta
+snmp-server host 10.75.13.131 version 2c @Yuanta
+mac address-table notification change
+snmp ifmib ifindex persist
+!
+no tacacs-server directed-request
+no tacacs-server key 123456
+no tacacs server 10.75.206.72
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ no password
+ authorization commands 1 CONSOLE
+ authorization commands 15 CONSOLE
+ login authentication CONSOLE
+ stopbits 1
+line aux 0
+line vty 0 4
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input none
+!
+call-home
+ ! If contact email address in call-home is configured as sch-smart-licensing@cisco.com
+ ! the email address configured in Cisco Smart License Portal will be used as contact email address to send SCH notifications.
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile "CiscoTAC-1"
+  active
+  destination transport-method http
+ntp access-group peer NTP-Server
+ntp access-group serve NTP-Deny
+ntp access-group query-only NTP-Deny
+ntp server 10.75.215.1 source GigabitEthernet0/0/1.1
+!
+!
+!
+!
+!
+!
+end

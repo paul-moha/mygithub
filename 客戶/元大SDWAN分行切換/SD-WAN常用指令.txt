@@ -1,0 +1,59 @@
+
+
+scope firmware
+download image usbA:
+show download-task
+show download
+scope auto-install
+install security-pack version xxxx
+connect local-mgmt 
+dir usbdrive:
+
+
+show platform
+
+
+sdebug platfomr condition ipv4 10.71.197.0/24 both
+deb platform packet
+
+
+
+show platform software sdwan qos adapt stat
+show platform software sdwan qos adapt history Tunnel1 10.1.14.14
+show sdwan app-fwd cflowd flows 
+
+
+show sdwan policy access-list-associations
+show sdwan policy access-list-counters
+show sdwan policy access-list-names
+show sdwan policy access-list-policers
+show sdwan policy data-policy-filter
+show sdwan policy rewrite-associations
+
+
+抓debug 方式
+debug platform condition ipv4 123.222.164.235/32 both
+debug platform packet-trace copy packet both L3
+debug platform condition start
+debug platform condition stop
+show platform packet-trace summary
+show platform packet-trace id
+
+no debug platform all
+show debug
+
+
+Cisco SD-WAN升版
+
+show sdwan software 
+copy usb0: bootflash: 
+
+request platform software sdwan software install bootflash
+request platform software sdwan software activate 17.08.01.0.1526
+request platform software sdwan software set-default 17.08.01.0.1526
+request platform software sdwan software remove
+
+show platform software sdwan qos target 
+show platform software sdwan qos adapt stats
+show platform software sdwan qos policy 
+show interface 

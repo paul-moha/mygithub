@@ -1,0 +1,4098 @@
+=~=~=~=~=~=~=~=~=~=~=~= PuTTY log 2024.04.23 11:06:24 =~=~=~=~=~=~=~=~=~=~=~=
+ter len 0
+R_10.75.249.250#show run
+Building configuration...
+
+Current configuration : 106030 bytes
+!
+! Last configuration change at 18:21:58 TWN Mon Apr 15 2024 by netadmin11
+! NVRAM config last updated at 18:22:00 TWN Mon Apr 15 2024 by netadmin11
+!
+version 16.9
+no service pad
+service tcp-keepalives-in
+service tcp-keepalives-out
+service timestamps debug datetime msec localtime
+service timestamps log datetime msec localtime show-timezone year
+service password-encryption
+no service dhcp
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname R_10.75.249.250
+!
+boot-start-marker
+boot system flash bootflash:/asr1002x-universalk9.16.09.06.SPA.bin
+boot-end-marker
+!
+!
+vrf definition Mgmt-intf
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging buffered 102400
+enable secret 5 $1$HHVo$FSrQTeX9c8JZwSIgMjj5w.
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ Auth
+ server 10.75.206.72
+!
+aaa authentication login default group Auth local
+aaa authentication login CONSOLE none
+aaa authorization commands 1 default group Auth local 
+aaa authorization commands 1 CONSOLE none 
+aaa authorization commands 15 default group Auth local 
+aaa authorization commands 15 CONSOLE none 
+aaa accounting commands 1 default start-stop group Auth
+aaa accounting commands 15 default start-stop group Auth
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone TWN 8 0
+no ip source-route
+!
+!
+!
+!
+!
+!
+!
+no ip bootp server
+no ip domain lookup
+ip domain name yuantabank.com
+!
+!
+!
+login on-failure log
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid ASR1002-X sn JAE195105GP
+no license smart enable
+!
+spanning-tree extend system-id
+diagnostic bootup level minimal
+!
+!
+!
+username admin secret 5 $1$dZGq$evoTz34ARHzBbc4zustKW0
+!
+redundancy
+ mode none
+!
+!
+!
+!
+controller SONET 0/1/0
+ framing sdh
+ clock source line
+ aug mapping au-4
+ !
+ au-4 1 tug-3 1
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 2
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 3
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+!
+controller SONET 0/2/0
+ framing sdh
+ clock source line
+ aug mapping au-4
+ !
+ au-4 1 tug-3 1
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 2
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 3
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+!
+controller SONET 0/3/0
+ framing sdh
+ clock source line
+ aug mapping au-4
+ !
+ au-4 1 tug-3 1
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 2
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+ !
+ au-4 1 tug-3 3
+  mode c-12
+  tug-2 1 e1 1 channel-group 0 timeslots 1-8
+  tug-2 1 e1 2 channel-group 0 timeslots 1-8
+  tug-2 1 e1 3 channel-group 0 timeslots 1-8
+  tug-2 2 e1 1 channel-group 0 timeslots 1-8
+  tug-2 2 e1 2 channel-group 0 timeslots 1-8
+  tug-2 2 e1 3 channel-group 0 timeslots 1-8
+  tug-2 3 e1 1 channel-group 0 timeslots 1-8
+  tug-2 3 e1 2 channel-group 0 timeslots 1-8
+  tug-2 3 e1 3 channel-group 0 timeslots 1-8
+  tug-2 4 e1 1 channel-group 0 timeslots 1-8
+  tug-2 4 e1 2 channel-group 0 timeslots 1-8
+  tug-2 4 e1 3 channel-group 0 timeslots 1-8
+  tug-2 5 e1 1 channel-group 0 timeslots 1-8
+  tug-2 5 e1 2 channel-group 0 timeslots 1-8
+  tug-2 5 e1 3 channel-group 0 timeslots 1-8
+  tug-2 6 e1 1 channel-group 0 timeslots 1-8
+  tug-2 6 e1 2 channel-group 0 timeslots 1-8
+  tug-2 6 e1 3 channel-group 0 timeslots 1-8
+  tug-2 7 e1 1 channel-group 0 timeslots 1-8
+  tug-2 7 e1 2 channel-group 0 timeslots 1-8
+  tug-2 7 e1 3 channel-group 0 timeslots 1-8
+!
+!
+!
+cdp run
+!
+class-map match-all voice
+ match access-group 10
+!
+policy-map voice
+ class voice
+  police 300000 conform-action transmit  exceed-action drop 
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 10.75.255.1 255.255.255.255
+!
+interface Loopback1
+ ip address 10.75.255.7 255.255.255.255
+!
+interface Loopback2
+ ip address 10.75.255.8 255.255.255.255
+!
+interface Loopback3
+ ip address 10.75.255.9 255.255.255.255
+!
+interface Port-channel1
+ description SW3850_10.75.249.241:PO2
+ ip address 10.75.249.250 255.255.255.0
+ no ip redirects
+ no ip proxy-arp
+ no negotiation auto
+ hold-queue 150 in
+!
+interface Tunnel2
+ no ip address
+!
+interface Tunnel3
+ description Connect To NODE0600-A Tunnel2 ** Lease Line : 72E-89580 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.60
+!
+interface Tunnel4
+ description Connect To NODE0600-A Tunnel3 ** ADSL : 082-371429 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.60
+!
+interface Tunnel5
+ description Connect To NODE0611-A Tunnel2 ** Lease Line : 72E-89596 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.61
+!
+interface Tunnel6
+ description Connect To NODE0611-A Tunnel3 ** ADSL : 06-2937745 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.61
+!
+interface Tunnel7
+ description Connect To NODE0688-A Tunnel2 ** Lease Line : 72E-89788 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.68
+!
+interface Tunnel8
+ description Connect To NODE0688-A Tunnel3 ** ADSL : 06-2295510 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.68
+!
+interface Tunnel9
+ description Connect To NODE0699-A Tunnel2 ** Lease Line : 72E-89625 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.69
+!
+interface Tunnel10
+ description Connect To NODE0699-A Tunnel3 ** ADSL : 06-2679641 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.69
+!
+interface Tunnel11
+ description Connect To NODE0013-A Tunnel2 ** Lease Line : 42D-86082 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.1
+!
+interface Tunnel12
+ description Connect To NODE0013-A Tunnel3 ** ADSL : 04-22218897 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.1
+!
+interface Tunnel13
+ description Connect To NODE0057-A Tunnel2 ** Lease Line : 42D-80592 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.5
+!
+interface Tunnel14
+ description Connect To NODE0057-A Tunnel3 ** ADSL : 04-25284692 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.5
+!
+interface Tunnel15
+ description Connect To NODE0024-A Tunnel2 ** Lease Line : 42D-80590 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.2
+!
+interface Tunnel16
+ description Connect To NODE0024-A Tunnel3 ** FTTB : 42YV-000074 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.2
+!
+interface Tunnel17
+ description Connect To NODE0518-A Tunnel2 ** Lease Line : 72D-85692 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.51
+!
+interface Tunnel18
+ description Connect To NODE0518-A Tunnel3 ** ADSL : 07-7156671 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.51
+!
+interface Tunnel19
+ description Connect To NODE0806-A Tunnel2 ** Lease Line : 72E-89707 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.80
+ service-policy input voice
+ service-policy output voice
+!
+interface Tunnel20
+ description Connect To NODE0806-A Tunnel3 ** ADSL : 06-2356901 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.80
+!
+interface Tunnel21
+ description Connect To NODE0828-A Tunnel2 ** Lease Line : 72E-89708 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.82
+!
+interface Tunnel22
+ description Connect To NODE0828-A Tunnel3 ** ADSL : 06-2467246 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.82
+!
+interface Tunnel23
+ description Connect To R_10.91.110.250 Tunnel2 ** LAN-2M-UTP **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.110
+!
+interface Tunnel24
+ description Connect To R_10.91.110.250 Tunnel3 ** ADSL : 07-2416509 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.110
+!
+interface Tunnel25
+ description Connect To Node1250 Tunnel2 ** Lease Line :72D-89307 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.125
+!
+interface Tunnel26
+ description Connect To Node1250-R Tunnel3 ** ADSL : XXXXXXX**
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.125
+!
+interface Tunnel27
+ description Connect To NODE0105-A Tunnel2 ** Lease Line : 42E-80179 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.10
+!
+interface Tunnel28
+ description Connect To NODE0105-A Tunnel3 ** ADSL : 049-2336388 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.10
+!
+interface Tunnel29
+ description Connect To NODE0954-A Tunnel2 ** Lease Line : 42E-80174 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.95
+!
+interface Tunnel30
+ description Connect To NODE0954-A Tunnel3 ** ADSL : 04-24634163 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.95
+!
+interface Tunnel31
+ description Connect To NODE0242-A Tunnel2 ** Lease Line : 42D-80594 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.24
+!
+interface Tunnel32
+ description Connect To NODE0242-A Tunnel3 ** FTTB : 43YV-000103 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.24
+!
+interface Tunnel33
+ description Connect To NODE0404-A Tunnel2 ** Lease Line : 72D-61933 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.40
+!
+interface Tunnel34
+ description Connect To NODE0404-A Tunnel3 ** ADSL : 07-3950523 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.40
+!
+interface Tunnel35
+ description Connect To NODE0116-A Tunnel2 ** Lease Line : 6E-80479 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.11
+!
+interface Tunnel36
+ description Connect To NODE0116-A Tunnel3 ** ADSL : 06-3127761 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.11
+!
+interface Tunnel37
+ description Connect To NODE0426-A Tunnel2 ** Lease Line : 72E-89443 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.42
+!
+interface Tunnel38
+ description Connect To NODE0426-A Tunnel3 ** ADSL : 08-7366917 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.42
+!
+interface Tunnel39
+ description Connect To NODE0079-A Tunnel2 ** Lease Line : 42E-80180 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.7
+!
+interface Tunnel40
+ description Connect To NODE0079-A Tunnel3 ** ADSL : 04-8377260 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.7
+!
+interface Tunnel41
+ description Connect To NODE0264-A Tunnel2 ** Lease Line : 42E-80175 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.26
+!
+interface Tunnel42
+ description Connect To NODE0264-A Tunnel3 ** ADSL : 037-376021 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.26
+!
+interface Tunnel43
+ description Connect To NODE0172-A Tunnel2 ** Lease Line : 42E-80178 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.17
+!
+interface Tunnel44
+ description Connect To NODE0172-A Tunnel3 ** ADSL : 047-753420 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.17
+!
+interface Tunnel45
+ description Connect To NODE0297-A Tunnel2 ** Lease Line : 73E-80203 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.29
+!
+interface Tunnel46
+ description Connect To NODE0297-A Tunnel3 ** ADSL : 06-7213302 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.29
+!
+interface Tunnel47
+ description Connect To NODE0231-A Tunnel2 ** Lease Line : 42D-80593 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.23
+!
+interface Tunnel48
+ description Connect To NODE0231-A Tunnel3 ** ADSL : 04-22635185 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.23
+!
+interface Tunnel49
+ description Connect To NODE0286-A Tunnel2 ** Lease Line : 42E-80174 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.28
+!
+interface Tunnel50
+ description Connect To NODE0286-A Tunnel3 ** ADSL : 048-780497 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.28
+!
+interface Tunnel51
+ description Connect To NODE0194-A Tunnel2 ** Lease Line : 42E-88017 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.19
+!
+interface Tunnel52
+ description Connect To NODE0194-A Tunnel3 ** ADSL : 05-2911924 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.19
+!
+interface Tunnel53
+ description Connect To NODE0068-A Tunnel2 ** Lease Line : 42E-80181 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.6
+!
+interface Tunnel54
+ description Connect To NODE0068-A Tunnel3 ** ADSL : 047-285840 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.6
+!
+interface Tunnel57
+ description Connect To NODE0301-A Tunnel2 ** Lease Line : 42D-80596 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.30
+!
+interface Tunnel58
+ description Connect To NODE0301-A Tunnel3 ** ADSL : 04-26871442 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.30
+!
+interface Tunnel59
+ description Connect To NODE0046-A Tunnel2 ** Lease Line : 42D-80591 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.4
+!
+interface Tunnel60
+ description Connect To NODE0046-A Tunnel3 ** ADSL : 04-26629833 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.4
+!
+interface Tunnel61
+ description Connect To NODE0312-A Tunnel2 ** Lease Line : 42E-86529 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.31
+!
+interface Tunnel62
+ description Connect To NODE0312-A Tunnel3 ** ADSL : 05-6362563 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.31
+!
+interface Tunnel63
+ description Connect To NODE0529-A Tunnel2 ** Lease Line : 72E-89534 **
+ ip unnumbered Loopback0
+ ip mtu 1450
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.52
+!
+interface Tunnel64
+ description Connect To NODE0529-A Tunnel3 ** ADSL : 08-9356881 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.52
+!
+interface Tunnel65
+ description Connect To NODE0183-A Tunnel2 ** Lease Line : 42E-80177 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.18
+!
+interface Tunnel66
+ description Connect To NODE0183-A Tunnel3 ** ADSL : 05-5361484 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.18
+!
+interface Tunnel69
+ description Connect To NODE0448-A Tunnel2 ** Lease Line : 55E-87027 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.44
+!
+interface Tunnel70
+ description Connect To NODE0448-A Tunnel3 ** ADSL : 05-5955621 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.44
+!
+interface Tunnel71
+ description Connect To R_10.81.98.250 ** Lease Line : 42D-89785 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.98
+!
+interface Tunnel72
+ description Connect To R_10.81.98.250 ** FTTB : 42-YV002410 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.98
+!
+interface Tunnel73
+ description Connect To NODE0275-1F-R Tunnel2 ** Lease Line : 42D-60828 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.27
+!
+interface Tunnel74
+ description Connect To NODE0275-1F-R Tunnel3 ** ADSL : 04-22362156 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.27
+!
+interface Tunnel200
+ description Connect to Node0036 Tunnel1 ** Lease Line : 227D-75216 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.186
+!
+interface Tunnel202
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.255.211
+!
+interface Tunnel203
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.255.206
+!
+interface Tunnel206
+ description Connect to Node0417 Tunnel1 ** Lease Line : 227D-75314 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.193
+!
+interface Tunnel208
+ description Connect to Node0582 Tunnel1 ** Lease Line : 227D-75315 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.208
+!
+interface Tunnel209
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.160
+!
+interface Tunnel216
+ description Connect to Node0631 Tunnel1 ** Lease Line : 227E-88355 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.166
+!
+interface Tunnel217
+ description Connect to Node0410 Tunnel1 ** Lease Line : 227D-75469 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.54
+!
+interface Tunnel221
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.255.210
+!
+interface Tunnel224
+ description Connect to Node0221 Tunnel1 ** Lease Line : 227D-75435 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.126
+!
+interface Tunnel225
+ description Connect to Node0487 Tunnel1 ** Lease Line : 227D-75648 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.218
+!
+interface Tunnel227
+ description Connect to Node0036 Tunnel1 ** Lease Line : 227D-75741 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.177
+!
+interface Tunnel230
+ description Connect to Node0039 Tunnel1 ** Lease Line : 227D-76161 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.180
+!
+interface Tunnel238
+ description Connect to Node0214 Tunnel1 ** Lease Line : 227D-77575 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.205
+!
+interface Tunnel241
+ description Connect to Node0081 Tunnel1 ** Lease Line : 227D-77710 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.9
+!
+interface Tunnel243
+ description Connect to Node0370 Tunnel1 ** Lease Line : 227D-77707 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.40
+!
+interface Tunnel244
+ description Connect to Node0152 Tunnel1 ** Lease Line : 227D-77716 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.21
+!
+interface Tunnel245
+ description Connect to Node0151 Tunnel1 ** Lease Line : 227D-77715 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.20
+!
+interface Tunnel249
+ description Connect to Node0031 Tunnel1 ** Lease Line : 227D-77709 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.4
+!
+interface Tunnel250
+ description Connect to Node0210 Tunnel1 ** Lease Line : 227D-77771 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.28
+!
+interface Tunnel251
+ description Connect to Node0331 Tunnel1 ** Lease Line : 227D-77719 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.36
+!
+interface Tunnel260
+ description Connect to Node8060581 Tunnel1
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.157
+!
+interface Tunnel261
+ description Connect to Node0082 Tunnel1 ** Lease Line :223D-67047 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.200
+!
+interface Tunnel262
+ description Connect to 10.71.150.254 Tunnel1 ** Lease Line :223D67257 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.150
+!
+interface Tunnel266
+ description Connect to 10.78.184.254 Tunnel1 ** Lease Line : XXXXXXXX **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.184
+!
+interface Tunnel303
+ description Connect to Node0052 Tunnel1 ** Lease Line : 42D-60183 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.151
+!
+interface Tunnel305
+ description Connect to Node0022 Tunnel1 ** Lease Line : 42D-60191 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.123
+!
+interface Tunnel306
+ description Connect to Node0241 Tunnel1 ** Lease Line : 42D-60192 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.171
+!
+interface Tunnel307
+ description Connect to Node0023 Tunnel1 ** Lease Line : 42D-60443 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.172
+!
+interface Tunnel308
+ description Connect to Node0311 Tunnel1 ** Lease Line : 42E-83240 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.67
+!
+interface Tunnel310
+ description Connect to Node0240 Tunnel1 ** Lease Line : 42D-60449 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.29
+!
+interface Tunnel312
+ description Connect to Node0310 Tunnel1 ** Lease Line : 42E-83233 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.34
+!
+interface Tunnel316
+ description Connect to Node0100 Tunnel1 ** Lease Line : 42D-60448 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.10
+!
+interface Tunnel317
+ description Connect to Node0021 Tunnel1 ** Lease Line : 42D-60453 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.45
+!
+interface Tunnel318
+ description Connect to Node0020 Tunnel1 ** Lease Line : 42D-60454 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.44
+!
+interface Tunnel320
+ description Connect to Node6015 Tunnel1 ** Lease Line : 42E-83227 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.113
+!
+interface Tunnel321
+ description Connect to Node0042 Tunnel1 ** Lease Line : 42D-60462 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.48
+!
+interface Tunnel327
+ description Connect to 10.88.200.254-R Tunnel1 ** Lease Line : 42E-83293 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.200
+!
+interface Tunnel329
+ description Connect to 10.88.104.254 Tunnel1 ** Lease Line : 42E-83327 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.104
+!
+interface Tunnel403
+ description Connect to Node0129 Tunnel1 ** Lease Line : 72D-87935 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.184
+!
+interface Tunnel405
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.255.134
+!
+interface Tunnel410
+ description Connect to Node0425 Tunnel1 ** Lease Line : 72E-89955 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.212
+!
+interface Tunnel413
+ description Connect to Node0111 Tunnel1 ** Lease Line : 72D-88693 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.12
+!
+interface Tunnel414
+ description Connect to Node0113 Tunnel1 ** Lease Line : 72E-83044 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.14
+!
+interface Tunnel415
+ description Connect to Node0110 Tunnel1 ** Lease Line : 72E-83045 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.11
+!
+interface Tunnel417
+ description Connect to Node0400 Tunnel1 ** Lease Line : 72D-88684 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.42
+!
+interface Tunnel418
+ description Connect to Node0122 Tunnel1 ** Lease Line : 72D-88685 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.17
+!
+interface Tunnel421
+ description Connect to Node0112 Tunnel1 ** Lease Line : 72E-83041 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.13
+!
+interface Tunnel423
+ description Connect to Node0420 Tunnel1 ** Lease Line : 72E-83394 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.50
+!
+interface Tunnel424
+ description Connect to Node0291 Tunnel1 ** Lease Line : 72E-83043 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.49
+!
+interface Tunnel425
+ description Connect to Node0421 Tunnel1 ** Lease Line : 72E-83048 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.52
+!
+interface Tunnel427
+ description Connect to Node0691 Tunnel1 ** Lease Line : 72E-83046 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.199
+!
+interface Tunnel428
+ description Connect to NodeXXXX Tunnel1 ** Lease Line : 72E-83180 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.190
+!
+interface Tunnel500
+ description Connect to Node0157 Tunnel3 ** ADSL : 02-29374821 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.186
+!
+interface Tunnel506
+ description Connect to Node0417 Tunnel3 ** ADSL : 02-23825572 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.193
+!
+interface Tunnel508
+ description Connect to Node0582 Tunnel3 ** ADSL : 02-26482402 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.208
+!
+interface Tunnel509
+ description Connect to Node0483 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.160
+!
+interface Tunnel516
+ description Connect to Node0631 Tunnel3 ** ADSL : 03-5967140 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.166
+!
+interface Tunnel517
+ description Connect to Node0410 Tunnel3 ** ADSL : 02-23122081 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.54
+!
+interface Tunnel524
+ description Connect to Node0221 Tunnel3 ** ADSL : 02-29249541 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.126
+!
+interface Tunnel525
+ description Connect to Node0487 Tunnel3 ** ADSL : 02-22667170 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.218
+!
+interface Tunnel527
+ description Connect to Node0036 Tunnel3 ** ADSL : 02-87733445 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.177
+!
+interface Tunnel530
+ description Connect to Node0039 Tunnel3 ** ADSL : 02-27024910 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.180
+!
+interface Tunnel534
+ description Connect to Node0363 Tunnel3 ** ADSL : 02-27137130 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.191
+!
+interface Tunnel538
+ description Connect to Node0214 Tunnel3 ** ADSL : 02-24277549 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.205
+!
+interface Tunnel541
+ description Connect to Node0081 Tunnel3 ** ADSL : 02-29921774 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.9
+!
+interface Tunnel543
+ description Connect to Node0370 Tunnel3 ** ADSL : 02-22052442 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.40
+!
+interface Tunnel545
+ description Connect to Node0151 Tunnel3 ** ADSL : 02-23224253 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.20
+!
+interface Tunnel549
+ description Connect to Node0031 Tunnel3 ** ADSL : 02-25785738 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.4
+!
+interface Tunnel550
+ description Connect to Node0210 Tunnel3 ** ADSL : 02-27421670 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.28
+!
+interface Tunnel551
+ description Connect to Node0331 Tunnel3 ** ADSL : 02-28818714 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.36
+!
+interface Tunnel560
+ description Connect to Node8060581 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.157
+!
+interface Tunnel561
+ description Connect to Node0082 Tunnel3 ** ADSL : 02-22433075 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.200
+!
+interface Tunnel562
+ description Connect to 10.78.150.254Tunnel3 ** ADSL : 02-29540235 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.150
+!
+interface Tunnel566
+ description Connect to 10.78.184.254 Tunnel3 ** ADSL : XXXXXXXXXX **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.184
+!
+interface Tunnel603
+ description Connect to Node0052 Tunnel3 ** ADSL : 04-25158190 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.151
+!
+interface Tunnel605
+ description Connect to Node0022 Tunnel3 ** ADSL : 04-23012874 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.123
+!
+interface Tunnel606
+ description Connect to Node0241 Tunnel3 ** ADSL : 04-24864873 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.171
+!
+interface Tunnel607
+ description Connect to Node0023 Tunnel3 ** ADSL : 04-23267112 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.172
+!
+interface Tunnel608
+ description Connect to Node0311 Tunnel3 ** ADSL :  **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.67
+!
+interface Tunnel610
+ description Connect to Node0240 Tunnel3 ** ADSL : 04-24063170 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.29
+!
+interface Tunnel612
+ description Connect to Node0310 Tunnel3 ** ADSL : 05-5864437 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.34
+!
+interface Tunnel616
+ description Connect to Node0100 Tunnel3 ** ADSL : 04-22014722 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.10
+!
+interface Tunnel617
+ description Connect to Node0021 Tunnel3 ** ADSL : 04-24514807 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.45
+!
+interface Tunnel618
+ description Connect to Node0020 Tunnel3 ** ADSL : 04-25694355 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.44
+!
+interface Tunnel620
+ description Connect to Node6015 Tunnel3 ** ADSL : 04-7762743 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.113
+!
+interface Tunnel621
+ description Connect to Node0042 Tunnel3 ** ADSL : 04-26222495 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.48
+!
+interface Tunnel627
+ description Connect to 10.88.200.254-R Tunnel3 ** ADSL : 05-2648157 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.200
+!
+interface Tunnel629
+ description Connect to 10.88.104.254 Tunnel3 ** ADSL : 04-7239572 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.104
+!
+interface Tunnel703
+ description Connect to Node0129 Tunnel3 ** ADSL :  **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.184
+!
+interface Tunnel710
+ description Connect to Node0425 Tunnel3 ** ADSL : 08-8333654 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.212
+!
+interface Tunnel713
+ description Connect to Node0111 Tunnel3 ** ADSL : 07-6965423 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.12
+!
+interface Tunnel714
+ description Connect to Node0113 Tunnel3 ** ADSL : 06-2722151 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.14
+!
+interface Tunnel715
+ description Connect to Node0110 Tunnel3 ** ADSL : 06-3387162 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.11
+!
+interface Tunnel717
+ description Connect to Node0400 Tunnel3 ** ADSL : 07-3854450 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.42
+!
+interface Tunnel718
+ description Connect to Node0122 Tunnel3 ** ADSL : 07-6434808 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.17
+!
+interface Tunnel721
+ description Connect to Node0112 Tunnel3 ** ADSL : 06-2617584 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.13
+!
+interface Tunnel723
+ description Connect to Node0420 Tunnel3 ** ADSL : 08-7320239 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.50
+!
+interface Tunnel724
+ description Connect to Node0291 Tunnel3 ** ADSL : 06-5856274 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.49
+!
+interface Tunnel725
+ description Connect to Node0421 Tunnel3 ** ADSL : 08-7896744 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.52
+!
+interface Tunnel727
+ description Connect to Node0691 Tunnel3 ** ADSL :  **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.199
+!
+interface Tunnel728
+ description Connect to Node0111 Tunnel3 ** ADSL : 06-7830581 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.190
+!
+interface Tunnel8806
+ no ip address
+!
+interface Tunnel9232
+ no ip address
+!
+interface Tunnel78149
+ description Connect to 10.78.149.254 Tunnel1 ** Lease Line : 223D67325  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.149
+!
+interface Tunnel78163
+ description Connect to 10.78.163.254 Tunnel1 ** Lease Line : 223D67333 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.163
+!
+interface Tunnel78174
+ description Connect to 10.78.174.254 Tunnel1 ** Lease Line : 223E83330  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.174
+!
+interface Tunnel78175
+ description Connect to 10.78.175.254 Tunnel1 ** Lease Line : 223D67331  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.175
+!
+interface Tunnel78234
+ description Connect To R_10.78.234.254 Tunnel1(223E83670)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.78.245.234
+!
+interface Tunnel78649
+ description Connect to 10.78.149.254 Tunnel3 ** ADSL :02-22778518 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.149
+!
+interface Tunnel78663
+ description Connect to 10.78.163.254 Tunnel3 ** ADSL : 225-W001587**
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.163
+!
+interface Tunnel78674
+ description Connect to 10.78.174.254 Tunnel3 ** ADSL :03-5439820 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.174
+!
+interface Tunnel78675
+ description Connect to 10.78.175.254 Tunnel3 ** ADSL :02-27931120 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.175
+!
+interface Tunnel78734
+ description Connect To R_10.78.234.254 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.78.241.234
+!
+interface Tunnel81144
+ description Connect To R_10.81.144.250 Tunnel2(42D61475)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.144
+!
+interface Tunnel81148
+ description Connect To R_10.81.148.250 Tunnel2(42D61476)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.148
+!
+interface Tunnel81179
+ description Connect To R_10.81.179.250 Tunnel2(42E83377)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.179
+!
+interface Tunnel81181
+ description Connect To R_10.81.181.250 Tunnel2(42D61478)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.181
+!
+interface Tunnel81182
+ description Connect To R_10.81.182.250 Tunnel2(42D61479)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.182
+!
+interface Tunnel81195
+ description Connect To R_10.81.195.250 Tunnel2(42D61480)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.195
+!
+interface Tunnel81200
+ description Connect To R_10.81.200.250 Tunnel2(42E-88171)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.81.255.200
+!
+interface Tunnel81644
+ description Connect To R_10.81.144.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.144
+!
+interface Tunnel81648
+ description Connect To R_10.81.148.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.148
+!
+interface Tunnel81679
+ description Connect To R_10.81.179.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1450
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.179
+!
+interface Tunnel81681
+ description Connect To R_10.81.181.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.181
+!
+interface Tunnel81682
+ description Connect To R_10.81.182.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.182
+!
+interface Tunnel81695
+ description Connect To R_10.81.195.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.195
+!
+interface Tunnel81700
+ description Connect To R_10.81.200.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.81.251.200
+!
+interface Tunnel88006
+ description Connect to R_10.88.6.254 Tunnel1 ** Lease Line : 42D-61593 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.6
+!
+interface Tunnel88008
+ description Connect to R_10.88.8.254 Tunnel1 ** Lease Line : 42E-83415 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.8
+!
+interface Tunnel88100
+ description Connect to 10.88.100.254 Tunnel1 ** Lease Line : 42D60970  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.100
+!
+interface Tunnel88101
+ description Connect to R_10.88.101.254 Tunnel1 ** Lease Line : 42D-61595 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.101
+!
+interface Tunnel88102
+ description Connect to R_10.88.102.254 Tunnel1 ** Lease Line : 42E-83416 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.102
+!
+interface Tunnel88137
+ description Connect to 10.88.137.254 Tunnel1 ** Lease Line :42E-83368  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.137
+!
+interface Tunnel88175
+ description Connect to 10.88.175.254 Tunnel1 ** Lease Line :42D-61413  **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.88.245.175
+!
+interface Tunnel88506
+ description Connect to R_10.88.6.254 Tunnel3 ** ADSL : 46-YV000952 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.6
+!
+interface Tunnel88508
+ description Connect to R_10.88.8.254 Tunnel3 ** ADSL : 46-YV000952 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.8
+!
+interface Tunnel88600
+ description Connect to 10.88.100.254 Tunnel3 ** ADSL :04-23261532 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.100
+!
+interface Tunnel88601
+ description Connect to R_10.88.101.254 Tunnel3 ** ADSL : 42-YV003843 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.101
+!
+interface Tunnel88602
+ description Connect to R_10.88.102.254 Tunnel3 ** ADSL : 55-YV001081 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.102
+!
+interface Tunnel88637
+ description Connect to 10.88.137.254 Tunnel3 ** ADSL :37-W002380 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.137
+!
+interface Tunnel88675
+ description Connect to 10.88.175.254 Tunnel3 ** ADSL :45-W001867 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.88.241.175
+!
+interface Tunnel91025
+ description Connect To R_10.91.25.252 Tunnel2 ** Lease Line : 72D-61713 **
+ ip unnumbered Loopback0
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.25
+!
+interface Tunnel91125
+ no ip address
+ shutdown
+!
+interface Tunnel91134
+ description Connect To R_10.91.134.250 Tunnel2(72D61714)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.134
+!
+interface Tunnel91136
+ description Connect To R_10.91.136.250 Tunnel2(72E83873)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.136
+!
+interface Tunnel91137
+ description Connect To R_10.91.137.250 Tunnel2(72D61699)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.137
+!
+interface Tunnel91138
+ description Connect To R_10.91.138.250 Tunnel2(72D61700)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.138
+!
+interface Tunnel91139
+ description Connect To R_10.91.139.250 Tunnel2(72E83876)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.139
+!
+interface Tunnel91140
+ description Connect To R_10.91.140.250 Tunnel2(72E83874)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.140
+!
+interface Tunnel91145
+ description Connect To R_10.91.145.250 Tunnel2(72D61701)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.145
+!
+interface Tunnel91149
+ description Connect To R_10.91.149.250 Tunnel2(72D61702)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.149
+!
+interface Tunnel91154
+ description Connect To R_10.91.154.250 Tunnel2(72D61703)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.154
+!
+interface Tunnel91155
+ description Connect To R_10.91.155.250 Tunnel2(72D61704)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.155
+!
+interface Tunnel91156
+ description Connect To R_10.91.156.250 Tunnel2(72D61705)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.156
+!
+interface Tunnel91158
+ description Connect To R_10.91.158.250 Tunnel2(72E83875)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.158
+!
+interface Tunnel91160
+ description Connect To R_10.91.160.250 Tunnel2(72E83878)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.160
+!
+interface Tunnel91162
+ description Connect To R_10.91.162.250 Tunnel2(72E83879)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.162
+!
+interface Tunnel91163
+ description Connect To R_10.91.163.250 Tunnel2(72E83880)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.163
+!
+interface Tunnel91172
+ description Connect To R_10.91.172.250 Tunnel2(72D61706)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.172
+!
+interface Tunnel91174
+ description Connect To R_10.91.174.250 Tunnel2(72D61707)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.174
+!
+interface Tunnel91183
+ description Connect To R_10.91.183.250 Tunnel2(72D61709)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.183
+!
+interface Tunnel91185
+ description Connect To R_10.91.185.250 Tunnel2(72D61711)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.185
+!
+interface Tunnel91186
+ description Connect To R_10.91.186.250 Tunnel2(72D61712)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.186
+!
+interface Tunnel91187
+ description Connect To R_10.91.187.252 Tunnel2(72D-62098)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.187
+!
+interface Tunnel91199
+ description Connect To R_10.91.199.250 Tunnel2(72D61840)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback0
+ tunnel destination 10.91.255.199
+!
+interface Tunnel91232
+ description Connect To R_10.91.11.250 Tunnel4 ** Lease Line : 6E-80584 **
+ ip unnumbered Loopback1
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback1
+ tunnel destination 10.91.255.232
+!
+interface Tunnel91525
+ description Connect To R_10.91.25.252 Tunnel3 ** FTTB : 72-YV002698 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.25
+!
+interface Tunnel91634
+ description Connect To R_10.91.134.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.134
+!
+interface Tunnel91636
+ description Connect To R_10.91.136.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.136
+!
+interface Tunnel91637
+ description Connect To R_10.91.137.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.137
+!
+interface Tunnel91638
+ description Connect To R_10.91.138.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.138
+!
+interface Tunnel91639
+ description Connect To R_10.91.139.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.139
+!
+interface Tunnel91640
+ description Connect To R_10.91.140.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.140
+!
+interface Tunnel91645
+ description Connect To R_10.91.145.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.145
+!
+interface Tunnel91649
+ description Connect To R_10.91.149.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.149
+!
+interface Tunnel91654
+ description Connect To R_10.91.154.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.154
+!
+interface Tunnel91655
+ description Connect To R_10.91.155.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.155
+!
+interface Tunnel91656
+ description Connect To R_10.91.156.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.156
+!
+interface Tunnel91658
+ description Connect To R_10.91.158.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.158
+!
+interface Tunnel91660
+ description Connect To R_10.91.160.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.160
+!
+interface Tunnel91662
+ description Connect To R_10.91.162.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.162
+!
+interface Tunnel91663
+ description Connect To R_10.91.163.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.163
+!
+interface Tunnel91672
+ description Connect To R_10.91.172.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.172
+!
+interface Tunnel91674
+ description Connect To R_10.91.174.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.174
+!
+interface Tunnel91683
+ description Connect To R_10.91.183.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.183
+!
+interface Tunnel91685
+ description Connect To R_10.91.185.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.185
+!
+interface Tunnel91686
+ description Connect To R_10.91.186.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.186
+!
+interface Tunnel91687
+ description Connect To R_10.91.187.252 Tunnel3( 7621-YV000674)
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.187
+!
+interface Tunnel91699
+ description Connect To R_10.91.199.250 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback2
+ tunnel destination 10.91.251.199
+!
+interface Tunnel91732
+ description Connect To R_10.91.11.250 Tunnel5 ** FTTB : 6-YV002672 **
+ ip unnumbered Loopback3
+ ip mtu 1500
+ keepalive 1 3
+ tunnel source Loopback3
+ tunnel destination 10.91.251.232
+!
+interface Tunnel98104
+ description Connect to 10.98.104.254 Tunnel1 ** Lease Line : 72D-60880  **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.104
+!
+interface Tunnel98155
+ description Connect to R_10.98.155.254 Tunnel1 ** Lease Line : 72D-62091 **
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.155
+!
+interface Tunnel98237
+ description Connect To R_10.98.237.254 Tunnel1(72E83884)
+ ip unnumbered Loopback0
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback0
+ tunnel destination 10.98.245.237
+!
+interface Tunnel98504
+ description Connect to 10.98.104.254 Tunnel3 ** ADSL :72-W006990 **
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.104
+!
+interface Tunnel98655
+ description Connect to R_10.98.155.254 Tunnel3 ** ADSL : 72-YV006813 **
+ ip unnumbered Loopback2
+ ip mtu 1476
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.155
+!
+interface Tunnel98737
+ description Connect To R_10.98.237.254 Tunnel3
+ ip unnumbered Loopback2
+ ip mtu 1500
+ shutdown
+ keepalive 10 3
+ tunnel source Loopback2
+ tunnel destination 10.98.241.237
+!
+interface GigabitEthernet0/0/0
+ description SW3750_10.75.249.241:G1/0/21
+ no ip address
+ no ip redirects
+ no ip proxy-arp
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/1
+ description SW3750_10.75.249.241:G2/0/21
+ no ip address
+ no ip redirects
+ no ip proxy-arp
+ speed 1000
+ no negotiation auto
+ cdp enable
+ channel-group 1 mode active
+!
+interface GigabitEthernet0/0/2
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/3
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/4
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet0/0/5
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface Serial0/1/0.1/1/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/1/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/1/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/2/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/1/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/3/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/1/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/3/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/4/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/6/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/6/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/1/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/1/7/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/1/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/1/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/1/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/2/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/2/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/3/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/2/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/3/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/4/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/2/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/6/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/6/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/2/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/2/7/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/3/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/1/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/1/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/2/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/3/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/3/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/1/0.1/3/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/4/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/1/0.1/3/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/1/1/1:0
+ description Connect to 223E-83132
+ ip address 10.78.244.65 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/1/2:0
+ description Connect to 223E-83136
+ ip address 10.88.251.9 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/1/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/1/2/1:0
+ description Connect to 223D-66655
+ ip address 10.78.244.69 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/2/2:0
+ description Connect to 223D-66670
+ ip address 10.78.244.121 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/2/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/1/3/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/1/3/2:0
+ description Connect to 223D-66674
+ ip address 10.78.244.25 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/3/3:0
+ description Connect to 223D-67333
+ ip address 10.78.244.57 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/4/1:0
+ description Connect to 223D-67334
+ ip address 10.78.244.189 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/4/2:0
+ description Connect to 223D-66680
+ ip address 10.78.244.101 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/4/3:0
+ description Connect to 223D-66678
+ ip address 10.78.244.33 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/5/1:0
+ description Connect to 223D-67257
+ ip address 10.78.244.109 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/5/2:0
+ description Connect to 223D-66681
+ ip address 10.78.244.37 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/5/3:0
+ description Connect to 223D-67605
+ ip address 10.78.244.13 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/6/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/1/6/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/1/6/3:0
+ description Connect to 223D-67331
+ ip address 10.78.244.85 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/1/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/1/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/1/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/1/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/1/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/2/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/3/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/3/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/4/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/2/4/2:0
+ description Connect to 223D-66671
+ ip address 10.78.244.1 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/2/4/3:0
+ description Connect to 223D-66656
+ ip address 10.78.244.97 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/2/5/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/2/5/2:0
+ description Connect to 223D-66685
+ ip address 10.88.251.85 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/2/5/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/2/0.1/2/6/1:0
+ description Connect to 223D-66667
+ ip address 10.78.244.113 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/2/6/2:0
+ description Connect to 223D-66683
+ ip address 10.88.251.13 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/2/0.1/2/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/2/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/1/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/1/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/1/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/2/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/2/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/2/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/3/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/3/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/3/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/4/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/4/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/4/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/5/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/5/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/6/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/6/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/6/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/7/1:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/7/2:0
+ no ip address
+ shutdown
+!
+interface Serial0/2/0.1/3/7/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/3/0.1/1/1/1:0
+ description Connect to 223E-83813
+ ip address 10.78.244.157 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/1/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/1/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/2/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/2/2:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/2/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/3/1:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/3/2:0
+ description Connect to 223D-66694
+ ip address 10.78.244.169 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/3/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+!
+interface Serial0/3/0.1/1/4/1:0
+ description Connect to 223E-83330
+ ip address 10.78.244.5 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/4/2:0
+ description Connect to 223D-66688
+ ip address 10.78.244.161 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/4/3:0
+ description Connect to 223D-66698
+ ip address 10.78.244.29 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/5/1:0
+ description Connect to 223D-67047
+ ip address 10.78.244.233 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/5/2:0
+ description Connect to 223D-66693
+ ip address 10.78.244.201 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/5/3:0
+ no ip address
+ shutdown
+!
+interface Serial0/3/0.1/1/6/1:0
+ description Connect to 223D-66686
+ ip address 10.78.244.193 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/6/2:0
+ description Connect to 223D-66691
+ ip address 10.78.244.197 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/6/3:0
+ no ip address
+ encapsulation ppp
+ shutdown
+ cdp enable
+!
+interface Serial0/3/0.1/1/7/1:0
+ description Connect to 223D-66689
+ ip address 10.78.244.177 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/7/2:0
+ description Connect to 223D-66690
+ ip address 10.78.244.173 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/1/7/3:0
+ description Connect to 223D-66705
+ ip address 10.78.244.237 255.255.255.252
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/2/1/1:0
+ no ip address
+ encapsulation ppp
+ cdp enable
+!
+interface Serial0/3/0.1/2/1/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/1/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/2/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/2/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/2/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/3/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/3/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/3/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/4/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/4/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/4/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/5/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/5/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/5/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/6/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/6/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/6/3:0
+ no ip address
+!
+interface Serial0/3/0.1/2/7/1:0
+ no ip address
+!
+interface Serial0/3/0.1/2/7/2:0
+ no ip address
+!
+interface Serial0/3/0.1/2/7/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/1/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/1/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/1/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/2/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/2/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/2/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/3/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/3/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/3/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/4/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/4/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/4/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/5/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/5/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/5/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/6/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/6/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/6/3:0
+ no ip address
+!
+interface Serial0/3/0.1/3/7/1:0
+ no ip address
+!
+interface Serial0/3/0.1/3/7/2:0
+ no ip address
+!
+interface Serial0/3/0.1/3/7/3:0
+ no ip address
+!
+interface GigabitEthernet0
+ vrf forwarding Mgmt-intf
+ no ip address
+ shutdown
+ negotiation auto
+!
+router ospf 1
+ router-id 10.75.255.1
+ redistribute static metric 20 subnets route-map branch
+ network 10.75.249.0 0.0.0.255 area 0
+ network 10.75.255.1 0.0.0.0 area 0
+ network 10.75.255.7 0.0.0.0 area 0
+ network 10.75.255.8 0.0.0.0 area 0
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip tftp source-interface GigabitEthernet0
+no ip nat service sip udp port 5060
+ip route 0.0.0.0 0.0.0.0 10.75.249.254 200
+ip route 10.71.255.131 255.255.255.255 10.75.249.251
+ip route 10.74.0.0 255.255.0.0 10.75.249.251
+ip route 10.74.255.245 255.255.255.255 10.75.249.254
+ip route 10.75.0.0 255.255.0.0 10.75.249.254
+ip route 10.78.4.0 255.255.255.0 Tunnel249
+ip route 10.78.4.0 255.255.255.0 Tunnel549 50
+ip route 10.78.9.0 255.255.255.0 Tunnel241
+ip route 10.78.9.0 255.255.255.0 Tunnel541 50
+ip route 10.78.20.0 255.255.255.0 Tunnel245
+ip route 10.78.20.0 255.255.255.0 Tunnel545 50
+ip route 10.78.21.0 255.255.255.0 Tunnel244
+ip route 10.78.28.0 255.255.255.0 Tunnel250
+ip route 10.78.28.0 255.255.255.0 Tunnel550 50
+ip route 10.78.36.0 255.255.255.0 Tunnel251
+ip route 10.78.36.0 255.255.255.0 Tunnel551 50
+ip route 10.78.40.0 255.255.255.0 Tunnel243
+ip route 10.78.40.0 255.255.255.0 Tunnel543 50
+ip route 10.78.54.0 255.255.255.0 Tunnel217
+ip route 10.78.54.0 255.255.255.0 Tunnel517 50
+ip route 10.78.126.0 255.255.255.0 Tunnel224
+ip route 10.78.126.0 255.255.255.0 Tunnel524 50
+ip route 10.78.149.0 255.255.255.0 Tunnel78149
+ip route 10.78.149.0 255.255.255.0 Tunnel78649 50
+ip route 10.78.150.0 255.255.255.0 Tunnel262
+ip route 10.78.150.0 255.255.255.0 Tunnel562 50
+ip route 10.78.157.0 255.255.255.0 Tunnel260
+ip route 10.78.157.0 255.255.255.0 Tunnel560 50
+ip route 10.78.160.0 255.255.255.0 Tunnel209
+ip route 10.78.160.0 255.255.255.0 Tunnel509 50
+ip route 10.78.163.0 255.255.255.0 Tunnel78163
+ip route 10.78.163.0 255.255.255.0 Tunnel78663 50
+ip route 10.78.166.0 255.255.255.0 Tunnel216
+ip route 10.78.166.0 255.255.255.0 Tunnel516 50
+ip route 10.78.174.0 255.255.255.0 Tunnel78174
+ip route 10.78.174.0 255.255.255.0 Tunnel78674 50
+ip route 10.78.175.0 255.255.255.0 Tunnel78175
+ip route 10.78.175.0 255.255.255.0 Tunnel78675 50
+ip route 10.78.177.0 255.255.255.0 Tunnel227
+ip route 10.78.177.0 255.255.255.0 Tunnel527 50
+ip route 10.78.180.0 255.255.255.0 Tunnel230
+ip route 10.78.180.0 255.255.255.0 Tunnel530 50
+ip route 10.78.184.0 255.255.255.0 Tunnel266
+ip route 10.78.184.0 255.255.255.0 Tunnel566 50
+ip route 10.78.186.0 255.255.255.0 Tunnel200
+ip route 10.78.186.0 255.255.255.0 Tunnel500 50
+ip route 10.78.191.0 255.255.255.0 Tunnel534 50
+ip route 10.78.193.0 255.255.255.0 Tunnel206
+ip route 10.78.193.0 255.255.255.0 Tunnel506 50
+ip route 10.78.200.0 255.255.255.0 Tunnel261
+ip route 10.78.200.0 255.255.255.0 Tunnel561 50
+ip route 10.78.205.0 255.255.255.0 Tunnel238
+ip route 10.78.205.0 255.255.255.0 Tunnel538 50
+ip route 10.78.208.0 255.255.255.0 Tunnel208
+ip route 10.78.208.0 255.255.255.0 Tunnel508 50
+ip route 10.78.218.0 255.255.255.0 Tunnel225
+ip route 10.78.218.0 255.255.255.0 Tunnel525 50
+ip route 10.78.234.0 255.255.255.0 Tunnel78234
+ip route 10.78.234.0 255.255.255.0 Tunnel78734 50
+ip route 10.78.241.0 255.255.255.0 10.75.249.254
+ip route 10.78.245.4 255.255.255.255 Serial0/3/0.1/1/6/1:0
+ip route 10.78.245.9 255.255.255.255 Serial0/3/0.1/1/4/2:0
+ip route 10.78.245.20 255.255.255.255 Serial0/3/0.1/1/7/1:0
+ip route 10.78.245.21 255.255.255.255 Serial0/3/0.1/1/7/2:0
+ip route 10.78.245.28 255.255.255.255 Serial0/3/0.1/1/6/2:0
+ip route 10.78.245.36 255.255.255.255 Serial0/3/0.1/1/5/2:0
+ip route 10.78.245.40 255.255.255.255 Serial0/3/0.1/1/3/2:0
+ip route 10.78.245.54 255.255.255.255 Serial0/2/0.1/1/2/1:0
+ip route 10.78.245.126 255.255.255.255 Serial0/2/0.1/2/4/3:0
+ip route 10.78.245.149 255.255.255.255 Serial0/2/0.1/1/5/3:0
+ip route 10.78.245.150 255.255.255.255 Serial0/2/0.1/1/5/1:0
+ip route 10.78.245.157 255.255.255.255 Serial0/3/0.1/1/7/3:0
+ip route 10.78.245.160 255.255.255.255 Serial0/2/0.1/1/5/2:0
+ip route 10.78.245.163 255.255.255.255 Serial0/2/0.1/1/3/3:0
+ip route 10.78.245.166 255.255.255.255 Serial0/2/0.1/1/1/1:0
+ip route 10.78.245.174 255.255.255.255 Serial0/3/0.1/1/4/1:0
+ip route 10.78.245.175 255.255.255.255 Serial0/2/0.1/1/6/3:0
+ip route 10.78.245.177 255.255.255.255 Serial0/2/0.1/2/6/1:0
+ip route 10.78.245.180 255.255.255.255 Serial0/2/0.1/1/2/2:0
+ip route 10.78.245.184 255.255.255.255 Serial0/2/0.1/1/4/1:0
+ip route 10.78.245.186 255.255.255.255 Serial0/2/0.1/2/4/2:0
+ip route 10.78.245.193 255.255.255.255 Serial0/2/0.1/1/3/2:0
+ip route 10.78.245.200 255.255.255.255 Serial0/3/0.1/1/5/1:0
+ip route 10.78.245.202 255.255.255.255 Serial0/1/0.1/2/4/2:0
+ip route 10.78.245.205 255.255.255.255 Serial0/3/0.1/1/4/3:0
+ip route 10.78.245.208 255.255.255.255 Serial0/2/0.1/1/4/3:0
+ip route 10.78.245.218 255.255.255.255 Serial0/2/0.1/1/4/2:0
+ip route 10.78.245.234 255.255.255.255 Serial0/3/0.1/1/1/1:0
+ip route 10.81.1.0 255.255.255.0 Tunnel11
+ip route 10.81.1.0 255.255.255.0 Tunnel12 50
+ip route 10.81.2.0 255.255.255.0 Tunnel15
+ip route 10.81.2.0 255.255.255.0 Tunnel16 50
+ip route 10.81.4.0 255.255.255.0 Tunnel59
+ip route 10.81.4.0 255.255.255.0 Tunnel60 50
+ip route 10.81.5.0 255.255.255.0 Tunnel13
+ip route 10.81.5.0 255.255.255.0 Tunnel14 50
+ip route 10.81.6.0 255.255.255.0 Tunnel53
+ip route 10.81.6.0 255.255.255.0 Tunnel54 50
+ip route 10.81.7.0 255.255.255.0 Tunnel39
+ip route 10.81.7.0 255.255.255.0 Tunnel40 50
+ip route 10.81.10.0 255.255.255.0 Tunnel27
+ip route 10.81.10.0 255.255.255.0 Tunnel28 50
+ip route 10.81.17.0 255.255.255.0 Tunnel43
+ip route 10.81.17.0 255.255.255.0 Tunnel44 50
+ip route 10.81.18.0 255.255.255.0 Tunnel65
+ip route 10.81.18.0 255.255.255.0 Tunnel66 50
+ip route 10.81.19.0 255.255.255.0 Tunnel51
+ip route 10.81.19.0 255.255.255.0 Tunnel52 50
+ip route 10.81.23.0 255.255.255.0 Tunnel47
+ip route 10.81.23.0 255.255.255.0 Tunnel48 50
+ip route 10.81.24.0 255.255.255.0 Tunnel31
+ip route 10.81.24.0 255.255.255.0 Tunnel32 50
+ip route 10.81.26.0 255.255.255.0 Tunnel41
+ip route 10.81.26.0 255.255.255.0 Tunnel42 50
+ip route 10.81.27.0 255.255.255.0 Tunnel73
+ip route 10.81.27.0 255.255.255.0 Tunnel74 50
+ip route 10.81.28.0 255.255.255.0 Tunnel49
+ip route 10.81.28.0 255.255.255.0 Tunnel50 50
+ip route 10.81.30.0 255.255.255.0 Tunnel57
+ip route 10.81.30.0 255.255.255.0 Tunnel58 50
+ip route 10.81.31.0 255.255.255.0 Tunnel61
+ip route 10.81.31.0 255.255.255.0 Tunnel62 50
+ip route 10.81.44.0 255.255.255.0 Tunnel69
+ip route 10.81.44.0 255.255.255.0 Tunnel70 50
+ip route 10.81.95.0 255.255.255.0 Tunnel29
+ip route 10.81.95.0 255.255.255.0 Tunnel30 50
+ip route 10.81.98.0 255.255.255.0 Tunnel71
+ip route 10.81.98.0 255.255.255.0 Tunnel72 50
+ip route 10.81.144.0 255.255.255.0 Tunnel81144
+ip route 10.81.144.0 255.255.255.0 Tunnel81644 50
+ip route 10.81.148.0 255.255.255.0 Tunnel81148
+ip route 10.81.148.0 255.255.255.0 Tunnel81648 50
+ip route 10.81.179.0 255.255.255.0 Tunnel81179
+ip route 10.81.179.0 255.255.255.0 Tunnel81679 50
+ip route 10.81.181.0 255.255.255.0 Tunnel81181
+ip route 10.81.181.0 255.255.255.0 Tunnel81681 50
+ip route 10.81.182.0 255.255.255.0 Tunnel81182
+ip route 10.81.182.0 255.255.255.0 Tunnel81682 50
+ip route 10.81.195.0 255.255.255.0 Tunnel81195
+ip route 10.81.195.0 255.255.255.0 Tunnel81695 50
+ip route 10.81.200.0 255.255.255.0 Tunnel81200
+ip route 10.81.200.0 255.255.255.0 Tunnel81700 50
+ip route 10.81.238.0 255.255.255.0 Tunnel11
+ip route 10.81.238.0 255.255.255.0 Tunnel12 50
+ip route 10.81.247.0 255.255.255.0 Tunnel53
+ip route 10.81.247.0 255.255.255.0 Tunnel54 50
+ip route 10.81.251.0 255.255.255.0 10.75.249.254
+ip route 10.81.251.235 255.255.255.255 10.75.249.254
+ip route 10.87.1.0 255.255.255.0 Tunnel11
+ip route 10.87.1.0 255.255.255.0 Tunnel12 50
+ip route 10.87.2.0 255.255.255.0 Tunnel15
+ip route 10.87.2.0 255.255.255.0 Tunnel16 50
+ip route 10.87.4.0 255.255.255.0 Tunnel59
+ip route 10.87.4.0 255.255.255.0 Tunnel60 50
+ip route 10.87.5.0 255.255.255.0 Tunnel13
+ip route 10.87.5.0 255.255.255.0 Tunnel14 50
+ip route 10.87.6.0 255.255.255.0 Tunnel53
+ip route 10.87.6.0 255.255.255.0 Tunnel54 50
+ip route 10.87.7.0 255.255.255.0 Tunnel39
+ip route 10.87.7.0 255.255.255.0 Tunnel40 50
+ip route 10.87.10.0 255.255.255.0 Tunnel27
+ip route 10.87.10.0 255.255.255.0 Tunnel28 50
+ip route 10.87.17.0 255.255.255.0 Tunnel43
+ip route 10.87.17.0 255.255.255.0 Tunnel44 50
+ip route 10.87.18.0 255.255.255.0 Tunnel65
+ip route 10.87.18.0 255.255.255.0 Tunnel66 50
+ip route 10.87.19.0 255.255.255.0 Tunnel51
+ip route 10.87.19.0 255.255.255.0 Tunnel52 50
+ip route 10.87.23.0 255.255.255.0 Tunnel47
+ip route 10.87.23.0 255.255.255.0 Tunnel48 50
+ip route 10.87.24.0 255.255.255.0 Tunnel31
+ip route 10.87.24.0 255.255.255.0 Tunnel32 50
+ip route 10.87.26.0 255.255.255.0 Tunnel41
+ip route 10.87.26.0 255.255.255.0 Tunnel42 50
+ip route 10.87.27.0 255.255.255.0 Tunnel73
+ip route 10.87.27.0 255.255.255.0 Tunnel74 50
+ip route 10.87.28.0 255.255.255.0 Tunnel49
+ip route 10.87.28.0 255.255.255.0 Tunnel50 50
+ip route 10.87.30.0 255.255.255.0 Tunnel57
+ip route 10.87.30.0 255.255.255.0 Tunnel58 50
+ip route 10.87.31.0 255.255.255.0 Tunnel61
+ip route 10.87.31.0 255.255.255.0 Tunnel62 50
+ip route 10.87.44.0 255.255.255.0 Tunnel69
+ip route 10.87.44.0 255.255.255.0 Tunnel70 50
+ip route 10.87.95.0 255.255.255.0 Tunnel29
+ip route 10.87.95.0 255.255.255.0 Tunnel30 50
+ip route 10.87.98.0 255.255.255.0 Tunnel71
+ip route 10.87.98.0 255.255.255.0 Tunnel72 50
+ip route 10.87.144.0 255.255.255.0 Tunnel81144
+ip route 10.87.144.0 255.255.255.0 Tunnel81644 50
+ip route 10.87.148.0 255.255.255.0 Tunnel81148
+ip route 10.87.148.0 255.255.255.0 Tunnel81648 50
+ip route 10.87.179.0 255.255.255.0 Tunnel81179
+ip route 10.87.179.0 255.255.255.0 Tunnel81679 50
+ip route 10.87.181.0 255.255.255.0 Tunnel81181
+ip route 10.87.181.0 255.255.255.0 Tunnel81681 50
+ip route 10.87.182.0 255.255.255.0 Tunnel81182
+ip route 10.87.182.0 255.255.255.0 Tunnel81682 50
+ip route 10.87.195.0 255.255.255.0 Tunnel81195
+ip route 10.87.195.0 255.255.255.0 Tunnel81695 50
+ip route 10.87.200.0 255.255.255.0 Tunnel81200
+ip route 10.87.200.0 255.255.255.0 Tunnel81700 50
+ip route 10.88.6.0 255.255.255.0 Tunnel88006
+ip route 10.88.6.0 255.255.255.0 Tunnel88506 50
+ip route 10.88.8.0 255.255.255.0 Tunnel88008
+ip route 10.88.8.0 255.255.255.0 Tunnel88508 50
+ip route 10.88.10.0 255.255.255.0 Tunnel316
+ip route 10.88.10.0 255.255.255.0 Tunnel616 50
+ip route 10.88.29.0 255.255.255.0 Tunnel310
+ip route 10.88.29.0 255.255.255.0 Tunnel610 50
+ip route 10.88.34.0 255.255.255.0 Tunnel312
+ip route 10.88.34.0 255.255.255.0 Tunnel612 50
+ip route 10.88.44.0 255.255.255.0 Tunnel318
+ip route 10.88.44.0 255.255.255.0 Tunnel618 50
+ip route 10.88.45.0 255.255.255.0 Tunnel317
+ip route 10.88.45.0 255.255.255.0 Tunnel617 50
+ip route 10.88.48.0 255.255.255.0 Tunnel321
+ip route 10.88.48.0 255.255.255.0 Tunnel621 50
+ip route 10.88.67.0 255.255.255.0 Tunnel308
+ip route 10.88.67.0 255.255.255.0 Tunnel608 50
+ip route 10.88.100.0 255.255.255.0 Tunnel88100
+ip route 10.88.100.0 255.255.255.0 Tunnel88600 50
+ip route 10.88.101.0 255.255.255.0 Tunnel88101
+ip route 10.88.101.0 255.255.255.0 Tunnel88601 50
+ip route 10.88.102.0 255.255.255.0 Tunnel88102
+ip route 10.88.102.0 255.255.255.0 Tunnel88602 50
+ip route 10.88.104.0 255.255.255.0 Tunnel329
+ip route 10.88.104.0 255.255.255.0 Tunnel629 50
+ip route 10.88.113.0 255.255.255.0 Tunnel320
+ip route 10.88.113.0 255.255.255.0 Tunnel620 50
+ip route 10.88.123.0 255.255.255.0 Tunnel305
+ip route 10.88.123.0 255.255.255.0 Tunnel605 50
+ip route 10.88.134.0 255.255.255.0 Tunnel405
+ip route 10.88.137.0 255.255.255.0 Tunnel88137
+ip route 10.88.137.0 255.255.255.0 Tunnel88637 50
+ip route 10.88.151.0 255.255.255.0 Tunnel303
+ip route 10.88.151.0 255.255.255.0 Tunnel603 50
+ip route 10.88.171.0 255.255.255.0 Tunnel306
+ip route 10.88.171.0 255.255.255.0 Tunnel606 50
+ip route 10.88.172.0 255.255.255.0 Tunnel307
+ip route 10.88.172.0 255.255.255.0 Tunnel607 50
+ip route 10.88.175.0 255.255.255.0 Tunnel88175
+ip route 10.88.175.0 255.255.255.0 Tunnel88675 50
+ip route 10.88.200.0 255.255.255.0 Tunnel327
+ip route 10.88.200.0 255.255.255.0 Tunnel627 50
+ip route 10.88.206.0 255.255.255.0 Tunnel203
+ip route 10.88.210.0 255.255.255.0 Tunnel221
+ip route 10.88.211.0 255.255.255.0 Tunnel202
+ip route 10.88.241.0 255.255.255.0 10.75.249.254
+ip route 10.88.255.206 255.255.255.255 Serial0/2/0.1/2/6/2:0
+ip route 10.88.255.210 255.255.255.255 Serial0/2/0.1/2/5/2:0
+ip route 10.88.255.211 255.255.255.255 Serial0/2/0.1/1/1/2:0
+ip route 10.91.11.0 255.255.255.0 Tunnel35
+ip route 10.91.11.0 255.255.255.0 Tunnel91232
+ip route 10.91.11.0 255.255.255.0 Tunnel36 50
+ip route 10.91.11.0 255.255.255.0 Tunnel91732 50
+ip route 10.91.25.0 255.255.255.0 Tunnel91025
+ip route 10.91.25.0 255.255.255.0 Tunnel91525 50
+ip route 10.91.29.0 255.255.255.0 Tunnel45
+ip route 10.91.29.0 255.255.255.0 Tunnel46 50
+ip route 10.91.40.0 255.255.255.0 Tunnel33
+ip route 10.91.40.0 255.255.255.0 Tunnel34 50
+ip route 10.91.42.0 255.255.255.0 Tunnel37
+ip route 10.91.42.0 255.255.255.0 Tunnel38 50
+ip route 10.91.51.0 255.255.255.0 Tunnel17
+ip route 10.91.51.0 255.255.255.0 Tunnel18 50
+ip route 10.91.52.0 255.255.255.0 Tunnel63
+ip route 10.91.52.0 255.255.255.0 Tunnel64 50
+ip route 10.91.60.0 255.255.255.0 Tunnel3
+ip route 10.91.60.0 255.255.255.0 Tunnel4 50
+ip route 10.91.61.0 255.255.255.0 Tunnel5
+ip route 10.91.61.0 255.255.255.0 Tunnel6 50
+ip route 10.91.68.0 255.255.255.0 Tunnel7
+ip route 10.91.68.0 255.255.255.0 Tunnel8 50
+ip route 10.91.69.0 255.255.255.0 Tunnel9
+ip route 10.91.69.0 255.255.255.0 Tunnel10 50
+ip route 10.91.80.0 255.255.255.0 Tunnel19
+ip route 10.91.80.0 255.255.255.0 Tunnel20 50
+ip route 10.91.82.0 255.255.255.0 Tunnel21
+ip route 10.91.82.0 255.255.255.0 Tunnel22 50
+ip route 10.91.110.0 255.255.255.0 Tunnel23
+ip route 10.91.110.0 255.255.255.0 Tunnel24 50
+ip route 10.91.125.0 255.255.255.0 Tunnel25
+ip route 10.91.125.0 255.255.255.0 Tunnel26 50
+ip route 10.91.134.0 255.255.255.0 Tunnel91134
+ip route 10.91.134.0 255.255.255.0 Tunnel91634 50
+ip route 10.91.136.0 255.255.255.0 Tunnel91136
+ip route 10.91.136.0 255.255.255.0 Tunnel91636 50
+ip route 10.91.137.0 255.255.255.0 Tunnel91137
+ip route 10.91.137.0 255.255.255.0 Tunnel91637 50
+ip route 10.91.138.0 255.255.255.0 Tunnel91138
+ip route 10.91.138.0 255.255.255.0 Tunnel91638 50
+ip route 10.91.139.0 255.255.255.0 Tunnel91139
+ip route 10.91.139.0 255.255.255.0 Tunnel91639 50
+ip route 10.91.140.0 255.255.255.0 Tunnel91140
+ip route 10.91.140.0 255.255.255.0 Tunnel91640 50
+ip route 10.91.145.0 255.255.255.0 Tunnel91145
+ip route 10.91.145.0 255.255.255.0 Tunnel91645 50
+ip route 10.91.149.0 255.255.255.0 Tunnel91149
+ip route 10.91.149.0 255.255.255.0 Tunnel91649 50
+ip route 10.91.154.0 255.255.255.0 Tunnel91154
+ip route 10.91.154.0 255.255.255.0 Tunnel91654 50
+ip route 10.91.155.0 255.255.255.0 Tunnel91155
+ip route 10.91.155.0 255.255.255.0 Tunnel91655 50
+ip route 10.91.156.0 255.255.255.0 Tunnel91156
+ip route 10.91.156.0 255.255.255.0 Tunnel91656 50
+ip route 10.91.158.0 255.255.255.0 Tunnel91158
+ip route 10.91.158.0 255.255.255.0 Tunnel91658 50
+ip route 10.91.160.0 255.255.255.0 Tunnel91160
+ip route 10.91.160.0 255.255.255.0 Tunnel91660 50
+ip route 10.91.162.0 255.255.255.0 Tunnel91162
+ip route 10.91.162.0 255.255.255.0 Tunnel91662 50
+ip route 10.91.163.0 255.255.255.0 Tunnel91163
+ip route 10.91.163.0 255.255.255.0 Tunnel91663 50
+ip route 10.91.172.0 255.255.255.0 Tunnel91172
+ip route 10.91.172.0 255.255.255.0 Tunnel91672 50
+ip route 10.91.174.0 255.255.255.0 Tunnel91174
+ip route 10.91.174.0 255.255.255.0 Tunnel91674 50
+ip route 10.91.183.0 255.255.255.0 Tunnel91183
+ip route 10.91.183.0 255.255.255.0 Tunnel91683 50
+ip route 10.91.185.0 255.255.255.0 Tunnel91185
+ip route 10.91.185.0 255.255.255.0 Tunnel91685 50
+ip route 10.91.186.0 255.255.255.0 Tunnel91186
+ip route 10.91.186.0 255.255.255.0 Tunnel91686 50
+ip route 10.91.187.0 255.255.255.0 Tunnel91187
+ip route 10.91.187.0 255.255.255.0 Tunnel91687 50
+ip route 10.91.199.0 255.255.255.0 Tunnel91199
+ip route 10.91.199.0 255.255.255.0 Tunnel91699 50
+ip route 10.91.220.0 255.255.255.0 Tunnel5
+ip route 10.91.220.0 255.255.255.0 Tunnel6 50
+ip route 10.91.231.0 255.255.255.0 Tunnel7
+ip route 10.91.231.0 255.255.255.0 Tunnel36 50
+ip route 10.91.231.0 255.255.255.0 Tunnel91732 50
+ip route 10.91.231.0 255.255.255.0 Tunnel8 50
+ip route 10.91.232.0 255.255.255.0 Tunnel35
+ip route 10.91.232.0 255.255.255.0 Tunnel91232
+ip route 10.91.232.0 255.255.255.0 Tunnel36 50
+ip route 10.91.232.0 255.255.255.0 Tunnel91732 50
+ip route 10.91.250.25 255.255.255.255 10.75.249.254
+ip route 10.91.251.0 255.255.255.0 10.75.249.254
+ip route 10.91.255.25 255.255.255.255 10.75.249.254
+ip route 10.97.11.0 255.255.255.0 Tunnel35
+ip route 10.97.11.0 255.255.255.0 Tunnel91232
+ip route 10.97.11.0 255.255.255.0 Tunnel36 50
+ip route 10.97.11.0 255.255.255.0 Tunnel91732 50
+ip route 10.97.25.0 255.255.255.0 Tunnel91025
+ip route 10.97.25.0 255.255.255.0 Tunnel91525 50
+ip route 10.97.29.0 255.255.255.0 Tunnel45
+ip route 10.97.29.0 255.255.255.0 Tunnel46 50
+ip route 10.97.40.0 255.255.255.0 Tunnel33
+ip route 10.97.40.0 255.255.255.0 Tunnel34 50
+ip route 10.97.42.0 255.255.255.0 Tunnel37
+ip route 10.97.42.0 255.255.255.0 Tunnel38 50
+ip route 10.97.51.0 255.255.255.0 Tunnel17
+ip route 10.97.51.0 255.255.255.0 Tunnel18 50
+ip route 10.97.52.0 255.255.255.0 Tunnel63
+ip route 10.97.52.0 255.255.255.0 Tunnel64 50
+ip route 10.97.60.0 255.255.255.0 Tunnel3
+ip route 10.97.60.0 255.255.255.0 Tunnel4 50
+ip route 10.97.61.0 255.255.255.0 Tunnel5
+ip route 10.97.61.0 255.255.255.0 Tunnel6 50
+ip route 10.97.68.0 255.255.255.0 Tunnel7
+ip route 10.97.68.0 255.255.255.0 Tunnel8 50
+ip route 10.97.69.0 255.255.255.0 Tunnel9
+ip route 10.97.69.0 255.255.255.0 Tunnel10 50
+ip route 10.97.80.0 255.255.255.0 Tunnel19
+ip route 10.97.80.0 255.255.255.0 Tunnel20 50
+ip route 10.97.82.0 255.255.255.0 Tunnel21
+ip route 10.97.82.0 255.255.255.0 Tunnel22 50
+ip route 10.97.110.0 255.255.255.0 Tunnel23
+ip route 10.97.110.0 255.255.255.0 Tunnel24 50
+ip route 10.97.125.0 255.255.255.0 Tunnel25
+ip route 10.97.125.0 255.255.255.0 Tunnel26 50
+ip route 10.97.134.0 255.255.255.0 Tunnel91134
+ip route 10.97.134.0 255.255.255.0 Tunnel91634 50
+ip route 10.97.136.0 255.255.255.0 Tunnel91136
+ip route 10.97.136.0 255.255.255.0 Tunnel91636 50
+ip route 10.97.137.0 255.255.255.0 Tunnel91137
+ip route 10.97.137.0 255.255.255.0 Tunnel91637 50
+ip route 10.97.138.0 255.255.255.0 Tunnel91138
+ip route 10.97.138.0 255.255.255.0 Tunnel91638 50
+ip route 10.97.139.0 255.255.255.0 Tunnel91139
+ip route 10.97.139.0 255.255.255.0 Tunnel91639 50
+ip route 10.97.140.0 255.255.255.0 Tunnel91140
+ip route 10.97.140.0 255.255.255.0 Tunnel91640 50
+ip route 10.97.145.0 255.255.255.0 Tunnel91145
+ip route 10.97.145.0 255.255.255.0 Tunnel91645 50
+ip route 10.97.149.0 255.255.255.0 Tunnel91149
+ip route 10.97.149.0 255.255.255.0 Tunnel91649 50
+ip route 10.97.154.0 255.255.255.0 Tunnel91154
+ip route 10.97.154.0 255.255.255.0 Tunnel91654 50
+ip route 10.97.155.0 255.255.255.0 Tunnel91155
+ip route 10.97.155.0 255.255.255.0 Tunnel91655 50
+ip route 10.97.156.0 255.255.255.0 Tunnel91156
+ip route 10.97.156.0 255.255.255.0 Tunnel91656 50
+ip route 10.97.158.0 255.255.255.0 Tunnel91158
+ip route 10.97.158.0 255.255.255.0 Tunnel91658 50
+ip route 10.97.160.0 255.255.255.0 Tunnel91160
+ip route 10.97.160.0 255.255.255.0 Tunnel91660 50
+ip route 10.97.162.0 255.255.255.0 Tunnel91162
+ip route 10.97.162.0 255.255.255.0 Tunnel91662 50
+ip route 10.97.163.0 255.255.255.0 Tunnel91163
+ip route 10.97.163.0 255.255.255.0 Tunnel91663 50
+ip route 10.97.172.0 255.255.255.0 Tunnel91172
+ip route 10.97.172.0 255.255.255.0 Tunnel91672 50
+ip route 10.97.174.0 255.255.255.0 Tunnel91174
+ip route 10.97.174.0 255.255.255.0 Tunnel91674 50
+ip route 10.97.183.0 255.255.255.0 Tunnel91183
+ip route 10.97.183.0 255.255.255.0 Tunnel91683 50
+ip route 10.97.185.0 255.255.255.0 Tunnel91185
+ip route 10.97.185.0 255.255.255.0 Tunnel91685 50
+ip route 10.97.186.0 255.255.255.0 Tunnel91186
+ip route 10.97.186.0 255.255.255.0 Tunnel91686 50
+ip route 10.97.187.0 255.255.255.0 Tunnel91187
+ip route 10.97.187.0 255.255.255.0 Tunnel91687 50
+ip route 10.97.199.0 255.255.255.0 Tunnel91199
+ip route 10.97.199.0 255.255.255.0 Tunnel91699 50
+ip route 10.98.11.0 255.255.255.0 Tunnel415
+ip route 10.98.11.0 255.255.255.0 Tunnel715 50
+ip route 10.98.12.0 255.255.255.0 Tunnel413
+ip route 10.98.12.0 255.255.255.0 Tunnel713 50
+ip route 10.98.13.0 255.255.255.0 Tunnel421
+ip route 10.98.13.0 255.255.255.0 Tunnel721 50
+ip route 10.98.14.0 255.255.255.0 Tunnel414
+ip route 10.98.14.0 255.255.255.0 Tunnel714 50
+ip route 10.98.17.0 255.255.255.0 Tunnel418
+ip route 10.98.17.0 255.255.255.0 Tunnel718 50
+ip route 10.98.42.0 255.255.255.0 Tunnel417
+ip route 10.98.42.0 255.255.255.0 Tunnel717 50
+ip route 10.98.49.0 255.255.255.0 Tunnel424
+ip route 10.98.49.0 255.255.255.0 Tunnel724 50
+ip route 10.98.50.0 255.255.255.0 Tunnel423
+ip route 10.98.50.0 255.255.255.0 Tunnel723 50
+ip route 10.98.52.0 255.255.255.0 Tunnel425
+ip route 10.98.52.0 255.255.255.0 Tunnel725 50
+ip route 10.98.104.0 255.255.255.0 Tunnel98104
+ip route 10.98.104.0 255.255.255.0 Tunnel98504 50
+ip route 10.98.155.0 255.255.255.0 Tunnel98155
+ip route 10.98.155.0 255.255.255.0 Tunnel98655 50
+ip route 10.98.184.0 255.255.255.0 Tunnel403
+ip route 10.98.184.0 255.255.255.0 Tunnel703 50
+ip route 10.98.190.0 255.255.255.0 Tunnel428
+ip route 10.98.190.0 255.255.255.0 Tunnel728 50
+ip route 10.98.199.0 255.255.255.0 Tunnel427
+ip route 10.98.199.0 255.255.255.0 Tunnel727 50
+ip route 10.98.212.0 255.255.255.0 Tunnel410
+ip route 10.98.212.0 255.255.255.0 Tunnel710 50
+ip route 10.98.237.0 255.255.255.0 Tunnel98237
+ip route 10.98.237.0 255.255.255.0 Tunnel98737 50
+ip route 10.98.241.0 255.255.255.0 10.75.249.254
+ip route 10.225.1.0 255.255.255.0 10.75.249.251
+ip route 10.225.1.220 255.255.255.255 10.75.249.251
+ip route 59.120.48.163 255.255.255.255 10.75.249.254
+ip route 60.248.149.78 255.255.255.255 10.75.249.254
+ip route 60.250.169.40 255.255.255.255 10.75.249.254
+ip route 60.250.169.43 255.255.255.255 10.75.249.254
+ip route 140.134.250.8 255.255.255.255 10.75.249.254
+ip route 172.26.81.0 255.255.255.0 10.75.249.251
+ip route 192.169.5.1 255.255.255.255 10.75.249.254
+ip route 192.169.254.1 255.255.255.255 10.75.249.254
+ip route 192.169.254.2 255.255.255.255 10.75.249.254
+ip route 192.169.254.20 255.255.255.255 10.75.249.254
+ip route 192.169.254.50 255.255.255.255 10.75.249.254
+ip route 192.169.254.100 255.255.255.255 10.75.249.254
+ip route 192.192.105.180 255.255.255.255 10.75.249.254
+ip route 192.193.208.166 255.255.255.255 10.75.249.254
+ip route 192.193.208.230 255.255.255.255 10.75.249.254
+ip route 192.193.208.231 255.255.255.255 10.75.249.254
+ip route 192.193.211.170 255.255.255.255 10.75.249.254
+ip route 192.193.211.171 255.255.255.255 10.75.249.254
+ip route 199.67.139.130 255.255.255.255 10.75.249.254
+ip route 203.65.168.162 255.255.255.255 10.75.249.254
+ip route 210.62.37.3 255.255.255.255 10.75.249.254
+ip route 210.69.124.245 255.255.255.255 10.75.249.254
+ip route 210.240.76.2 255.255.255.255 10.75.249.254
+ip route 210.242.218.0 255.255.255.0 10.75.249.254
+!
+ip ssh time-out 60
+ip ssh version 2
+!
+!
+ip access-list extended NTP-Deny
+ deny   ip any any
+ip access-list extended NTP-Server
+ permit ip host 10.75.215.1 any
+ deny   ip any any
+ip access-list extended branch_net
+ permit ip 10.78.0.0 0.0.255.255 any
+ permit ip 10.81.0.0 0.0.255.255 any
+ permit ip 10.88.0.0 0.0.255.255 any
+ permit ip 10.89.0.0 0.0.255.255 any
+ permit ip 10.91.0.0 0.0.255.255 any
+ permit ip 10.98.0.0 0.0.255.255 any
+ permit ip 10.87.0.0 0.0.255.255 any
+ permit ip 10.97.0.0 0.0.255.255 any
+logging history debugging
+logging alarm informational
+logging source-interface Port-channel1
+logging host 10.75.251.122
+logging host 10.75.13.12
+access-list 10 permit 10.225.1.0 0.0.0.255
+access-list 99 permit 10.75.13.126
+access-list 99 permit 10.75.13.131
+access-list 99 permit 10.64.14.0 0.0.0.255
+access-list 99 permit 10.75.125.0 0.0.0.255
+access-list 99 permit 10.75.200.0 0.0.0.255
+access-list 99 permit 10.75.248.0 0.0.0.255
+access-list 99 permit 10.75.249.0 0.0.0.255
+!
+!
+route-map branch permit 10 
+ match ip address branch_net
+!
+snmp-server community @Yuanta RO
+snmp-server community onlynetsecure RW
+snmp-server enable traps snmp authentication linkdown linkup coldstart warmstart
+snmp-server enable traps tty
+snmp-server host 10.75.249.138 version 2c @Yuanta 
+snmp ifmib ifindex persist
+tacacs-server host 10.75.206.72
+tacacs-server host 10.75.206.137
+tacacs-server directed-request
+tacacs-server key 7 055A545C751918
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+banner motd ^C
+**************************************************************
+ 
+   WARNING: This system is for the use of authorized clients only.
+            Individuals using the computer network system without
+            authorization, or in excess of their authorization, are
+            subject to having all their activity on this computer
+            network system monitored and recorded by system
+            personnel.  To protect the computer network system from
+            unauthorized use and to ensure the computer network systems
+            is functioning properly, system administrators monitor this
+            system.  Anyone using this computer network system
+            expressly consents to such monitoring and is advised that
+            if such monitoring reveals possible conduct of criminal
+            activity, system personnel may provide the evidence of
+            such activity to law enforcement officers. 
+            Access is restricted to authorized users only.
+            Unauthorized access is a violation of state and federal,
+            civil and criminal laws.
+**************************************************************
+^C
+!
+line con 0
+ exec-timeout 15 0
+ authorization commands 1 CONSOLE
+ authorization commands 15 CONSOLE
+ logging synchronous
+ login authentication CONSOLE
+ stopbits 1
+line aux 0
+ stopbits 1
+line vty 0 4
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input ssh
+line vty 5 15
+ access-class 99 in
+ exec-timeout 15 0
+ logging synchronous
+ transport input none
+!
+ntp access-group peer NTP-Server
+ntp access-group serve NTP-Deny
+ntp access-group query-only NTP-Deny
+ntp server 10.75.215.1 source Port-channel1
+!
+!
+!
+!
+!
+!
+end
+
+R_10.75.249.250#exit

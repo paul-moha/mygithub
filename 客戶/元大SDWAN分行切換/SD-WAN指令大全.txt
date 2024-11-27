@@ -1,0 +1,52 @@
+6show sdwan policy access-list-associations
+show sdwan policy access-list-counters
+show sdwan policy access-list-names
+show sdwan policy access-list-policers
+​show sdwan policy data-policy-filter
+show sdwan policy rewrite-associations
+show policy-map interface GigabitEthernet0/0/2
+
+
+Adaptive Qos
+
+show platform software sdwan qos adapt stats 
+show platform software sdwan qos adapt history all 
+show platform software sdwan qos adapt history GigabitEthernet0/0/4
+show policy-map interface GigabitEthernet3
+show platform software sdwan qos adapt stats 
+show platform software sdwan qos adapt history Tunnel1 10.1.14.14
+show policy-map multipoint Tunnel1 10.1.14.14
+
+
+
+Per-Tunnel QoS
+show platform software sdwan qos template
+show platform software sdwan qos policy
+show platform software sdwan qos target
+show policy-map interface GigabitEthernet 0/0/1 
+show platform software sdwan qos summary
+
+debug plat condition stop 
+show plat packet-trace summary
+clear platform packet-trace configurration
+show debugging 
+show platform condition all
+debug plat packet-trac start
+
+
+show platform packet-trace statistics
+show platform packet-trace summary
+debug platform condiction ipv4 x.x.x.x/32 access-list both
+show run policy data-policy
+show run policy control-policy xxxx
+show run route-map
+show sdwan policy from-vsmart
+show sdwan app-route stats
+show sdwan app-fwd cflow flows
+
+
+E-mail
+ cd /var/log/nms
+ tail -f vmanage-server.log | grep -I "email" -A S
+
+
