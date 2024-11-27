@@ -1,0 +1,25 @@
+aaa new-model
+
+tacacs server ISE1
+ address ipv4 172.26.249.24
+ key cisco
+tacacs server ISE2
+ address ipv4 172.26.249.26
+ key cisco
+
+
+aaa group server tacacs+ ISE-GROUP-T
+ server name ISE1
+ server name ISE2
+!
+
+
+
+aaa authentication login default group ISE-GROUP-T line none
+aaa authorization config-commands
+aaa authorization exec default group ISE-GROUP-T local 
+aaa authorization commands 1 default group ISE-GROUP-T local 
+aaa authorization commands 15 default group ISE-GROUP-T local 
+aaa accounting exec default start-stop group ISE-GROUP-T
+aaa accounting commands 1 default start-stop group ISE-GROUP-T
+aaa accounting commands 15 default start-stop group ISE-GROUP-T
