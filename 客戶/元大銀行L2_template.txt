@@ -122,6 +122,6 @@ mac address-table notification change
 
  
 
-
+//SPF error-disable 解決方式
 no errdisable detect cause gbic-invalid
 service unsupported-transceiver
