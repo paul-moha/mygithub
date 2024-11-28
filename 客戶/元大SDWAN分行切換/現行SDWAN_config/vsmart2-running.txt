@@ -1,0 +1,1640 @@
+﻿﻿vSmart2# sh run
+system
+ host-name             vSmart2
+ gps-location latitude 24.9948
+ gps-location longitude 121.4582
+ system-ip             10.240.236.6
+ site-id               1
+ admin-tech-on-failure
+ no vrrp-advt-with-phymac
+ sp-organization-name  YuantaFutures
+ organization-name     YuantaFutures
+ clock timezone Asia/Taipei
+ vbond vbond.yuantafutures
+ aaa
+  auth-order      local radius tacacs
+  usergroup basic
+   task system read write
+   task interface read write
+  !
+  usergroup netadmin
+  !
+  usergroup operator
+   task system read
+   task interface read
+   task policy read
+   task routing read
+   task security read
+  !
+  usergroup tenantadmin
+  !
+  user admin
+   password $6$r1AwZV3r/IOJEQbO$qmE5zZoh3GhOStToSMd.caxWZIks20wEImpu0FQrhAw2RjuHi4L10rftU4zqYMHdP79pqAzd7tUHaUzT99uVQ0
+  !
+  ciscotacro-user true
+  ciscotacrw-user true
+ !
+ logging
+  disk
+   enable
+  !
+ !
+ ntp
+  parent
+   no enable
+   stratum 5
+  exit
+  server 10.216.9.1
+   version 4
+  exit
+ !
+!
+omp
+ no shutdown
+ send-path-limit  8
+ graceful-restart
+ timers
+  graceful-restart-timer 604800
+ exit
+!
+snmp
+ no shutdown
+ view global
+  oid 1.3.6.1
+ !
+ community $8$87ACE86F77808CD9B621067FE299A822
+  view          global
+  authorization read-only
+ !
+!
+vpn 0
+ dns 10.216.4.101 primary
+ host vbond.yuantafutures ip 10.240.237.3 10.240.237.4
+ interface eth0
+  ip address 10.240.237.6/24
+  ipv6 dhcp-client
+  tunnel-interface
+   allow-service all
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   no allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service stun
+  !
+  no shutdown
+ !
+ ip route 0.0.0.0/0 10.240.237.254
+!
+vpn 512
+!
+policy
+ data-policy _vpn1_BQIDC_YJ_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-ip                    10.214.220.171/32
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-ip                    10.214.220.171/32
+     destination-data-prefix-list HC_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-ip                    10.214.220.171/32
+     destination-data-prefix-list TC_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-ip                    10.214.220.171/32
+     destination-data-prefix-list TN_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-ip                    10.214.220.171/32
+     destination-data-prefix-list KH_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      BQIDC-VRF3-NETWORK
+     destination-data-prefix-list YJ_VIP_NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      10_214_217_80
+     destination-data-prefix-list miywang
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      BQIDC-VRF3-NETWORK
+     destination-data-prefix-list YJ_VIP_NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 91
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 101
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 111
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list TN_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 121
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list BRANCH_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 131
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 141
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 151
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 161
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list TN_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 171
+    match
+     source-ip                    10.240.0.0/16
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 181
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     count test_count_1796187478
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 191
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 201
+    match
+     source-data-prefix-list      BQIDC_Network
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 211
+    match
+     source-data-prefix-list      BQIDC_FH_NETWORK
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 221
+    match
+     source-data-prefix-list      BQIDC_FH_NETWORK
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 231
+    match
+     source-data-prefix-list      EXCHANGE
+     destination-data-prefix-list BRANCH_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 241
+    match
+     source-data-prefix-list      10_214_217_80
+     destination-data-prefix-list YJ_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   default-action accept
+  !
+ !
+ data-policy _vpn1_HC_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-data-prefix-list HC_Network
+     destination-ip          10.214.220.171/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-data-prefix-list HC_Network
+     destination-ip          10.214.217.141/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      HC_Network
+     destination-data-prefix-list EXCHANGE
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 91
+    match
+     source-ip 0.0.0.0/0
+    !
+    action accept
+     count  CFLOWD_897418689
+     cflowd
+    !
+   !
+   default-action accept
+  !
+ !
+ data-policy _vpn1_KH_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-data-prefix-list KH_Network
+     destination-ip          10.214.220.171/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-data-prefix-list KH_Network
+     destination-ip          10.214.217.141/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      KH_Network
+     destination-data-prefix-list EXCHANGE
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 91
+    match
+     source-ip 0.0.0.0/0
+    !
+    action accept
+     count  CFLOWD_-1855761969
+     cflowd
+    !
+   !
+   default-action accept
+  !
+ !
+ data-policy _vpn1_TC_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-data-prefix-list TC_Network
+     destination-ip          10.214.220.171/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-data-prefix-list TC_Network
+     destination-ip          10.214.217.141/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      TC_Network
+     destination-data-prefix-list EXCHANGE
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 91
+    match
+     source-ip 0.0.0.0/0
+    !
+    action accept
+     count  CFLOWD_-400611758
+     cflowd
+    !
+   !
+   default-action accept
+  !
+ !
+ data-policy _vpn1_TN_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-data-prefix-list TN_Network
+     destination-ip          10.214.220.171/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-data-prefix-list TN_Network
+     destination-ip          10.214.217.141/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list YJ_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      TN_Network
+     destination-data-prefix-list EXCHANGE
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   default-action accept
+  !
+ !
+ data-policy _vpn1_YJ_BQIDC_MASS_TRAFFIC
+  vpn-list vpn1
+   sequence 1
+    match
+     source-data-prefix-list YJ_Network
+     destination-ip          10.214.25.254/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 11
+    match
+     source-data-prefix-list YJ_Network
+     destination-ip          10.214.217.141/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 21
+    match
+     source-data-prefix-list YJ_Network
+     destination-ip          10.214.220.171/32
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 31
+    match
+     source-data-prefix-list      YJ_VIP_NETWORK
+     destination-data-prefix-list BQIDC-VRF3-NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 41
+    match
+     source-data-prefix-list      miywang
+     destination-data-prefix-list 10_214_217_80
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 51
+    match
+     source-data-prefix-list      YJ_VIP_NETWORK
+     destination-data-prefix-list BQIDC-VRF3-NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 61
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 71
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 81
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     FTP_SMB_RDP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 91
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list TN_Network
+     app-list                     FTP_SMB
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 101
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BRANCH_Network
+     app-list                     SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color mpls
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 111
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 121
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 131
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+     app-list                     LOG_SNMP
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 141
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list TN_Network
+     app-list                     LOG
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 151
+    match
+     source-data-prefix-list YJ_Network
+     destination-ip          10.240.0.0/16
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 161
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 171
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 181
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_Network
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom1
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 191
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_FH_NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color private2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 201
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list BQIDC_FH_NETWORK
+    !
+    action accept
+     set
+      local-tloc-list
+       color custom2
+       encap ipsec
+      !
+     !
+    !
+   !
+   sequence 211
+    match
+     source-data-prefix-list      YJ_Network
+     destination-data-prefix-list 10_214_217_80
+    !
+    action accept
+     set
+      local-tloc-list
+       color private1
+       encap ipsec
+      !
+     !
+    !
+   !
+   default-action accept
+  !
+ !
+ cflowd-template CFLOWD_FROM_HC
+  collector vpn 1 address 10.229.241.101 port 9001 transport transport_udp source-interface GigabitEthernet0/0/3
+  collector vpn 1 address 10.229.241.101 port 9994 transport transport_udp source-interface GigabitEthernet0/0/3
+ !
+ cflowd-template CFLOWD_FROM_KH
+  collector vpn 1 address 10.229.247.101 port 9001 transport transport_udp source-interface GigabitEthernet0/0/3
+  collector vpn 1 address 10.229.247.101 port 9994 transport transport_udp source-interface GigabitEthernet0/0/3
+ !
+ cflowd-template CFLOWD_FROM_TC
+  collector vpn 1 address 10.229.243.101 port 9001 transport transport_udp source-interface GigabitEthernet0/0/3
+  collector vpn 1 address 10.229.243.101 port 9993 transport transport_udp source-interface GigabitEthernet0/0/3
+ !
+ cflowd-template CFLOWD_FROM_TN
+  collector vpn 1 address 10.229.245.101 port 9001 transport transport_udp source-interface GigabitEthernet0/0/3
+  collector vpn 1 address 10.229.245.101 port 9994 transport transport_udp source-interface GigabitEthernet0/0/3
+ !
+ cflowd-template CFLOW_FROM_SERVICE_YJ_8300
+  flow-active-timeout 60
+  collector vpn 1 address 10.229.1.45 port 9994 transport transport_udp source-interface GigabitEthernet0/0/5
+ !
+ lists
+  vpn-list vpn1
+   vpn 1
+  !
+  vpn-list vpn2
+   vpn 2
+  !
+  data-prefix-list 10_214_217_80
+   ip-prefix 10.214.217.80/32
+  !
+  data-prefix-list BQIDC-VRF3-NETWORK
+   ip-prefix 10.204.0.0/16
+   ip-prefix 10.214.0.0/16
+  !
+  data-prefix-list BQIDC_FH_NETWORK
+   ip-prefix 10.155.0.0/16
+  !
+  data-prefix-list BQIDC_Network
+   ip-prefix 10.204.0.0/16
+   ip-prefix 10.214.0.0/16
+   ip-prefix 10.240.0.0/16
+   ip-prefix 172.31.0.0/16
+  !
+  data-prefix-list BRANCH_Network
+   ip-prefix 10.229.142.0/24
+   ip-prefix 10.229.240.0/24
+   ip-prefix 10.229.241.0/24
+   ip-prefix 10.229.242.0/24
+   ip-prefix 10.229.243.0/24
+   ip-prefix 10.229.244.0/24
+   ip-prefix 10.229.245.0/24
+   ip-prefix 10.229.246.0/24
+   ip-prefix 10.229.247.0/24
+   ip-prefix 10.229.249.0/24
+   ip-prefix 10.229.250.0/24
+   ip-prefix 10.229.251.0/24
+   ip-prefix 10.229.252.0/24
+  !
+  data-prefix-list EXCHANGE
+   ip-prefix 10.214.201.1/32
+  !
+  data-prefix-list HC_Network
+   ip-prefix 10.229.240.0/24
+   ip-prefix 10.229.241.0/24
+   ip-prefix 10.229.249.0/24
+  !
+  data-prefix-list KH_Network
+   ip-prefix 10.229.246.0/24
+   ip-prefix 10.229.247.0/24
+   ip-prefix 10.229.252.0/24
+  !
+  data-prefix-list TC_Network
+   ip-prefix 10.229.142.0/24
+   ip-prefix 10.229.242.0/24
+   ip-prefix 10.229.243.0/24
+   ip-prefix 10.229.250.0/24
+  !
+  data-prefix-list TN_Network
+   ip-prefix 10.229.244.0/24
+   ip-prefix 10.229.245.0/24
+   ip-prefix 10.229.251.0/24
+  !
+  data-prefix-list YJ_Network
+   ip-prefix 10.228.8.0/22
+   ip-prefix 10.228.12.0/24
+   ip-prefix 10.229.0.0/17
+   ip-prefix 10.229.237.0/24
+   ip-prefix 10.229.253.0/24
+   ip-prefix 10.229.254.0/24
+   ip-prefix 10.229.255.0/24
+  !
+  data-prefix-list YJ_VIP_NETWORK
+   ip-prefix 10.229.237.0/24
+  !
+  data-prefix-list miywang
+   ip-prefix 10.229.8.196/32
+  !
+  app-list FTP_SMB
+   app cifs
+   app ftp
+   app ftp-data
+   app ftp_data
+   app smb
+   app smb_direct
+  !
+  app-list FTP_SMB_RDP
+   app cifs
+   app ftp
+   app ftp-data
+   app ftp_data
+   app ms-wbt
+   app rdp
+   app smb
+   app smb_direct
+  !
+  app-list LOG
+   app syslog
+  !
+  app-list LOG_SNMP
+   app snmp
+   app syslog
+  !
+  app-list SNMP
+   app snmp
+  !
+  site-list BQIDC
+   site-id 1
+  !
+  site-list HC
+   site-id 3
+  !
+  site-list KH
+   site-id 7
+  !
+  site-list TC
+   site-id 4
+  !
+  site-list TN
+   site-id 6
+  !
+  site-list YJ
+   site-id 2
+  !
+  prefix-list Default_Route
+   ip-prefix 0.0.0.0/0
+  !
+  prefix-list _AnyIpv4PrefixList
+   ip-prefix 0.0.0.0/0 le 32
+  !
+ !
+ control-policy DefaultR_Preference
+  sequence 1
+   match tloc
+   !
+   action accept
+   !
+  !
+  sequence 11
+   match route
+    originator  10.240.236.12
+    prefix-list Default_Route
+    site-list   BQIDC
+   !
+   action accept
+    set
+     preference 200
+    !
+   !
+  !
+  sequence 21
+   match route
+    originator  10.240.236.11
+    prefix-list Default_Route
+    site-list   BQIDC
+   !
+   action accept
+    set
+     preference 100
+    !
+   !
+  !
+  sequence 31
+   match route
+    prefix-list _AnyIpv4PrefixList
+    vpn-list    vpn1
+   !
+   action accept
+    export-to
+     vpn-list vpn2
+    !
+   !
+  !
+  sequence 41
+   match route
+    prefix-list _AnyIpv4PrefixList
+    vpn-list    vpn2
+   !
+   action accept
+    export-to
+     vpn-list vpn1
+    !
+   !
+  !
+  default-action accept
+ !
+ control-policy Deny_DefaultR
+  sequence 1
+   match tloc
+   !
+   action accept
+   !
+  !
+  sequence 11
+   match route
+    prefix-list Default_Route
+   !
+   action reject
+   !
+  !
+  sequence 21
+   match route
+    prefix-list _AnyIpv4PrefixList
+   !
+   action accept
+   !
+  !
+  default-action accept
+ !
+ control-policy Route_Leaking_VPN1_VPN2
+  sequence 1
+   match route
+    prefix-list _AnyIpv4PrefixList
+    vpn-list    vpn1
+   !
+   action accept
+    export-to
+     vpn-list vpn2
+    !
+   !
+  !
+  sequence 11
+   match route
+    prefix-list _AnyIpv4PrefixList
+    vpn-list    vpn2
+   !
+   action accept
+    export-to
+     vpn-list vpn1
+    !
+   !
+  !
+  default-action accept
+ !
+!
+apply-policy
+ site-list BQIDC
+  control-policy DefaultR_Preference in
+  data-policy _vpn1_BQIDC_YJ_MASS_TRAFFIC from-service
+ !
+ site-list HC
+  control-policy Route_Leaking_VPN1_VPN2 in
+  data-policy _vpn1_HC_MASS_TRAFFIC from-service
+  cflowd-template CFLOWD_FROM_HC
+ !
+ site-list KH
+  control-policy Route_Leaking_VPN1_VPN2 in
+  data-policy _vpn1_KH_MASS_TRAFFIC from-service
+  cflowd-template CFLOWD_FROM_KH
+ !
+ site-list TC
+  control-policy Route_Leaking_VPN1_VPN2 in
+  data-policy _vpn1_TC_MASS_TRAFFIC from-service
+  cflowd-template CFLOWD_FROM_TC
+ !
+ site-list TN
+  control-policy Route_Leaking_VPN1_VPN2 in
+  data-policy _vpn1_TN_MASS_TRAFFIC from-service
+  cflowd-template CFLOWD_FROM_TN
+ !
+ site-list YJ
+  control-policy Route_Leaking_VPN1_VPN2 in
+  control-policy Deny_DefaultR out
+  data-policy _vpn1_YJ_BQIDC_MASS_TRAFFIC from-service
+  cflowd-template CFLOW_FROM_SERVICE_YJ_8300
+ !
+!

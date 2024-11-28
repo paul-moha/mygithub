@@ -1,0 +1,435 @@
+﻿﻿YFTC-cEdge41#
+YFTC-cEdge41#sh sdwan run
+system
+ gps-location latitude 24.1384
+ gps-location longitude 120.6807
+ system-ip             10.240.236.41
+ overlay-id            1
+ site-id               4
+ port-offset           0
+ control-session-pps   300
+ admin-tech-on-failure
+ sp-organization-name  YuantaFutures
+ organization-name     YuantaFutures
+ port-hop
+ track-transport
+ track-default-gateway
+ console-baud-rate     9600
+ no on-demand enable
+ on-demand idle-timeout 10
+ vbond vbond.yuantafutures port 12346
+!
+service timestamps
+service call-home
+service tcp-keepalives-in
+service tcp-keepalives-out
+no service tcp-small-servers
+no service udp-small-servers
+hostname YFTC-cEdge41
+username admin privilege 15 secret 9 $9$2/2J2V2M4/MF4.$V9VgL0OMnl6/UWx7P1ucLIpigya1SrfSdRWvtSBLRP6
+username cisco privilege 15 secret 9 $9$3FEG2V2L4/UH3U$ogGQb.cXKPzHj4I6xDwQs2UZG8WndRwQdHkieO32u5w
+username miywang privilege 15 secret 9 $9$2VMM2VEG1l6K3k$nb2dPp3Gv/QGYHUFL17dS5rGXBAHgm8vH.N4bVbKEDY
+vrf definition 1
+ rd 1:1
+ address-family ipv4
+  route-target export 65504:1
+  route-target import 65504:1
+  exit-address-family
+ !
+ address-family ipv6
+  exit-address-family
+ !
+!
+vrf definition 2
+ rd 1:2
+ address-family ipv4
+  route-target export 65504:2
+  route-target import 65504:2
+  exit-address-family
+ !
+ address-family ipv6
+  exit-address-family
+ !
+!
+vrf definition Mgmt-intf
+ rd 1:512
+ address-family ipv4
+  route-target export 65504:512
+  route-target import 65504:512
+  exit-address-family
+ !
+ address-family ipv6
+  exit-address-family
+ !
+!
+ip arp proxy disable
+no ip finger
+no ip rcmd rcp-enable
+no ip rcmd rsh-enable
+no ip dhcp use class
+ip host vbond.yuantafutures 10.240.237.3 10.240.237.4
+ip name-server 10.216.4.101
+ip route 0.0.0.0 0.0.0.0 10.240.235.46
+ip route 0.0.0.0 0.0.0.0 10.240.239.254
+ip route 0.0.0.0 0.0.0.0 125.227.84.254
+ip bootp server
+no ip source-route
+ip access-list extended Cisco_SSH-acl-22
+ 10 permit tcp 10.204.0.0 0.0.255.255 any eq 22
+ 20 permit tcp 10.214.0.0 0.0.255.255 any eq 22
+ 30 permit tcp 10.240.0.0 0.0.255.255 any eq 22
+ 40 permit tcp 172.31.0.0 0.0.255.255 any eq 22
+ 50 permit tcp 10.228.8.0 0.0.3.255 any eq 22
+ 60 permit tcp 10.228.12.0 0.0.0.255 any eq 22
+ 70 permit tcp 10.229.0.0 0.0.127.255 any eq 22
+ 80 permit tcp 10.229.237.0 0.0.0.255 any eq 22
+ 90 permit tcp 10.229.253.0 0.0.0.255 any eq 22
+ 100 permit tcp 10.229.254.0 0.0.0.255 any eq 22
+ 110 permit tcp 10.229.255.0 0.0.0.255 any eq 22
+ 120 permit tcp 10.229.244.0 0.0.0.255 any eq 22
+ 130 permit tcp 10.229.245.0 0.0.0.255 any eq 22
+ 140 permit tcp 10.229.251.0 0.0.0.255 any eq 22
+ 150 permit tcp 210.71.214.168 0.0.0.0 any eq 22
+ 160 permit tcp 125.227.157.67 0.0.0.0 any eq 22
+ 170 deny tcp any any eq 22
+!
+no ip http server
+no ip http secure-server
+ip nat settings central-policy
+interface GigabitEthernet0/0/0
+ no shutdown
+ arp timeout 1200
+ ip address 10.240.239.41 255.255.255.0
+ no ip redirects
+ ip mtu    1500
+ load-interval 30
+ mtu           1500
+ negotiation auto
+exit
+interface GigabitEthernet0/0/1
+ no shutdown
+ arp timeout 1200
+ ip address 10.240.235.41 255.255.255.248
+ no ip redirects
+ ip mtu    1500
+ load-interval 30
+ mtu           1500
+ negotiation auto
+exit
+interface GigabitEthernet0/0/2
+ no shutdown
+ arp timeout 1200
+ ip address 125.227.84.14 255.255.255.0
+ no ip redirects
+ ip mtu    1500
+ load-interval 30
+ mtu           1500
+ negotiation auto
+exit
+interface GigabitEthernet0/0/3
+ no shutdown
+ arp timeout 1200
+ bfd template t1
+ vrf forwarding 1
+ ip address 10.229.242.251 255.255.255.0
+ no ip redirects
+ ip mtu    1500
+ ip nbar protocol-discovery
+ load-interval 30
+ mtu           1500
+ negotiation auto
+exit
+interface GigabitEthernet0/1/0
+ no shutdown
+ arp timeout 1200
+ bfd template t1
+ vrf forwarding 2
+ ip address 192.168.4.41 255.255.255.0
+ no ip redirects
+ ip mtu    1500
+ ip nbar protocol-discovery
+ load-interval 30
+ mtu           1500
+ negotiation auto
+exit
+interface GigabitEthernet0/1/1
+ no shutdown
+exit
+interface Tunnel0
+ no shutdown
+ ip unnumbered GigabitEthernet0/0/0
+ no ip redirects
+ ipv6 unnumbered GigabitEthernet0/0/0
+ no ipv6 redirects
+ tunnel source GigabitEthernet0/0/0
+ tunnel mode sdwan
+exit
+interface Tunnel1
+ no shutdown
+ ip unnumbered GigabitEthernet0/0/1
+ no ip redirects
+ ipv6 unnumbered GigabitEthernet0/0/1
+ no ipv6 redirects
+ tunnel source GigabitEthernet0/0/1
+ tunnel mode sdwan
+exit
+interface Tunnel2
+ no shutdown
+ ip unnumbered GigabitEthernet0/0/2
+ no ip redirects
+ ipv6 unnumbered GigabitEthernet0/0/2
+ no ipv6 redirects
+ tunnel source GigabitEthernet0/0/2
+ tunnel mode sdwan
+exit
+clock timezone CST 8 0
+logging persistent size 104857600 filesize 10485760
+no logging monitor
+logging buffered 512000
+logging console
+aaa group server tacacs+ tacacs-1
+ server-private 10.214.222.16 port 49 timeout 5 key 6 FddOJHV^hGQ[XZiEMiESeIQiVABOWZAAB
+ ip vrf forwarding 1
+!
+aaa authentication login default group tacacs-1 local
+aaa authorization exec default group tacacs-1 local
+aaa server radius dynamic-author
+!
+bfd-template single-hop t1
+ interval min-tx 500 min-rx 500 multiplier 3
+!
+router bgp 65504
+ bgp log-neighbor-changes
+ address-family ipv4 unicast vrf 1
+  bgp router-id 10.240.236.41
+  distance bgp 20 200 20
+  neighbor 10.229.242.254 remote-as 65498
+  neighbor 10.229.242.254 activate
+  neighbor 10.229.242.254 default-originate
+  neighbor 10.229.242.254 fall-over bfd
+  neighbor 10.229.242.254 send-community both
+  neighbor 10.229.242.254 soft-reconfiguration inbound
+  propagate-aspath
+  redistribute omp
+  exit-address-family
+ !
+ address-family ipv4 unicast vrf 2
+  bgp router-id 10.240.236.41
+  distance bgp 20 200 20
+  neighbor 192.168.4.254 remote-as 65498
+  neighbor 192.168.4.254 activate
+  neighbor 192.168.4.254 fall-over bfd
+  neighbor 192.168.4.254 send-community both
+  neighbor 192.168.4.254 soft-reconfiguration inbound
+  propagate-aspath
+  redistribute omp
+  exit-address-family
+ !
+ timers bgp 60 180
+!
+snmp-server community 6 AGOfJNMihDISXfGOgOOJLeOBFTQUMXAAB view global ro
+snmp-server enable traps
+snmp-server ifindex persist
+snmp-server trap timeout 30
+snmp-server view global 1.3.6.1 included
+line aux 0
+ stopbits 1
+!
+line con 0
+ speed    9600
+ stopbits 1
+!
+line vty 0 4
+ access-class Cisco_SSH-acl-22 in vrf-also
+ transport input ssh
+!
+line vty 5 80
+ access-class Cisco_SSH-acl-22 in vrf-also
+ transport input ssh
+!
+ntp server 10.216.9.1 source GigabitEthernet0/0/0 version 4
+ntp source GigabitEthernet0/0/0
+lldp run
+nat64 translation timeout tcp 3600
+nat64 translation timeout udp 300
+sdwan
+ interface GigabitEthernet0/0/0
+  tunnel-interface
+   encapsulation ipsec weight 4
+   no border
+   color private1 restrict
+   no last-resort-circuit
+   no low-bandwidth-link
+   no vbond-as-stun-server
+   vmanage-connection-preference 5
+   port-hop
+   carrier                       default
+   nat-refresh-interval          5
+   hello-interval                1000
+   hello-tolerance               12
+   no allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   allow-service sshd
+   no allow-service netconf
+   allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+   allow-service snmp
+   no allow-service bfd
+  exit
+ exit
+ interface GigabitEthernet0/0/1
+  tunnel-interface
+   encapsulation ipsec weight 20
+   no border
+   color mpls restrict
+   no last-resort-circuit
+   no low-bandwidth-link
+   no vbond-as-stun-server
+   vmanage-connection-preference 5
+   port-hop
+   carrier                       default
+   nat-refresh-interval          5
+   hello-interval                1000
+   hello-tolerance               12
+   no allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   allow-service sshd
+   no allow-service netconf
+   allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+   allow-service snmp
+   no allow-service bfd
+  exit
+ exit
+ interface GigabitEthernet0/0/2
+  tunnel-interface
+   encapsulation ipsec weight 5
+   no border
+   color custom1 restrict
+   no last-resort-circuit
+   no low-bandwidth-link
+   max-control-connections       0
+   no vbond-as-stun-server
+   vmanage-connection-preference 5
+   port-hop
+   carrier                       default
+   nat-refresh-interval          5
+   hello-interval                1000
+   hello-tolerance               12
+   no allow-service all
+   no allow-service bgp
+   allow-service dhcp
+   allow-service dns
+   allow-service icmp
+   allow-service sshd
+   no allow-service netconf
+   no allow-service ntp
+   no allow-service ospf
+   no allow-service stun
+   allow-service https
+   no allow-service snmp
+   no allow-service bfd
+  exit
+ exit
+ appqoe
+  no tcpopt enable
+  no dreopt enable
+ !
+ omp
+  no shutdown
+  send-path-limit  8
+  ecmp-limit       8
+  graceful-restart
+  no as-dot-notation
+  timers
+   holdtime               60
+   advertisement-interval 1
+   graceful-restart-timer 302400
+   eor-timer              300
+  exit
+  address-family ipv4 vrf 1
+   advertise bgp
+   advertise connected
+  !
+  address-family ipv4 vrf 2
+   advertise bgp
+  !
+  address-family ipv4
+   advertise static
+  !
+  address-family ipv6
+   advertise connected
+   advertise static
+  !
+ !
+!
+licensing config enable false
+licensing config privacy hostname false
+licensing config privacy version false
+licensing config utility utility-enable false
+bfd default-dscp 48
+bfd app-route multiplier 6
+bfd app-route poll-interval 600000
+security
+ ipsec
+  rekey         604800
+  replay-window 512
+ !
+!
+sslproxy
+ no enable
+ rsa-key-modulus      2048
+ certificate-lifetime 730
+ eckey-type           P256
+ ca-tp-label          PROXY-SIGNING-CA
+ settings expired-certificate  drop
+ settings untrusted-certificate drop
+ settings unknown-status       drop
+ settings certificate-revocation-check none
+ settings unsupported-protocol-versions drop
+ settings unsupported-cipher-suites drop
+ settings failure-mode         close
+ settings minimum-tls-ver      TLSv1
+ dual-side optimization enable
+!
+policy
+ app-visibility
+ no app-visibility-ipv6
+ flow-visibility
+ no flow-visibility-ipv6
+ no implicit-acl-logging
+ log-frequency        1000
+ lists
+  data-prefix-list BQIDC_Network
+   ip-prefix 10.204.0.0/16
+   ip-prefix 10.214.0.0/16
+   ip-prefix 10.240.0.0/16
+   ip-prefix 172.31.0.0/16
+  !
+  data-prefix-list TN_Network
+   ip-prefix 10.229.244.0/24
+   ip-prefix 10.229.245.0/24
+   ip-prefix 10.229.251.0/24
+  !
+  data-prefix-list YJ_Network
+   ip-prefix 10.228.8.0/22
+   ip-prefix 10.228.12.0/24
+   ip-prefix 10.229.0.0/17
+   ip-prefix 10.229.237.0/24
+   ip-prefix 10.229.253.0/24
+   ip-prefix 10.229.254.0/24
+   ip-prefix 10.229.255.0/24
+  !
+ !
+!
+
