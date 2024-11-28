@@ -42,13 +42,13 @@ vlan internal allocation policy ascending
 !
 vlan1229
 !
-interface r FastEthernet0/1-48
- switchport access vlan 229
+interface  range  x/x
+ switchport access vlan xxxx
  switchport mode access
  spanning-tree bpduguard enable
 !
-interface r GigabitEthernet0/1-2
- switchport access vlan 229
+interface range   x/x
+ switchport access vlan xxx
  switchport mode access
 !
 interface Vlan1
