@@ -4,3 +4,6 @@ git pull --rebase
 
 第二招：無視規則，總之就是聽我的!
 git push -f
+
+
+https://gitbook.tw/chapters/github/fail-to-push
