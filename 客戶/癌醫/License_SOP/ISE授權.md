@@ -1,7 +1,5 @@
 # 參考Cisco License 文件
-![](/mygithub/客戶/癌醫/photo/參考license文件.png)
-
-
+![](/mygithub/客戶/癌醫/License_SOP/photo/參考license文件.png)
 # 點選傳統License
 ![](/mygithub/客戶/癌醫/photo/傳統License.png)
 
