@@ -123,3 +123,5 @@ mac address-table notification change
  
 
 
+no errdisable detect cause gbic-invalid
+service unsupported-transceiver
