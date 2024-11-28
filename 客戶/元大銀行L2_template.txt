@@ -40,7 +40,7 @@ spanning-tree extend system-id
 !
 vlan internal allocation policy ascending
 !
-vlan 229
+vlan1229
 !
 interface r FastEthernet0/1-48
  switchport access vlan 229
@@ -54,7 +54,7 @@ interface r GigabitEthernet0/1-2
 interface Vlan1
  shutdown
 !
-interface Vlan229
+interface Vlan1229
  ip address 10.71.229.241 255.255.255.0
 !
 ip default-gateway 10.71.229.254
